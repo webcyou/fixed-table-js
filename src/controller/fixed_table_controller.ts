@@ -4,5 +4,10 @@
 /// <reference path='../_all.ts' />
 
 module FixedTable {
+  export class FixedTableController {
+    constructor(
+      ) {
+    }
 
+  }
 }
