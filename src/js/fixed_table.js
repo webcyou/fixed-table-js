@@ -6,7 +6,7 @@ var FixedTables;
         function FixedTable(option) {
             this.model = new FixedTables.FixedTableModel(option);
             this.view = new FixedTables.FixedTableView(this.model);
-            this.controller = new FixedTables.FixedTableController();
+            this.controller = new FixedTables.FixedTableController(this.model, this.view);
         }
         return FixedTable;
     }());
@@ -141,6 +141,11 @@ var FixedTables;
                 return (cell['x'] === x && cell['y'] === y);
             });
         };
+        Thead.prototype.getFirstCell = function () {
+            return this.cells.filter(function (cell) {
+                return (cell['x'] === 0 && cell['y'] === 0);
+            });
+        };
         return Thead;
     }());
     FixedTables.Thead = Thead;
@@ -148,8 +153,20 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var FixedTableController = (function () {
-        function FixedTableController() {
+        function FixedTableController(model, view) {
+            this.model = model;
+            this.view = view;
         }
+        FixedTableController.prototype.setScrollEvent = function () {
+            var tableView = this.view.getTableView();
+            try {
+                tableView.addEventListener('scroll', this.view.boxScroll, false);
+            }
+            catch (e) {
+                tableView.attachEvent('onscroll', this.view.boxScroll());
+            }
+            console.log(tableView);
+        };
         return FixedTableController;
     }());
     FixedTables.FixedTableController = FixedTableController;
@@ -178,6 +195,9 @@ var FixedTables;
         FixedTableModel.prototype.getTbodyCell = function (x, y) {
             return this.tableView.table.tbody.getCells(x, y);
         };
+        FixedTableModel.prototype.getFirstCell = function () {
+            return this.tableView.table.thead.getFirstCell();
+        };
         return FixedTableModel;
     }());
     FixedTables.FixedTableModel = FixedTableModel;
@@ -205,6 +225,7 @@ var FixedTables;
         FixedTableView.prototype.setStyle = function () {
             this.setTheadFixedStyle();
             this.setTbodyFixedStyle();
+            this.setScrollEvent();
         };
         FixedTableView.prototype.createTheadModel = function () {
             var tr = this.thead.querySelectorAll('tr'), th = this.thead.querySelectorAll('tr > *'), styles, cells = [];
@@ -284,17 +305,45 @@ var FixedTables;
             }
         };
         FixedTableView.prototype.setTbodyFixedStyle = function () {
+            var tr = this.tbody.querySelectorAll('tr'), td, angleCell = this.model.getFirstCell()[0], cell, cells = [];
+            for (var i = 0; i < tr.length; i++) {
+                td = tr[i].querySelectorAll('tr > *');
+                for (var n = 0; n < td.length; n++) {
+                    if (n == 0) {
+                        td[n].style.width = angleCell.width + 'px';
+                        td[n].style.position = 'absolute';
+                        td[n].style.left = 0;
+                    }
+                }
+            }
+        };
+        FixedTableView.prototype.setTbodyScrollStyle = function (left) {
             var tr = this.tbody.querySelectorAll('tr'), td, cell, cells = [];
             for (var i = 0; i < tr.length; i++) {
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
-                        cell = this.model.getTbodyCell(n, i)[0];
-                        td[n].style.width = cell.width + 'px';
-                        console.log(cell);
+                        td[n].style.left = left + 'px';
                     }
                 }
             }
+        };
+        FixedTableView.prototype.setScrollEvent = function () {
+            var that = this;
+            try {
+                this.tableView.addEventListener('scroll', function () {
+                    that.boxScroll();
+                }, false);
+            }
+            catch (e) {
+            }
+        };
+        FixedTableView.prototype.getTableView = function () {
+            return this.tableView;
+        };
+        FixedTableView.prototype.boxScroll = function () {
+            this.setTbodyScrollStyle(this.tableView.scrollLeft);
+            console.log(this.tableView.scrollLeft);
         };
         return FixedTableView;
     }());

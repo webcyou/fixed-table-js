@@ -39,5 +39,9 @@ module FixedTables {
       return this.tableView.table.tbody.getCells(x, y);
     }
 
+    public getFirstCell() {
+      return this.tableView.table.thead.getFirstCell();
+    }
+
   }
 }

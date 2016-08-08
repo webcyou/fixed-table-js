@@ -33,5 +33,11 @@ module FixedTables {
       });
     }
 
+    public getFirstCell() {
+      return this.cells.filter((cell: Cell)=> {
+        return (cell['x'] === 0 && cell['y'] === 0);
+      });
+    }
+
   }
 }

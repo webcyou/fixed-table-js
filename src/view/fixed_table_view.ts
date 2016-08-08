@@ -37,6 +37,8 @@ module FixedTables {
     private setStyle() {
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle();
+
+      this.setScrollEvent();
     }
 
     private createTheadModel() {
@@ -144,6 +146,33 @@ module FixedTables {
 
     private setTbodyFixedStyle() {
       var tr: any[] = this.tbody.querySelectorAll('tr'),
+          td: any[],
+          angleCell = this.model.getFirstCell()[0],
+          cell,
+          cells = [];
+
+      for (var i = 0; i < tr.length; i++) {
+        td = tr[i].querySelectorAll('tr > *');
+        for (var n = 0; n < td.length; n++) {
+          if(n == 0) {
+
+            //cell = this.model.getTbodyCell(n, i)[0];
+            //td[n].style.width = cell.width + 'px';
+
+            td[n].style.width = angleCell.width + 'px';
+
+            td[n].style.position = 'absolute';
+            td[n].style.left = 0;
+
+            //console.log(cell);
+          }
+          //td[n].style.width = cell.width + 'px';
+        }
+      }
+    }
+
+    private setTbodyScrollStyle(left) {
+      var tr: any[] = this.tbody.querySelectorAll('tr'),
         td: any[],
         cell,
         cells = [];
@@ -151,16 +180,33 @@ module FixedTables {
         td = tr[i].querySelectorAll('tr > *');
         for (var n = 0; n < td.length; n++) {
           if(n == 0) {
-            cell = this.model.getTbodyCell(n, i)[0];
-
-            //td[n].style.position = 'fixed';
-            td[n].style.width = cell.width + 'px';
-
-            console.log(cell);
+            td[n].style.left = left + 'px';
           }
-          //td[n].style.width = cell.width + 'px';
         }
       }
+    }
+
+    private setScrollEvent() {
+      var that = this;
+
+      try { //IE9+, Other Browsers
+        this.tableView.addEventListener('scroll', () => {
+          that.boxScroll();
+        }, false);
+      } catch (e) { //for IE8-
+        //tableView.attachEvent('onscroll', this.view.boxScroll());
+      }
+    }
+
+    public getTableView() {
+      return this.tableView;
+    }
+
+    public boxScroll() {
+      this.setTbodyScrollStyle(this.tableView.scrollLeft);
+
+      //console.log(this.tableView.scrollLeft);
+      console.log(this.tableView.scrollLeft);
     }
 
   }

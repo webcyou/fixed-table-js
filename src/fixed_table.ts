@@ -17,7 +17,7 @@ module FixedTables {
       ) {
       this.model = new FixedTables.FixedTableModel(option);
       this.view = new FixedTables.FixedTableView(this.model);
-      this.controller = new FixedTables.FixedTableController();
+      this.controller = new FixedTables.FixedTableController(this.model, this.view);
 
     }
 
