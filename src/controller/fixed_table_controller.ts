@@ -3,7 +3,7 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTable {
+module FixedTables {
   export class FixedTableController {
     constructor(
       ) {

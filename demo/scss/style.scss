@@ -21,11 +21,22 @@ table {
   padding: 80px;
 }
 
-#table {
+.fixedTable {
+  position: relative;
+  overflow: scroll;
+  padding-top: 41px;
   table {
-    width: 100%;
+    //width: 1700px;
+    //table-layout: fixed;
     thead {
+      //position: relative;
+      position: absolute;
+      top: 0;
+      width: 1617px;
       border-right: #ccc 1px solid;
+      tr {
+        //position: fixed;
+      }
       th {
         width: 130px;
         padding: 8px;
@@ -35,16 +46,24 @@ table {
       }
     }
     tbody {
+      display: block;
+      width: 1470px;
+      padding-left: 147px;
       border-right: #ccc 1px solid;
       border-bottom: #ccc 1px solid;
+      tr {
+        //width: 1617px;
+      }
       th,
       td {
-        width: 100px;
+        width: 130px;
         padding: 8px;
         border-top: #ccc 1px solid;
         border-left: #ccc 1px solid;
       }
       th {
+        position: absolute;
+        left: 0;
         background: #d2ebff;
       }
     }
