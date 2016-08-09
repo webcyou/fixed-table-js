@@ -19,6 +19,10 @@ module FixedTables {
       this.model = model;
       this.setElements();
       this.setTheadStyle();
+
+      this.setTheadLines();
+      this.createTheadModel();
+
       this.setTbodyStyle();
 
       this.setModels();
@@ -27,15 +31,33 @@ module FixedTables {
     }
 
     private setElements(): void {
-      this.setTableView();
-      this.setTable();
-      this.setThead();
-      this.setTbody();
+      this.tableView = document.getElementById(this.model.getTableViewIdName());
+      this.table = this.tableView.querySelector('table');
+      this.thead = this.table.querySelector('thead');
+      this.tbody = this.table.querySelector('tbody');
+
+      var tableStyles = (<any>this.table).currentStyle || (<any>document.defaultView).getComputedStyle(this.table, '');
+      this.model.setTableStyles(tableStyles);
+    }
+
+    private setTheadStyle(): void {
+      (<HTMLElement>this.thead).style.position = 'absolute';
+      (<HTMLElement>this.thead).style.top = '0';
+      (<HTMLElement>this.thead).style.width =  this.model.getTheadWidth() + 'px';
+      (<HTMLElement>this.thead).style.zIndex = '10';
+    }
+
+    private setTbodyStyle(): void {
+      this.model.setTbodyStyles();
+
+      this.tbody.style.display = 'block';
+      this.tbody.style.width = this.model.getTbodyWidth() + 'px';
+      this.tbody.style.paddingLeft = this.model.getTbodyPaddingLeft() + 'px';
     }
 
     private setModels(): void {
-      this.setTheadLines();
-      this.createTheadModel();
+      //this.setTheadLines();
+      //this.createTheadModel();
       this.createTbodyModel();
     }
 
@@ -43,19 +65,6 @@ module FixedTables {
       this.setTableViewStyle();
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle();
-    }
-
-    private setTheadStyle(): void {
-      (<HTMLElement>this.thead).style.position = 'absolute';
-      (<HTMLElement>this.thead).style.top = '0';
-      (<HTMLElement>this.thead).style.width = '1617px';
-      (<HTMLElement>this.thead).style.zIndex = '10';
-    }
-
-    private setTbodyStyle(): void {
-      this.tbody.style.display = 'block';
-      this.tbody.style.width = '1470px';
-      this.tbody.style.paddingLeft = '147px';
     }
 
     private setEvent(): void {
@@ -113,22 +122,6 @@ module FixedTables {
       this.model.setTbodyCells(cells);
     }
 
-    private setTable(): void {
-      this.table = this.tableView.querySelector('table');
-    }
-
-    private setThead(): void {
-      this.thead = this.table.querySelector('thead');
-    }
-
-    private setTbody(): void {
-      this.tbody = this.table.querySelector('tbody');
-    }
-
-    private setTableView(): void {
-      this.tableView = document.getElementById(this.model.getTableViewIdName());
-    }
-
     private setTheadLines(): void {
       this.model.setTheadLength(this.table.querySelectorAll('thead tr').length);
     }
@@ -176,7 +169,7 @@ module FixedTables {
 
     private setTbodyScrollStyle(left): void {
       var tr: any[] = this.tbody.querySelectorAll('tr'),
-        td: any[];
+          td: any[];
 
       for (var i = 0; i < tr.length; i++) {
         td = tr[i].querySelectorAll('tr > *');
