@@ -4,6 +4,7 @@
 /// <reference path='../_all.ts' />
 
 module FixedTables {
+
   export class FixedTableView {
     private model: FixedTableModel;
 
@@ -125,20 +126,20 @@ module FixedTables {
     }
 
     private setTheadFixedStyle() {
-      var tr: any[] = this.thead.querySelectorAll('tr'),
-        td: any[],
-        cell,
-        cells = [];
+      var tr: NodeList = this.thead.querySelectorAll('tr'),
+          td: NodeList,
+          cell: Cell,
+          cells = [];
+
       for (var i = 0; i < tr.length; i++) {
-        td = tr[i].querySelectorAll('tr > *');
+        td = (<Element>tr[i]).querySelectorAll('tr > *');
+
         for (var n = 0; n < td.length; n++) {
           if(i == 0) {
             cell = this.model.getTheadCell(n, i)[0];
 
             //td[n].style.position = 'fixed';
-            td[n].style.width = cell.width + 'px';
-
-            console.log(cell);
+            (<HTMLElement>td[n]).style.width = cell.width + 'px';
           }
         }
       }
@@ -186,6 +187,10 @@ module FixedTables {
       }
     }
 
+    private setTheadScrollStyle(top) {
+      this.thead.style.top = top + 'px';
+    }
+
     private setScrollEvent() {
       var that = this;
 
@@ -204,6 +209,7 @@ module FixedTables {
 
     public boxScroll() {
       this.setTbodyScrollStyle(this.tableView.scrollLeft);
+      this.setTheadScrollStyle(this.tableView.scrollTop);
 
       //console.log(this.tableView.scrollLeft);
       console.log(this.tableView.scrollLeft);

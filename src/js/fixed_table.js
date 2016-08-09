@@ -299,7 +299,6 @@ var FixedTables;
                     if (i == 0) {
                         cell = this.model.getTheadCell(n, i)[0];
                         td[n].style.width = cell.width + 'px';
-                        console.log(cell);
                     }
                 }
             }
@@ -328,6 +327,9 @@ var FixedTables;
                 }
             }
         };
+        FixedTableView.prototype.setTheadScrollStyle = function (top) {
+            this.thead.style.top = top + 'px';
+        };
         FixedTableView.prototype.setScrollEvent = function () {
             var that = this;
             try {
@@ -343,6 +345,7 @@ var FixedTables;
         };
         FixedTableView.prototype.boxScroll = function () {
             this.setTbodyScrollStyle(this.tableView.scrollLeft);
+            this.setTheadScrollStyle(this.tableView.scrollTop);
             console.log(this.tableView.scrollLeft);
         };
         return FixedTableView;

@@ -25,6 +25,7 @@ table {
   position: relative;
   overflow: scroll;
   padding-top: 41px;
+  height: 300px;
   table {
     //width: 1700px;
     //table-layout: fixed;
@@ -34,6 +35,7 @@ table {
       top: 0;
       width: 1617px;
       border-right: #ccc 1px solid;
+      z-index: 10;
       tr {
         //position: fixed;
       }
