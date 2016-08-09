@@ -1,4 +1,4 @@
-# FixedTableJS
+# Fixed Table JS
 FixedTableJS - Fixed Table Layout JavaScript Library
 
 
