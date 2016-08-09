@@ -14,12 +14,11 @@ table {
 }
 
 .tableView {
-  padding: 80px;
+  padding: 80px 0 0 80px;
 }
 
 .fixedTable {
-  padding-top: 41px;
-  height: 300px;
+  height: 600px;
   table {
     width: 1617px;
     thead {

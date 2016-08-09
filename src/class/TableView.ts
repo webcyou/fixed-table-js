@@ -7,7 +7,7 @@ module FixedTables {
 
   export class TableView {
     static CSS_POSITION_VALUE = 'relative';
-    static CSS_OVERFLOW_VALUE = 'scroll';
+    static CSS_OVERFLOW_VALUE = 'auto';
 
     constructor(
       public elementIdName: string,
@@ -15,6 +15,8 @@ module FixedTables {
       public fullMode: boolean,
       public fixedLineNum: number,
       public fixedColumnNum: number,
+      public offsetTop: number,
+      public offsetLeft: number,
       public position: string,
       public overflow: string
       ) {
@@ -27,6 +29,8 @@ module FixedTables {
         data.fullMode ? data.fullMode : false,
         data.fixedLineNum ? data.fixedLineNum : 1,
         data.fixedColumnNum ? data.fixedColumnNum : 1,
+        0,
+        0,
         this.CSS_POSITION_VALUE,
         this.CSS_OVERFLOW_VALUE
       );
@@ -34,6 +38,20 @@ module FixedTables {
 
     public getIdName(): string {
       return this.elementIdName
+    }
+
+    public setOffset(rect: ClientRect) {
+      console.log(rect);
+
+      this.offsetTop = rect.top;
+      this.offsetLeft = rect.left;
+    }
+
+    public getFullModeSize(windowWidth: number, windowHeight: number): Object {
+      return {
+        width: windowWidth - this.offsetLeft,
+        height: windowHeight - this.offsetTop
+      }
     }
   }
 }

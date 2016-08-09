@@ -4,6 +4,13 @@
 /// <reference path='../_all.ts' />
 
 module FixedTables {
+
+  interface ViewSize {
+    width: number;
+    height: number;
+  }
+
+
   export class FixedTableView {
     private model: FixedTableModel;
 
@@ -18,6 +25,9 @@ module FixedTables {
       this.model = model;
 
       this.setElements();
+      this.setTableViewModel();
+      this.setTableViewStyle();
+
       this.setTableModel();
 
       this.setTheadStyle();
@@ -41,6 +51,40 @@ module FixedTables {
       this.table = this.tableView.querySelector('table');
       this.thead = this.table.querySelector('thead');
       this.tbody = this.table.querySelector('tbody');
+    }
+
+    /**
+     * TableView
+     *
+    **/
+    private setTableViewModel() {
+      var tableViewModel: TableView = this.model.getTableViewModel();
+
+      tableViewModel.setOffset(this.tableView.getBoundingClientRect());
+    }
+
+    private setTableViewStyle(): void {
+      var tableViewModel: TableView = this.model.getTableViewModel();
+
+      this.tableView.style.position = tableViewModel.position;
+      this.tableView.style.overflow = tableViewModel.overflow;
+
+      if(tableViewModel.fullMode) {
+        this.setTableViewFullModeStyle();
+      }
+    }
+
+    private setTableViewFullModeStyle(): void {
+      var tableViewModel: TableView = this.model.getTableViewModel(),
+          viewSize: Object = tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+
+      this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
+      this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
+
+      viewSize = tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+
+      this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
+      this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
     }
 
     /**
@@ -128,16 +172,9 @@ module FixedTables {
      *
     **/
     private setFixedStyle(): void {
-      this.setTableViewStyle();
+      //this.setTableViewStyle();
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle();
-    }
-
-    private setTableViewStyle(): void {
-      var tableViewModel: TableView = this.model.getTableViewModel();
-
-      this.tableView.style.position = tableViewModel.position;
-      this.tableView.style.overflow = tableViewModel.overflow;
     }
 
     private getCreateCellModel(parent: string, elements, styles, i: number, n: number) {
@@ -203,11 +240,18 @@ module FixedTables {
      **/
     private setEventHandler(): void {
       this.setScrollEvent();
+      this.setWindowResizeEvent();
     }
 
     private setScrollEvent(): void {
       this.tableView.addEventListener('scroll', () => {
         this.boxScroll();
+      }, false);
+    }
+
+    private setWindowResizeEvent(): void {
+      window.addEventListener('resize', () => {
+        this.windowResize();
       }, false);
     }
 
@@ -230,9 +274,17 @@ module FixedTables {
       (<HTMLElement>this.thead).style.top = top + 'px';
     }
 
-    public boxScroll() {
+    public boxScroll(): void {
       this.setTbodyScrollStyle(this.tableView.scrollLeft);
       this.setTheadScrollStyle(this.tableView.scrollTop);
+    }
+
+    public windowResize(): void {
+      var tableViewModel: TableView = this.model.getTableViewModel();
+
+      if(tableViewModel.fullMode) {
+        this.setTableViewFullModeStyle();
+      }
     }
 
   }
