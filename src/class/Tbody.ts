@@ -19,6 +19,7 @@ module FixedTables {
       public borderBottomWidth: string,
       public borderLeftWidth: string,
       public paddingLeft: number,
+      public marginTop: number,
       public display: string,
       public fixedPositon: string,
       public fixedLeft: string
@@ -34,6 +35,7 @@ module FixedTables {
         data.borderRightWidth ? data.borderRightWidth : '',
         data.borderBottomWidth ? data.borderBottomWidth : '',
         data.borderLeftWidth ? data.borderLeftWidth : '',
+        0,
         0,
         this.CSS_DISPLAY_VALUE,
         this.FIXED_CSS_POSITION_VALUE,
@@ -57,6 +59,7 @@ module FixedTables {
 
     public setStyles(table) {
       this.paddingLeft = table.thead.cells[0].outerWidth;
+      this.marginTop = table.thead.cells[0].outerHeight;
       this.width = table.outerWidth - table.thead.cells[0].outerWidth;
     }
 
@@ -66,6 +69,10 @@ module FixedTables {
 
     public getCSSPaddingLeft(): string {
       return this.paddingLeft + 'px';
+    }
+
+    public getCSSMarginTop(): string {
+      return this.marginTop + 'px';
     }
 
     public getTbodyWidth() {

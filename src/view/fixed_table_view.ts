@@ -143,6 +143,7 @@ module FixedTables {
       (<HTMLElement>this.tbody).style.display = tbodyModel.display;
       (<HTMLElement>this.tbody).style.width = tbodyModel.getCSSWidth();
       (<HTMLElement>this.tbody).style.paddingLeft = tbodyModel.getCSSPaddingLeft();
+      (<HTMLElement>this.tbody).style.marginTop = tbodyModel.getCSSMarginTop();
     }
 
     private setTbodyModel() {
@@ -172,7 +173,6 @@ module FixedTables {
      *
     **/
     private setFixedStyle(): void {
-      //this.setTableViewStyle();
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle();
     }
@@ -229,6 +229,9 @@ module FixedTables {
             (<HTMLElement>td[n]).style.width = angleCell.getCSSWidth();
             (<HTMLElement>td[n]).style.position = tbodyModel.fixedPositon;
             (<HTMLElement>td[n]).style.left = tbodyModel.fixedLeft;
+          } else {
+            var cell = theadModel.getCell(n, 0);
+            (<HTMLElement>td[n]).style.width = cell.getCSSWidth();
           }
         }
       }
