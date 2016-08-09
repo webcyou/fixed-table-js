@@ -73,7 +73,7 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var Table = (function () {
-        function Table(thead, tbody, width, outerWidth, paddingTop, paddingRight, paddingBottom, paddingLeft, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth) {
+        function Table(thead, tbody, width, outerWidth, paddingTop, paddingRight, paddingBottom, paddingLeft, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, borderCollapse, borderSpacing) {
             this.thead = thead;
             this.tbody = tbody;
             this.width = width;
@@ -86,9 +86,11 @@ var FixedTables;
             this.borderRightWidth = borderRightWidth;
             this.borderBottomWidth = borderBottomWidth;
             this.borderLeftWidth = borderLeftWidth;
+            this.borderCollapse = borderCollapse;
+            this.borderSpacing = borderSpacing;
         }
         Table.fromData = function (data) {
-            return new Table(FixedTables.Thead.fromData({}), FixedTables.Tbody.fromData({}), data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth ? data.borderTopWidth : '', data.borderRightWidth ? data.borderRightWidth : '', data.borderBottomWidth ? data.borderBottomWidth : '', data.borderLeftWidth ? data.borderLeftWidth : '');
+            return new Table(FixedTables.Thead.fromData({}), FixedTables.Tbody.fromData({}), data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth ? data.borderTopWidth : '', data.borderRightWidth ? data.borderRightWidth : '', data.borderBottomWidth ? data.borderBottomWidth : '', data.borderLeftWidth ? data.borderLeftWidth : '', data.borderCollapse ? data.borderCollapse : this.CSS_BORDER_COLLAPSE_VALUE, data.borderSpacing ? data.borderSpacing : this.CSS_BORDER_SPACING_VALUE);
         };
         Table.prototype.setStyles = function (styles) {
             this.width = parseInt(styles["width"], 10);
@@ -113,6 +115,8 @@ var FixedTables;
             return this.width + (parseInt(this.paddingLeft, 10) + parseInt(this.paddingRight, 10)
                 + parseInt(this.borderLeftWidth, 10) + parseInt(this.borderRightWidth, 10));
         };
+        Table.CSS_BORDER_COLLAPSE_VALUE = 'collapse';
+        Table.CSS_BORDER_SPACING_VALUE = '0';
         return Table;
     }());
     FixedTables.Table = Table;
@@ -299,6 +303,7 @@ var FixedTables;
             this.setElements();
             this.setTableViewModel();
             this.setTableViewStyle();
+            this.setTableStyle();
             this.setTableModel();
             this.setTheadStyle();
             this.setTheadModel();
@@ -333,6 +338,11 @@ var FixedTables;
             viewSize = tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
             this.tableView.style.width = viewSize.width + 'px';
             this.tableView.style.height = viewSize.height + 'px';
+        };
+        FixedTableView.prototype.setTableStyle = function () {
+            var tableModel = this.model.getTableModel();
+            this.table.style.borderCollapse = tableModel.borderCollapse;
+            this.table.style.borderSpacing = tableModel.borderSpacing;
         };
         FixedTableView.prototype.setTableModel = function () {
             var tableStyles = this.table.currentStyle || document.defaultView.getComputedStyle(this.table, ''), tableModel = this.model.getTableModel();

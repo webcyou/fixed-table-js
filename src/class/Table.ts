@@ -5,6 +5,9 @@
 
 module FixedTables {
   export class Table {
+    static CSS_BORDER_COLLAPSE_VALUE = 'collapse';
+    static CSS_BORDER_SPACING_VALUE = '0';
+
     constructor(
       public thead: Thead,
       public tbody: Tbody,
@@ -17,7 +20,9 @@ module FixedTables {
       public borderTopWidth: string,
       public borderRightWidth: string,
       public borderBottomWidth: string,
-      public borderLeftWidth: string
+      public borderLeftWidth: string,
+      public borderCollapse: string,
+      public borderSpacing: string
       ) {
     }
 
@@ -34,7 +39,9 @@ module FixedTables {
         data.borderTopWidth ? data.borderTopWidth : '',
         data.borderRightWidth ? data.borderRightWidth : '',
         data.borderBottomWidth ? data.borderBottomWidth : '',
-        data.borderLeftWidth ? data.borderLeftWidth : ''
+        data.borderLeftWidth ? data.borderLeftWidth : '',
+        data.borderCollapse ? data.borderCollapse : this.CSS_BORDER_COLLAPSE_VALUE,
+        data.borderSpacing ? data.borderSpacing : this.CSS_BORDER_SPACING_VALUE
       );
     }
 

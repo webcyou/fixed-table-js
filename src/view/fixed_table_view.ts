@@ -28,6 +28,7 @@ module FixedTables {
       this.setTableViewModel();
       this.setTableViewStyle();
 
+      this.setTableStyle();
       this.setTableModel();
 
       this.setTheadStyle();
@@ -91,6 +92,14 @@ module FixedTables {
      * Table
      *
     **/
+    private setTableStyle(): void {
+      var tableModel: Table = this.model.getTableModel();
+
+      (<HTMLElement>this.table).style.borderCollapse = tableModel.borderCollapse;
+      (<HTMLElement>this.table).style.borderSpacing = tableModel.borderSpacing;
+
+    }
+
     private setTableModel(): void {
       var tableStyles = (<any>this.table).currentStyle || (<any>document.defaultView).getComputedStyle(this.table, ''),
           tableModel: Table = this.model.getTableModel();

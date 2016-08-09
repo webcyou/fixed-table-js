@@ -9,8 +9,8 @@ body {
 }
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+//  border-collapse: collapse;
+//  border-spacing: 0;
 }
 
 .tableView {
@@ -18,7 +18,7 @@ table {
 }
 
 .fixedTable {
-  height: 600px;
+  height: 300px;
   table {
     width: 1818px;
     thead {
