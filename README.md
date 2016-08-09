@@ -32,9 +32,6 @@ npm install fixed-table-js
 <script src="fixed_table.js"></script>
 ```
 
-
-### Start DataSet
-
 ```
 new FixedTable();
 ```
