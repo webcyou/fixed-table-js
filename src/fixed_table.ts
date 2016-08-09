@@ -10,6 +10,7 @@ module FixedTables {
   export class FixedTable {
     private view: FixedTableView;
     private model: FixedTableModel;
+
     constructor(
       option?: any
       ) {

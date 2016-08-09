@@ -4,7 +4,6 @@
 /// <reference path='../_all.ts' />
 
 module FixedTables {
-
   export class Table {
     constructor(
       public thead: Thead,
@@ -50,6 +49,16 @@ module FixedTables {
       this.borderBottomWidth = styles["border-bottom-width"];
       this.borderLeftWidth = styles["border-left-width"];
       this.outerWidth = this.getOuterWidth();
+      this.setTheadStyles();
+      //this.setTbodyStyles();
+    }
+
+    public setTheadStyles() {
+      this.thead.setStyles(this);
+    }
+
+    public setTbodyStyles() {
+      this.tbody.setStyles(this);
     }
 
     public getOuterWidth() {

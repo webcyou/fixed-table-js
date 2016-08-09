@@ -6,6 +6,8 @@
 module FixedTables {
 
   export class Tbody {
+    static CSS_DISPLAY_VALUE = 'block';
+
     constructor(
       public cells: Cell[],
       public width: number,
@@ -14,7 +16,8 @@ module FixedTables {
       public borderRightWidth: string,
       public borderBottomWidth: string,
       public borderLeftWidth: string,
-      public paddingLeft: number
+      public paddingLeft: number,
+      public display: string
       ) {
     }
 
@@ -27,7 +30,8 @@ module FixedTables {
         data.borderRightWidth ? data.borderRightWidth : '',
         data.borderBottomWidth ? data.borderBottomWidth : '',
         data.borderLeftWidth ? data.borderLeftWidth : '',
-        0
+        0,
+        this.CSS_DISPLAY_VALUE
       );
     }
 
@@ -50,8 +54,16 @@ module FixedTables {
       return this.paddingLeft;
     }
 
+    public getCSSPaddingLeft(): string {
+      return this.paddingLeft + 'px';
+    }
+
     public getTbodyWidth() {
       return this.width;
+    }
+
+    public getCSSWidth(): string {
+      return this.width + 'px';
     }
 
   }

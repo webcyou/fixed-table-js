@@ -6,6 +6,10 @@
 module FixedTables {
 
   export class Thead {
+    static CSS_POSITION_VALUE = 'absolute';
+    static CSS_TOP_VALUE = '0';
+    static CSS_ZINDEX_VALUE = '10';
+
     constructor(
       public lineNum: number,
       public cells: Cell[],
@@ -14,7 +18,10 @@ module FixedTables {
       public borderTopWidth: string,
       public borderRightWidth: string,
       public borderBottomWidth: string,
-      public borderLeftWidth: string
+      public borderLeftWidth: string,
+      public position: string,
+      public top: string,
+      public zIndex: string
       ) {
     }
 
@@ -27,7 +34,10 @@ module FixedTables {
         data.borderTopWidth ? data.borderTopWidth : '',
         data.borderRightWidth ? data.borderRightWidth : '',
         data.borderBottomWidth ? data.borderBottomWidth : '',
-        data.borderLeftWidth ? data.borderLeftWidth : ''
+        data.borderLeftWidth ? data.borderLeftWidth : '',
+        this.CSS_POSITION_VALUE,
+        this.CSS_TOP_VALUE,
+        this.CSS_ZINDEX_VALUE
       );
     }
 
@@ -61,6 +71,10 @@ module FixedTables {
 
     public getWidth(): number {
       return this.width;
+    }
+
+    public getCSSWidth(): string {
+      return this.width + 'px';
     }
   }
 }

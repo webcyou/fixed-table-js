@@ -13,47 +13,16 @@ module FixedTables {
       ) {
       this.tableView = TableView.fromData(option);
 
-    }
+      console.log(option);
 
-    public setTableStyles(styles): void {
-      this.tableView.table.setStyles(styles);
-      this.setTheadStyles();
     }
 
     public getTableViewIdName(): string {
       return this.tableView.getIdName();
     }
 
-    public setTheadLength(num: number): void {
-      this.tableView.table.thead.setLineNumber(num);
-    }
-
-    public setTheadStyles(): void {
-      this.tableView.table.thead.setStyles(this.tableView.table);
-    }
-
-    public setTbodyStyles(): void {
-      this.tableView.table.tbody.setStyles(this.tableView.table);
-    }
-
-    public getTheadWidth() {
-      return this.tableView.table.thead.getWidth();
-    }
-
-    public setTheadCells(data) {
-      this.tableView.table.thead.setCells(data);
-    }
-
     public setTbodyCells(data) {
       this.tableView.table.tbody.setCells(data);
-    }
-
-    public getTbodyPaddingLeft() {
-      return this.tableView.table.tbody.getPaddingLeft();
-    }
-
-    public getTbodyWidth() {
-      return this.tableView.table.tbody.getTbodyWidth();
     }
 
     public getTheadCell(x: number, y: number) {
@@ -66,6 +35,25 @@ module FixedTables {
 
     public getFirstCell() {
       return this.tableView.table.thead.getFirstCell();
+    }
+
+    /*
+    * Getter Model
+    */
+    public getTableViewModel(): TableView {
+      return this.tableView;
+    }
+
+    public getTableModel(): Table {
+      return this.tableView.table;
+    }
+
+    public getTheadModel(): Thead {
+      return this.tableView.table.thead;
+    }
+
+    public getTbodyModel(): Tbody {
+      return this.tableView.table.tbody;
     }
 
   }
