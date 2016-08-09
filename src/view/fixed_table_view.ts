@@ -62,64 +62,51 @@ module FixedTables {
       this.setScrollEvent();
     }
 
+    private getCreateCellModel(parent, elements, styles, i, n) {
+      return Cell.fromData({
+        parent: parent,
+        tagName: elements[i].tagName,
+        x: i,
+        y: n,
+        outerWidth: elements[i].offsetWidth,
+        outerHeight: elements[i].offsetHeight,
+        paddingTop: styles["padding-top"],
+        paddingRight: styles["padding-right"],
+        paddingBottom: styles["padding-bottom"],
+        paddingLeft: styles["padding-left"],
+        borderTopWidth: styles["border-top-width"],
+        borderRightWidth: styles["border-right-width"],
+        borderBottomWidth: styles["border-bottom-width"],
+        borderLeftWidth: styles["border-left-width"]
+      });
+    }
+
     private createTheadModel(): void {
       var tr: NodeList = this.thead.querySelectorAll('tr'),
           th: NodeList = this.thead.querySelectorAll('tr > *'),
           styles,
-          cells = [];
+          cells: Cell[] = [];
 
       for (var i = 0; i < th.length; i++) {
         styles = (<any>th[i]).currentStyle || (<any>document.defaultView).getComputedStyle(th[i], '');
-
-        cells.push(Cell.fromData({
-          parent: 'thead',
-          tagName: (<HTMLElement>th[i]).tagName,
-          x: i,
-          y: 0,
-          outerWidth: (<HTMLElement>th[i]).offsetWidth,
-          outerHeight: (<HTMLElement>th[i]).offsetHeight,
-          paddingTop: styles["padding-top"],
-          paddingRight: styles["padding-right"],
-          paddingBottom: styles["padding-bottom"],
-          paddingLeft: styles["padding-left"],
-          borderTopWidth: styles["border-top-width"],
-          borderRightWidth: styles["border-right-width"],
-          borderBottomWidth: styles["border-bottom-width"],
-          borderLeftWidth: styles["border-left-width"]
-        }));
+        cells.push(this.getCreateCellModel('thead', th, styles, i, 0));
       }
 
       this.model.setTheadCells(cells);
     }
 
     private createTbodyModel(): void {
-      var tr: any = this.tbody.querySelectorAll('tr'),
-          td: any,
+      var tr: NodeList = this.tbody.querySelectorAll('tr'),
+          td: NodeList,
           styles,
-          cells = [];
+          cells: Cell[] = [];
 
-      for (var i = 0; i < tr.length; i++) {
-        td = tr[i].querySelectorAll('tr > *');
+      for (var n: number = 0; n < tr.length; n++) {
+        td = (<Element>tr[n]).querySelectorAll('tr > *');
 
-        for (var n = 0; n < td.length; n++) {
-          styles = td[n].currentStyle || document.defaultView.getComputedStyle(td[n], '');
-
-          cells.push(Cell.fromData({
-            parent: 'tbody',
-            tagName: td[n].tagName,
-            x: n,
-            y: i,
-            outerWidth: td[n].offsetWidth,
-            outerHeight: td[n].offsetHeight,
-            paddingTop: styles["padding-top"],
-            paddingRight: styles["padding-right"],
-            paddingBottom: styles["padding-bottom"],
-            paddingLeft: styles["padding-left"],
-            borderTopWidth: styles["border-top-width"],
-            borderRightWidth: styles["border-right-width"],
-            borderBottomWidth: styles["border-bottom-width"],
-            borderLeftWidth: styles["border-left-width"]
-          }));
+        for (var i: number = 0; i < td.length; i++) {
+          styles = (<any>td[i]).currentStyle || (<any>document.defaultView).getComputedStyle(td[i], '');
+          cells.push(this.getCreateCellModel('tbody', td, styles, i, n));
         }
       }
 
@@ -157,7 +144,7 @@ module FixedTables {
           td: NodeList,
           cell: Cell;
 
-      for (var i = 0; i < tr.length; i++) {
+      for (var i: number = 0; i < tr.length; i++) {
         td = (<Element>tr[i]).querySelectorAll('tr > *');
 
         for (var n: number = 0; n < td.length; n++) {
