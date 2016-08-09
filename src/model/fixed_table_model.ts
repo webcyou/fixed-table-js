@@ -13,28 +13,7 @@ module FixedTables {
       ) {
       this.tableView = TableView.fromData(option);
 
-      console.log(option);
-
-    }
-
-    public getTableViewIdName(): string {
-      return this.tableView.getIdName();
-    }
-
-    public setTbodyCells(data) {
-      this.tableView.table.tbody.setCells(data);
-    }
-
-    public getTheadCell(x: number, y: number) {
-      return this.tableView.table.thead.getCells(x, y);
-    }
-
-    public getTbodyCell(x: number, y: number) {
-      return this.tableView.table.tbody.getCells(x, y);
-    }
-
-    public getFirstCell() {
-      return this.tableView.table.thead.getFirstCell();
+      //console.log(option);
     }
 
     /*

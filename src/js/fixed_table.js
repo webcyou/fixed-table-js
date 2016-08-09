@@ -59,6 +59,9 @@ var FixedTables;
             return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
                 + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
         };
+        Cell.prototype.getCSSWidth = function () {
+            return this.width + 'px';
+        };
         Cell.prototype.getHeight = function () {
             return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
                 + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
@@ -117,19 +120,23 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var TableView = (function () {
-        function TableView(elementIdName, table, fullMode, fixedLineNum, fixedColumnNum) {
+        function TableView(elementIdName, table, fullMode, fixedLineNum, fixedColumnNum, position, overflow) {
             this.elementIdName = elementIdName;
             this.table = table;
             this.fullMode = fullMode;
             this.fixedLineNum = fixedLineNum;
             this.fixedColumnNum = fixedColumnNum;
+            this.position = position;
+            this.overflow = overflow;
         }
         TableView.fromData = function (data) {
-            return new TableView(data.id ? data.id : 'fixedTable', FixedTables.Table.fromData({}), data.fullMode ? data.fullMode : false, data.fixedLineNum ? data.fixedLineNum : 1, data.fixedColumnNum ? data.fixedColumnNum : 1);
+            return new TableView(data.id ? data.id : 'fixedTable', FixedTables.Table.fromData({}), data.fullMode ? data.fullMode : false, data.fixedLineNum ? data.fixedLineNum : 1, data.fixedColumnNum ? data.fixedColumnNum : 1, this.CSS_POSITION_VALUE, this.CSS_OVERFLOW_VALUE);
         };
         TableView.prototype.getIdName = function () {
             return this.elementIdName;
         };
+        TableView.CSS_POSITION_VALUE = 'relative';
+        TableView.CSS_OVERFLOW_VALUE = 'scroll';
         return TableView;
     }());
     FixedTables.TableView = TableView;
@@ -137,7 +144,7 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var Tbody = (function () {
-        function Tbody(cells, width, outerWidth, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, paddingLeft, display) {
+        function Tbody(cells, width, outerWidth, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, paddingLeft, display, fixedPositon, fixedLeft) {
             this.cells = cells;
             this.width = width;
             this.outerWidth = outerWidth;
@@ -147,9 +154,11 @@ var FixedTables;
             this.borderLeftWidth = borderLeftWidth;
             this.paddingLeft = paddingLeft;
             this.display = display;
+            this.fixedPositon = fixedPositon;
+            this.fixedLeft = fixedLeft;
         }
         Tbody.fromData = function (data) {
-            return new Tbody([], data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.borderTopWidth ? data.borderTopWidth : '', data.borderRightWidth ? data.borderRightWidth : '', data.borderBottomWidth ? data.borderBottomWidth : '', data.borderLeftWidth ? data.borderLeftWidth : '', 0, this.CSS_DISPLAY_VALUE);
+            return new Tbody([], data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.borderTopWidth ? data.borderTopWidth : '', data.borderRightWidth ? data.borderRightWidth : '', data.borderBottomWidth ? data.borderBottomWidth : '', data.borderLeftWidth ? data.borderLeftWidth : '', 0, this.CSS_DISPLAY_VALUE, this.FIXED_CSS_POSITION_VALUE, this.FIXED_CSS_LEFT_VALUE);
         };
         Tbody.prototype.setCells = function (cells) {
             this.cells = cells;
@@ -158,6 +167,9 @@ var FixedTables;
             return this.cells.filter(function (cell) {
                 return (cell['x'] === x && cell['y'] === y);
             });
+        };
+        Tbody.prototype.getCell = function (x, y) {
+            return this.getCells(x, y)[0];
         };
         Tbody.prototype.setStyles = function (table) {
             this.paddingLeft = table.thead.cells[0].outerWidth;
@@ -176,6 +188,8 @@ var FixedTables;
             return this.width + 'px';
         };
         Tbody.CSS_DISPLAY_VALUE = 'block';
+        Tbody.FIXED_CSS_POSITION_VALUE = 'absolute';
+        Tbody.FIXED_CSS_LEFT_VALUE = '0';
         return Tbody;
     }());
     FixedTables.Tbody = Tbody;
@@ -210,10 +224,11 @@ var FixedTables;
                 return (cell['x'] === x && cell['y'] === y);
             });
         };
+        Thead.prototype.getCell = function (x, y) {
+            return this.getCells(x, y)[0];
+        };
         Thead.prototype.getFirstCell = function () {
-            return this.cells.filter(function (cell) {
-                return (cell['x'] === 0 && cell['y'] === 0);
-            });
+            return this.getCell(0, 0);
         };
         Thead.prototype.setStyles = function (table) {
             if (this.borderLeftWidth) {
@@ -241,23 +256,7 @@ var FixedTables;
     var FixedTableModel = (function () {
         function FixedTableModel(option) {
             this.tableView = FixedTables.TableView.fromData(option);
-            console.log(option);
         }
-        FixedTableModel.prototype.getTableViewIdName = function () {
-            return this.tableView.getIdName();
-        };
-        FixedTableModel.prototype.setTbodyCells = function (data) {
-            this.tableView.table.tbody.setCells(data);
-        };
-        FixedTableModel.prototype.getTheadCell = function (x, y) {
-            return this.tableView.table.thead.getCells(x, y);
-        };
-        FixedTableModel.prototype.getTbodyCell = function (x, y) {
-            return this.tableView.table.tbody.getCells(x, y);
-        };
-        FixedTableModel.prototype.getFirstCell = function () {
-            return this.tableView.table.thead.getFirstCell();
-        };
         FixedTableModel.prototype.getTableViewModel = function () {
             return this.tableView;
         };
@@ -285,11 +284,12 @@ var FixedTables;
             this.setTheadModel();
             this.setTbodyStyle();
             this.setTbodyModel();
-            this.setStyle();
-            this.setEvent();
+            this.setFixedStyle();
+            this.setEventHandler();
         }
         FixedTableView.prototype.setElements = function () {
-            this.tableView = document.getElementById(this.model.getTableViewIdName());
+            var tableViewModel = this.model.getTableViewModel();
+            this.tableView = document.getElementById(tableViewModel.getIdName());
             this.table = this.tableView.querySelector('table');
             this.thead = this.table.querySelector('thead');
             this.tbody = this.table.querySelector('tbody');
@@ -340,17 +340,15 @@ var FixedTables;
             }
             return cells;
         };
-        FixedTableView.prototype.setStyle = function () {
+        FixedTableView.prototype.setFixedStyle = function () {
             this.setTableViewStyle();
             this.setTheadFixedStyle();
             this.setTbodyFixedStyle();
         };
         FixedTableView.prototype.setTableViewStyle = function () {
-            this.tableView.style.position = 'relative';
-            this.tableView.style.overflow = 'scroll';
-        };
-        FixedTableView.prototype.setEvent = function () {
-            this.setScrollEvent();
+            var tableViewModel = this.model.getTableViewModel();
+            this.tableView.style.position = tableViewModel.position;
+            this.tableView.style.overflow = tableViewModel.overflow;
         };
         FixedTableView.prototype.getCreateCellModel = function (parent, elements, styles, i, n) {
             return FixedTables.Cell.fromData({
@@ -371,29 +369,38 @@ var FixedTables;
             });
         };
         FixedTableView.prototype.setTheadFixedStyle = function () {
-            var tr = this.thead.querySelectorAll('tr'), td, cell;
+            var theadModel = this.model.getTheadModel(), tr = this.thead.querySelectorAll('tr'), td, cell;
             for (var i = 0; i < tr.length; i++) {
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (i == 0) {
-                        cell = this.model.getTheadCell(n, i)[0];
-                        td[n].style.width = cell.width + 'px';
+                        cell = theadModel.getCell(n, i);
+                        td[n].style.width = cell.getCSSWidth();
                     }
                 }
             }
         };
         FixedTableView.prototype.setTbodyFixedStyle = function () {
-            var tr = this.tbody.querySelectorAll('tr'), td, angleCell = this.model.getFirstCell()[0];
+            var theadModel = this.model.getTheadModel(), tbodyModel = this.model.getTbodyModel(), tr = this.tbody.querySelectorAll('tr'), td, angleCell = theadModel.getFirstCell();
             for (var i = 0; i < tr.length; i++) {
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
-                        td[n].style.width = angleCell.width + 'px';
-                        td[n].style.position = 'absolute';
-                        td[n].style.left = '0';
+                        td[n].style.width = angleCell.getCSSWidth();
+                        td[n].style.position = tbodyModel.fixedPositon;
+                        td[n].style.left = tbodyModel.fixedLeft;
                     }
                 }
             }
+        };
+        FixedTableView.prototype.setEventHandler = function () {
+            this.setScrollEvent();
+        };
+        FixedTableView.prototype.setScrollEvent = function () {
+            var _this = this;
+            this.tableView.addEventListener('scroll', function () {
+                _this.boxScroll();
+            }, false);
         };
         FixedTableView.prototype.setTbodyScrollStyle = function (left) {
             var tr = this.tbody.querySelectorAll('tr'), td;
@@ -408,15 +415,6 @@ var FixedTables;
         };
         FixedTableView.prototype.setTheadScrollStyle = function (top) {
             this.thead.style.top = top + 'px';
-        };
-        FixedTableView.prototype.setScrollEvent = function () {
-            var that = this;
-            this.tableView.addEventListener('scroll', function () {
-                that.boxScroll();
-            }, false);
-        };
-        FixedTableView.prototype.getTableView = function () {
-            return this.tableView;
         };
         FixedTableView.prototype.boxScroll = function () {
             this.setTbodyScrollStyle(this.tableView.scrollLeft);

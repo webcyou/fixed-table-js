@@ -55,10 +55,12 @@ module FixedTables {
       });
     }
 
-    public getFirstCell() {
-      return this.cells.filter((cell: Cell)=> {
-        return (cell['x'] === 0 && cell['y'] === 0);
-      });
+    public getCell(x: number, y: number): Cell {
+      return this.getCells(x, y)[0];
+    }
+
+    public getFirstCell(): Cell {
+      return this.getCell(0, 0);
     }
 
     public setStyles(table) {

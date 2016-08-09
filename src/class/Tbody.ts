@@ -7,6 +7,8 @@ module FixedTables {
 
   export class Tbody {
     static CSS_DISPLAY_VALUE = 'block';
+    static FIXED_CSS_POSITION_VALUE = 'absolute';
+    static FIXED_CSS_LEFT_VALUE = '0';
 
     constructor(
       public cells: Cell[],
@@ -17,7 +19,9 @@ module FixedTables {
       public borderBottomWidth: string,
       public borderLeftWidth: string,
       public paddingLeft: number,
-      public display: string
+      public display: string,
+      public fixedPositon: string,
+      public fixedLeft: string
       ) {
     }
 
@@ -31,7 +35,9 @@ module FixedTables {
         data.borderBottomWidth ? data.borderBottomWidth : '',
         data.borderLeftWidth ? data.borderLeftWidth : '',
         0,
-        this.CSS_DISPLAY_VALUE
+        this.CSS_DISPLAY_VALUE,
+        this.FIXED_CSS_POSITION_VALUE,
+        this.FIXED_CSS_LEFT_VALUE
       );
     }
 
@@ -43,6 +49,10 @@ module FixedTables {
       return this.cells.filter((cell: Cell)=> {
         return (cell['x'] === x && cell['y'] === y);
       });
+    }
+
+    public getCell(x: number, y: number): Cell {
+      return this.getCells(x, y)[0];
     }
 
     public setStyles(table) {

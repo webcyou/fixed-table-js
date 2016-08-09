@@ -26,8 +26,8 @@ module FixedTables {
       this.setTbodyStyle();
       this.setTbodyModel();
 
-      this.setStyle();
-      this.setEvent();
+      this.setFixedStyle();
+      this.setEventHandler();
     }
 
     /**
@@ -35,7 +35,9 @@ module FixedTables {
      *
     **/
     private setElements(): void {
-      this.tableView = document.getElementById(this.model.getTableViewIdName());
+      var tableViewModel: TableView = this.model.getTableViewModel();
+
+      this.tableView = document.getElementById(tableViewModel.getIdName());
       this.table = this.tableView.querySelector('table');
       this.thead = this.table.querySelector('thead');
       this.tbody = this.table.querySelector('tbody');
@@ -65,7 +67,7 @@ module FixedTables {
       (<HTMLElement>this.thead).style.zIndex = theadModel.zIndex;
     }
 
-    private setTheadModel() {
+    private setTheadModel(): void {
       var theadModel: Thead = this.model.getTheadModel();
       theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
       theadModel.setCells(this.createTheadCellsModel());
@@ -73,9 +75,9 @@ module FixedTables {
 
     private createTheadCellsModel(): Cell[] {
       var tr: NodeList = this.thead.querySelectorAll('tr'),
-        th: NodeList = this.thead.querySelectorAll('tr > *'),
-        styles,
-        cells: Cell[] = [];
+          th: NodeList = this.thead.querySelectorAll('tr > *'),
+          styles,
+          cells: Cell[] = [];
 
       for (var i = 0; i < th.length; i++) {
         styles = (<any>th[i]).currentStyle || (<any>document.defaultView).getComputedStyle(th[i], '');
@@ -121,23 +123,24 @@ module FixedTables {
       return cells;
     }
 
-    private setStyle() {
+    /**
+     * Fixed Style
+     *
+    **/
+    private setFixedStyle(): void {
       this.setTableViewStyle();
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle();
     }
 
-    private setTableViewStyle() {
-      this.tableView.style.position = 'relative';
-      this.tableView.style.overflow = 'scroll';
-      //(<HTMLElement>this.table).style.tableLayout = 'fixed';
+    private setTableViewStyle(): void {
+      var tableViewModel: TableView = this.model.getTableViewModel();
+
+      this.tableView.style.position = tableViewModel.position;
+      this.tableView.style.overflow = tableViewModel.overflow;
     }
 
-    private setEvent(): void {
-      this.setScrollEvent();
-    }
-
-    private getCreateCellModel(parent, elements, styles, i, n) {
+    private getCreateCellModel(parent: string, elements, styles, i: number, n: number) {
       return Cell.fromData({
         parent: parent,
         tagName: elements[i].tagName,
@@ -157,7 +160,8 @@ module FixedTables {
     }
 
     private setTheadFixedStyle(): void {
-      var tr: NodeList = this.thead.querySelectorAll('tr'),
+      var theadModel: Thead = this.model.getTheadModel(),
+          tr: NodeList = this.thead.querySelectorAll('tr'),
           td: NodeList,
           cell: Cell;
 
@@ -166,32 +170,48 @@ module FixedTables {
 
         for (var n: number = 0; n < td.length; n++) {
           if(i == 0) {
-            cell = this.model.getTheadCell(n, i)[0];
-            (<HTMLElement>td[n]).style.width = cell.width + 'px';
+            cell = theadModel.getCell(n, i);
+            (<HTMLElement>td[n]).style.width = cell.getCSSWidth();
           }
         }
       }
     }
 
     private setTbodyFixedStyle(): void {
-      var tr: NodeList = this.tbody.querySelectorAll('tr'),
+      var theadModel: Thead = this.model.getTheadModel(),
+          tbodyModel: Tbody = this.model.getTbodyModel(),
+          tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList,
-          angleCell = this.model.getFirstCell()[0];
+          angleCell = theadModel.getFirstCell();
 
       for (var i: number = 0; i < tr.length; i++) {
         td = (<Element>tr[i]).querySelectorAll('tr > *');
 
         for (var n: number = 0; n < td.length; n++) {
           if(n == 0) {
-            (<HTMLElement>td[n]).style.width = angleCell.width + 'px';
-            (<HTMLElement>td[n]).style.position = 'absolute';
-            (<HTMLElement>td[n]).style.left = '0';
+            (<HTMLElement>td[n]).style.width = angleCell.getCSSWidth();
+            (<HTMLElement>td[n]).style.position = tbodyModel.fixedPositon;
+            (<HTMLElement>td[n]).style.left = tbodyModel.fixedLeft;
           }
         }
       }
     }
 
-    private setTbodyScrollStyle(left): void {
+    /**
+     * Event Handler
+     *
+     **/
+    private setEventHandler(): void {
+      this.setScrollEvent();
+    }
+
+    private setScrollEvent(): void {
+      this.tableView.addEventListener('scroll', () => {
+        this.boxScroll();
+      }, false);
+    }
+
+    private setTbodyScrollStyle(left: number): void {
       var tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList;
 
@@ -206,20 +226,8 @@ module FixedTables {
       }
     }
 
-    private setTheadScrollStyle(top): void {
+    private setTheadScrollStyle(top: number): void {
       (<HTMLElement>this.thead).style.top = top + 'px';
-    }
-
-    private setScrollEvent(): void {
-      var that = this;
-
-      this.tableView.addEventListener('scroll', () => {
-        that.boxScroll();
-      }, false);
-    }
-
-    public getTableView() {
-      return this.tableView;
     }
 
     public boxScroll() {
