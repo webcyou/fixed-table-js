@@ -141,10 +141,10 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var TableView = (function () {
-        function TableView(elementIdName, table, fullMode, fixedLineNum, fixedColumnNum, offsetTop, offsetLeft, position, overflow) {
+        function TableView(elementIdName, table, isFullMode, fixedLineNum, fixedColumnNum, offsetTop, offsetLeft, position, overflow) {
             this.elementIdName = elementIdName;
             this.table = table;
-            this.fullMode = fullMode;
+            this.isFullMode = isFullMode;
             this.fixedLineNum = fixedLineNum;
             this.fixedColumnNum = fixedColumnNum;
             this.offsetTop = offsetTop;
@@ -169,7 +169,7 @@ var FixedTables;
             };
         };
         TableView.prototype.chengeMode = function (bool) {
-            this.fullMode = bool;
+            this.isFullMode = bool;
         };
         TableView.CSS_POSITION_VALUE = 'relative';
         TableView.CSS_OVERFLOW_VALUE = 'auto';
@@ -355,7 +355,7 @@ var FixedTables;
         FixedTableView.prototype.setTableViewStyle = function () {
             this.tableView.style.position = this.tableViewModel.position;
             this.tableView.style.overflow = this.tableViewModel.overflow;
-            if (this.tableViewModel.fullMode) {
+            if (this.tableViewModel.isFullMode) {
                 this.setTableViewFullModeStyle();
             }
         };
@@ -502,7 +502,7 @@ var FixedTables;
             this.setTheadScrollStyle(this.tableView.scrollTop);
         };
         FixedTableView.prototype.windowResize = function () {
-            if (this.tableViewModel.fullMode) {
+            if (this.tableViewModel.isFullMode) {
                 this.setTableViewFullModeStyle();
             }
         };

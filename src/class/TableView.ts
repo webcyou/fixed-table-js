@@ -12,7 +12,7 @@ module FixedTables {
     constructor(
       public elementIdName: string,
       public table: Table,
-      public fullMode: boolean,
+      public isFullMode: boolean,
       public fixedLineNum: number,
       public fixedColumnNum: number,
       public offsetTop: number,
@@ -53,7 +53,7 @@ module FixedTables {
     }
 
     public chengeMode(bool: Boolean): void {
-      this.fullMode = bool;
+      this.isFullMode = bool;
     }
   }
 }

@@ -74,7 +74,7 @@ module FixedTables {
       this.tableView.style.position = this.tableViewModel.position;
       this.tableView.style.overflow = this.tableViewModel.overflow;
 
-      if(this.tableViewModel.fullMode) {
+      if(this.tableViewModel.isFullMode) {
         this.setTableViewFullModeStyle();
       }
     }
@@ -283,7 +283,7 @@ module FixedTables {
     }
 
     public windowResize(): void {
-      if(this.tableViewModel.fullMode) {
+      if(this.tableViewModel.isFullMode) {
         this.setTableViewFullModeStyle();
       }
     }
