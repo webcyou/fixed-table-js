@@ -43,7 +43,7 @@ module FixedTables {
       );
     }
 
-    public setCells(cells: Cell[]) {
+    public setCells(cells: Cell[]): void {
       this.cells = cells;
     }
 
@@ -57,13 +57,13 @@ module FixedTables {
       return this.getCells(x, y)[0];
     }
 
-    public setStyles(table) {
+    public setStyles(table: Table): void {
       this.paddingLeft = table.thead.cells[0].outerWidth;
       this.marginTop = table.thead.cells[0].outerHeight;
       this.width = table.outerWidth - table.thead.cells[0].outerWidth;
     }
 
-    public getPaddingLeft() {
+    public getPaddingLeft(): number {
       return this.paddingLeft;
     }
 
@@ -75,7 +75,7 @@ module FixedTables {
       return this.marginTop + 'px';
     }
 
-    public getTbodyWidth() {
+    public getTbodyWidth(): number {
       return this.width;
     }
 

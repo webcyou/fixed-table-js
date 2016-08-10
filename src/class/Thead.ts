@@ -45,12 +45,12 @@ module FixedTables {
       this.lineNum = num;
     }
 
-    public setCells(cells: Cell[]) {
+    public setCells(cells: Cell[]): void {
       this.cells = cells;
     }
 
     public getCells(x: number, y: number): Cell[] {
-      return this.cells.filter((cell: Cell)=> {
+      return this.cells.filter((cell: Cell) => {
         return (cell['x'] === x && cell['y'] === y);
       });
     }
@@ -63,7 +63,7 @@ module FixedTables {
       return this.getCell(0, 0);
     }
 
-    public setStyles(table) {
+    public setStyles(table: Table) {
       if(this.borderLeftWidth) {
         this.width = table.outerWidth - (parseInt(this.borderLeftWidth, 10) + parseInt(this.borderRightWidth, 10));
       } else {

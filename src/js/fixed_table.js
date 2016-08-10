@@ -117,13 +117,10 @@ var FixedTables;
             this.borderBottomWidth = styles["border-bottom-width"];
             this.borderLeftWidth = styles["border-left-width"];
             this.outerWidth = this.getOuterWidth();
-            this.setTheadStyles();
+            this.setTheadFixedModel();
         };
-        Table.prototype.setTheadStyles = function () {
+        Table.prototype.setTheadFixedModel = function () {
             this.thead.setStyles(this);
-        };
-        Table.prototype.setTbodyStyles = function () {
-            this.tbody.setStyles(this);
         };
         Table.prototype.setTbodyFixedModel = function () {
             this.tbody.setStyles(this);

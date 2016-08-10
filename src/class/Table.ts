@@ -56,15 +56,11 @@ module FixedTables {
       this.borderBottomWidth = styles["border-bottom-width"];
       this.borderLeftWidth = styles["border-left-width"];
       this.outerWidth = this.getOuterWidth();
-      this.setTheadStyles();
+      this.setTheadFixedModel();
     }
 
-    public setTheadStyles() {
+    public setTheadFixedModel() {
       this.thead.setStyles(this);
-    }
-
-    public setTbodyStyles() {
-      this.tbody.setStyles(this);
     }
 
     public setTbodyFixedModel() {

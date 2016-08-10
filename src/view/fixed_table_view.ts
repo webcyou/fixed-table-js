@@ -10,7 +10,6 @@ module FixedTables {
     height: number;
   }
 
-
   export class FixedTableView {
     private model: FixedTableModel;
 
@@ -43,7 +42,7 @@ module FixedTables {
     /**
      * Initialization
      **/
-    private init() {
+    private init(): void {
       this.setTableViewModel();
       this.setTableViewStyle();
 
@@ -62,7 +61,6 @@ module FixedTables {
 
     /**
      * Elements
-     *
     **/
     private setElements(): void {
       this.tableView = document.getElementById(this.tableViewModel.getIdName());
@@ -76,9 +74,8 @@ module FixedTables {
 
     /**
      * TableView
-     *
     **/
-    private setTableViewModel() {
+    private setTableViewModel(): void {
       this.tableViewModel.setOffset(this.tableView.getBoundingClientRect());
     }
 
@@ -105,7 +102,6 @@ module FixedTables {
 
     /**
      * Table
-     *
     **/
     private setTableStyle(): void {
       (<HTMLElement>this.table).style.borderCollapse = this.tableModel.borderCollapse;
@@ -148,7 +144,6 @@ module FixedTables {
 
     /**
      * Tbody
-     *
     **/
     private setTbodyStyle(): void {
       this.tableModel.setTbodyFixedModel();
@@ -159,7 +154,7 @@ module FixedTables {
       (<HTMLElement>this.tbody).style.marginTop = this.tbodyModel.getCSSMarginTop();
     }
 
-    private setTbodyModel() {
+    private setTbodyModel(): void {
       this.tbodyModel.setCells(this.createTbodyCellsModel());
     }
 
@@ -182,14 +177,13 @@ module FixedTables {
 
     /**
      * Fixed Style
-     *
     **/
     private setFixedStyle(): void {
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle();
     }
 
-    private getCreateCellModel(parent: string, elements, styles, i: number, n: number) {
+    private getCreateCellModel(parent: string, elements, styles, i: number, n: number): Cell {
       return Cell.fromData({
         parent: parent,
         tagName: elements[i].tagName,
@@ -251,7 +245,6 @@ module FixedTables {
 
     /**
      * Event Handler
-     *
      **/
     private setEventHandler(): void {
       this.setScrollEvent();
@@ -259,13 +252,13 @@ module FixedTables {
     }
 
     private setScrollEvent(): void {
-      this.tableView.addEventListener('scroll', () => {
+      this.tableView.addEventListener('scroll', (): void => {
         this.boxScroll();
       }, false);
     }
 
     private setWindowResizeEvent(): void {
-      window.addEventListener('resize', () => {
+      window.addEventListener('resize', (): void => {
         this.windowResize();
       }, false);
     }
