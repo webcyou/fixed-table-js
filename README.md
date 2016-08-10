@@ -59,12 +59,22 @@ Singleton Object
 new FixedTable();
 ```
 
+![](http://webcyou.com/fixed_table_js/img/f_t_01.png)
+
 
 **argument**
 
 ```
-new FixedTable(option, callback);
+new FixedTable(option);
 ```
+
+### Table Box Full Mode
+
+```
+new FixedTable({ fullMode: true; });
+```
+
+![](http://webcyou.com/fixed_table_js/img/f_t_02.png)
 
 ### Option Parameters Reference
 
