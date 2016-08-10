@@ -9,7 +9,7 @@ FixedTableJS - Fixed Table Layout JavaScript Library
 tableレイアウトでの簡単に固定表示を行える、JavaScriptライブラリです。
 
 ### demo
-[デモページ](https://webcyou.github.io/)
+[デモページ](https://webcyou.github.io/fixed_table/)
 
 ###  Quick start
 
