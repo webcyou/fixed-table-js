@@ -67,6 +67,10 @@ module FixedTables {
       this.tbody.setStyles(this);
     }
 
+    public setTbodyFixedModel() {
+      this.tbody.setStyles(this);
+    }
+
     public getOuterWidth() {
       return this.width + (parseInt(this.paddingLeft, 10) + parseInt(this.paddingRight, 10)
         + parseInt(this.borderLeftWidth, 10) + parseInt(this.borderRightWidth, 10));

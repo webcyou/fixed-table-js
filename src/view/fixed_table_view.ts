@@ -15,14 +15,24 @@ module FixedTables {
     private model: FixedTableModel;
 
     private tableView: HTMLElement;
-    private table: Element;
-    private thead: Element;
-    private tbody: Element;
+    private table    : Element;
+    private thead    : Element;
+    private tbody    : Element;
+
+    private tableViewModel: TableView;
+    private tableModel    : Table;
+    private theadModel    : Thead;
+    private tableModel    : Table;
+    private tbodyModel    : Tbody;
 
     constructor(
       model: FixedTableModel
       ) {
       this.model = model;
+      this.tableViewModel = this.model.getTableViewModel();
+      this.tableModel = this.model.getTableModel();
+      this.theadModel = this.model.getTheadModel();
+      this.tbodyModel = this.model.getTbodyModel();
 
       this.setElements();
       this.setTableViewModel();
@@ -46,9 +56,7 @@ module FixedTables {
      *
     **/
     private setElements(): void {
-      var tableViewModel: TableView = this.model.getTableViewModel();
-
-      this.tableView = document.getElementById(tableViewModel.getIdName());
+      this.tableView = document.getElementById(this.tableViewModel.getIdName());
       this.table = this.tableView.querySelector('table');
       this.thead = this.table.querySelector('thead');
       this.tbody = this.table.querySelector('tbody');
@@ -59,30 +67,25 @@ module FixedTables {
      *
     **/
     private setTableViewModel() {
-      var tableViewModel: TableView = this.model.getTableViewModel();
-
-      tableViewModel.setOffset(this.tableView.getBoundingClientRect());
+      this.tableViewModel.setOffset(this.tableView.getBoundingClientRect());
     }
 
     private setTableViewStyle(): void {
-      var tableViewModel: TableView = this.model.getTableViewModel();
+      this.tableView.style.position = this.tableViewModel.position;
+      this.tableView.style.overflow = this.tableViewModel.overflow;
 
-      this.tableView.style.position = tableViewModel.position;
-      this.tableView.style.overflow = tableViewModel.overflow;
-
-      if(tableViewModel.fullMode) {
+      if(this.tableViewModel.fullMode) {
         this.setTableViewFullModeStyle();
       }
     }
 
     private setTableViewFullModeStyle(): void {
-      var tableViewModel: TableView = this.model.getTableViewModel(),
-          viewSize: Object = tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+      var viewSize: Object = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
 
       this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
       this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
 
-      viewSize = tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+      viewSize = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
 
       this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
       this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
@@ -93,17 +96,13 @@ module FixedTables {
      *
     **/
     private setTableStyle(): void {
-      var tableModel: Table = this.model.getTableModel();
-
-      (<HTMLElement>this.table).style.borderCollapse = tableModel.borderCollapse;
-      (<HTMLElement>this.table).style.borderSpacing = tableModel.borderSpacing;
+      (<HTMLElement>this.table).style.borderCollapse = this.tableModel.borderCollapse;
+      (<HTMLElement>this.table).style.borderSpacing = this.tableModel.borderSpacing;
     }
 
     private setTableModel(): void {
-      var tableStyles = (<any>this.table).currentStyle || (<any>document.defaultView).getComputedStyle(this.table, ''),
-          tableModel: Table = this.model.getTableModel();
-
-      tableModel.setStyles(tableStyles);
+      var tableStyles = (<any>this.table).currentStyle || (<any>document.defaultView).getComputedStyle(this.table, '');
+      this.tableModel.setStyles(tableStyles);
     }
 
     /**
@@ -111,18 +110,15 @@ module FixedTables {
      *
     **/
     private setTheadStyle(): void {
-      var theadModel: Thead = this.model.getTheadModel();
-
-      (<HTMLElement>this.thead).style.position = theadModel.position;
-      (<HTMLElement>this.thead).style.top = theadModel.top;
-      (<HTMLElement>this.thead).style.width =  theadModel.getCSSWidth();
-      (<HTMLElement>this.thead).style.zIndex = theadModel.zIndex;
+      (<HTMLElement>this.thead).style.position = this.theadModel.position;
+      (<HTMLElement>this.thead).style.top = this.theadModel.top;
+      (<HTMLElement>this.thead).style.width =  this.theadModel.getCSSWidth();
+      (<HTMLElement>this.thead).style.zIndex = this.theadModel.zIndex;
     }
 
     private setTheadModel(): void {
-      var theadModel: Thead = this.model.getTheadModel();
-      theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
-      theadModel.setCells(this.createTheadCellsModel());
+      this.theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
+      this.theadModel.setCells(this.createTheadCellsModel());
     }
 
     private createTheadCellsModel(): Cell[] {
@@ -143,20 +139,16 @@ module FixedTables {
      *
     **/
     private setTbodyStyle(): void {
-      var tableModel: Table = this.model.getTableModel(),
-          tbodyModel: Tbody = this.model.getTbodyModel();
+      this.tableModel.setTbodyFixedModel();
 
-      tableModel.setTbodyStyles();
-
-      (<HTMLElement>this.tbody).style.display = tbodyModel.display;
-      (<HTMLElement>this.tbody).style.width = tbodyModel.getCSSWidth();
-      (<HTMLElement>this.tbody).style.paddingLeft = tbodyModel.getCSSPaddingLeft();
-      (<HTMLElement>this.tbody).style.marginTop = tbodyModel.getCSSMarginTop();
+      (<HTMLElement>this.tbody).style.display = this.tbodyModel.display;
+      (<HTMLElement>this.tbody).style.width = this.tbodyModel.getCSSWidth();
+      (<HTMLElement>this.tbody).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
+      (<HTMLElement>this.tbody).style.marginTop = this.tbodyModel.getCSSMarginTop();
     }
 
     private setTbodyModel() {
-      var tbodyModel: Tbody = this.model.getTbodyModel();
-      tbodyModel.setCells(this.createTbodyCellsModel());
+      this.tbodyModel.setCells(this.createTbodyCellsModel());
     }
 
     private createTbodyCellsModel(): Cell[] {
@@ -205,8 +197,7 @@ module FixedTables {
     }
 
     private setTheadFixedStyle(): void {
-      var theadModel: Thead = this.model.getTheadModel(),
-          tr: NodeList = this.thead.querySelectorAll('tr'),
+      var tr: NodeList = this.thead.querySelectorAll('tr'),
           td: NodeList,
           cell: Cell;
 
@@ -215,7 +206,7 @@ module FixedTables {
 
         for (var n: number = 0; n < td.length; n++) {
           if(i == 0) {
-            cell = theadModel.getCell(n, i);
+            cell = this.theadModel.getCell(n, i);
             (<HTMLElement>td[n]).style.width = cell.getCSSWidth();
           }
         }
@@ -223,25 +214,23 @@ module FixedTables {
     }
 
     private setTbodyFixedStyle(): void {
-      var theadModel: Thead = this.model.getTheadModel(),
-          tbodyModel: Tbody = this.model.getTbodyModel(),
-          tr: NodeList = this.tbody.querySelectorAll('tr'),
+      var tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList,
-          angleCell = theadModel.getFirstCell();
+          angleCell = this.theadModel.getFirstCell();
 
       for (var i: number = 0; i < tr.length; i++) {
         td = (<Element>tr[i]).querySelectorAll('tr > *');
 
         for (var n: number = 0; n < td.length; n++) {
           if(n == 0) {
-            var secondCell = tbodyModel.getCell(1, i);
+            var secondCell = this.tbodyModel.getCell(1, i);
 
             (<HTMLElement>td[n]).style.width = angleCell.getCSSWidth();
             (<HTMLElement>td[n]).style.height = secondCell.getCSSHeight();
-            (<HTMLElement>td[n]).style.position = tbodyModel.fixedPositon;
-            (<HTMLElement>td[n]).style.left = tbodyModel.fixedLeft;
+            (<HTMLElement>td[n]).style.position = this.tbodyModel.fixedPositon;
+            (<HTMLElement>td[n]).style.left = this.tbodyModel.fixedLeft;
           } else {
-            var cell = theadModel.getCell(n, 0);
+            var cell = this.theadModel.getCell(n, 0);
             (<HTMLElement>td[n]).style.width = cell.getCSSWidth();
           }
         }
@@ -294,9 +283,7 @@ module FixedTables {
     }
 
     public windowResize(): void {
-      var tableViewModel: TableView = this.model.getTableViewModel();
-
-      if(tableViewModel.fullMode) {
+      if(this.tableViewModel.fullMode) {
         this.setTableViewFullModeStyle();
       }
     }

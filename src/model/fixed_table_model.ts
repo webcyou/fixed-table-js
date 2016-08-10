@@ -16,8 +16,6 @@ module FixedTables {
       } else {
         this.tableView = TableView.fromData({});
       }
-
-      console.log(this);
     }
 
     /**
