@@ -13,7 +13,7 @@ module FixedTables {
       ) {
       this.tableView = TableView.fromData(option);
 
-      //console.log(option);
+      console.log(this);
     }
 
     /*

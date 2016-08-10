@@ -66,6 +66,9 @@ var FixedTables;
             return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
                 + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
         };
+        Cell.prototype.getCSSHeight = function () {
+            return this.height + 'px';
+        };
         return Cell;
     }());
     FixedTables.Cell = Cell;
@@ -278,6 +281,7 @@ var FixedTables;
     var FixedTableModel = (function () {
         function FixedTableModel(option) {
             this.tableView = FixedTables.TableView.fromData(option);
+            console.log(this);
         }
         FixedTableModel.prototype.getTableViewModel = function () {
             return this.tableView;
@@ -431,7 +435,9 @@ var FixedTables;
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
+                        var secondCell = tbodyModel.getCell(1, i);
                         td[n].style.width = angleCell.getCSSWidth();
+                        td[n].style.height = secondCell.getCSSHeight();
                         td[n].style.position = tbodyModel.fixedPositon;
                         td[n].style.left = tbodyModel.fixedLeft;
                     }

@@ -70,5 +70,9 @@ module FixedTables {
       return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
         + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
     }
+
+    public getCSSHeight(): string {
+      return this.height + 'px';
+    }
   }
 }

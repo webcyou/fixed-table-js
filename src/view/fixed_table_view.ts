@@ -97,7 +97,6 @@ module FixedTables {
 
       (<HTMLElement>this.table).style.borderCollapse = tableModel.borderCollapse;
       (<HTMLElement>this.table).style.borderSpacing = tableModel.borderSpacing;
-
     }
 
     private setTableModel(): void {
@@ -235,7 +234,10 @@ module FixedTables {
 
         for (var n: number = 0; n < td.length; n++) {
           if(n == 0) {
+            var secondCell = tbodyModel.getCell(1, i);
+
             (<HTMLElement>td[n]).style.width = angleCell.getCSSWidth();
+            (<HTMLElement>td[n]).style.height = secondCell.getCSSHeight();
             (<HTMLElement>td[n]).style.position = tbodyModel.fixedPositon;
             (<HTMLElement>td[n]).style.left = tbodyModel.fixedLeft;
           } else {
