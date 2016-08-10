@@ -49,11 +49,11 @@ module FixedTables {
       this.setTableStyle();
       this.setTableModel();
 
-      this.setTheadStyle();
       this.setTheadModel();
-
-      this.setTbodyStyle();
       this.setTbodyModel();
+
+      this.setTheadStyle();
+      this.setTbodyStyle();
 
       this.setFixedStyle();
       this.setEventHandler();
@@ -147,7 +147,6 @@ module FixedTables {
     **/
     private setTbodyStyle(): void {
       this.tableModel.setTbodyFixedModel();
-
       (<HTMLElement>this.tbody).style.display = this.tbodyModel.display;
       (<HTMLElement>this.tbody).style.width = this.tbodyModel.getCSSWidth();
       (<HTMLElement>this.tbody).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
@@ -160,16 +159,16 @@ module FixedTables {
 
     private createTbodyCellsModel(): Cell[] {
       var tr: NodeList = this.tbody.querySelectorAll('tr'),
-        td: NodeList,
-        styles,
-        cells: Cell[] = [];
+          td: NodeList,
+          styles,
+          cells: Cell[] = [];
 
-      for (var n: number = 0; n < tr.length; n++) {
-        td = (<Element>tr[n]).querySelectorAll('tr > *');
+      for (var y: number = 0; y < tr.length; y++) {
+        td = (<Element>tr[y]).querySelectorAll('tr > *');
 
-        for (var i: number = 0; i < td.length; i++) {
-          styles = (<any>td[i]).currentStyle || (<any>document.defaultView).getComputedStyle(td[i], '');
-          cells.push(this.getCreateCellModel('tbody', td, styles, i, n));
+        for (var x: number = 0; x < td.length; x++) {
+          styles = (<any>td[x]).currentStyle || (<any>document.defaultView).getComputedStyle(td[x], '');
+          cells.push(this.getCreateCellModel('tbody', td, styles, x, y));
         }
       }
       return cells;
@@ -183,14 +182,14 @@ module FixedTables {
       this.setTbodyFixedStyle();
     }
 
-    private getCreateCellModel(parent: string, elements, styles, i: number, n: number): Cell {
+    private getCreateCellModel(parent: string, elements, styles, x: number, y: number): Cell {
       return Cell.fromData({
         parent: parent,
-        tagName: elements[i].tagName,
-        x: i,
-        y: n,
-        outerWidth: elements[i].offsetWidth,
-        outerHeight: elements[i].offsetHeight,
+        tagName: elements[x].tagName,
+        x: x,
+        y: y,
+        outerWidth: elements[x].offsetWidth,
+        outerHeight: elements[x].offsetHeight,
         paddingTop: styles["padding-top"],
         paddingRight: styles["padding-right"],
         paddingBottom: styles["padding-bottom"],
@@ -207,13 +206,13 @@ module FixedTables {
           td: NodeList,
           cell: Cell;
 
-      for (var i: number = 0; i < tr.length; i++) {
-        td = (<Element>tr[i]).querySelectorAll('tr > *');
+      for (var y: number = 0; y < tr.length; y++) {
+        td = (<Element>tr[y]).querySelectorAll('tr > *');
 
-        for (var n: number = 0; n < td.length; n++) {
-          if(i == 0) {
-            cell = this.theadModel.getCell(n, i);
-            (<HTMLElement>td[n]).style.width = cell.getCSSWidth();
+        for (var x: number = 0; x < td.length; x++) {
+          if(y == 0) {
+            cell = this.theadModel.getCell(x, y);
+            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
           }
         }
       }
