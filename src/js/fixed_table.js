@@ -334,12 +334,11 @@ var FixedTables;
             }
         };
         FixedTableView.prototype.setTableViewFullModeStyle = function () {
-            var viewSize = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
-            this.tableView.style.width = viewSize.width + 'px';
-            this.tableView.style.height = viewSize.height + 'px';
-            viewSize = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
-            this.tableView.style.width = viewSize.width + 'px';
-            this.tableView.style.height = viewSize.height + 'px';
+            for (var i = 0; i < 2; i++) {
+                var viewSize = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+                this.tableView.style.width = viewSize.width + 'px';
+                this.tableView.style.height = viewSize.height + 'px';
+            }
         };
         FixedTableView.prototype.setTableStyle = function () {
             this.table.style.borderCollapse = this.tableModel.borderCollapse;

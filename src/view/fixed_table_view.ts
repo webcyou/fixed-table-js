@@ -89,15 +89,13 @@ module FixedTables {
     }
 
     private setTableViewFullModeStyle(): void {
-      var viewSize: Object = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+      // Fix ScrollBar
+      for (var i = 0; i < 2; i++) {
+        var viewSize: Object = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
 
-      this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
-      this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
-
-      viewSize = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
-
-      this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
-      this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
+        this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
+        this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
+      }
     }
 
     /**

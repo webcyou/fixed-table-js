@@ -5,7 +5,6 @@
 
 module FixedTables {
   export class FixedTableModel {
-    private window: Window;
     private tableView: TableView;
 
     constructor(
@@ -38,9 +37,9 @@ module FixedTables {
     }
 
     /**
-     * Function
+     * Public Function
     **/
-    public chengeMode(bool: boolean) {
+    public chengeMode(bool: boolean): void {
       this.tableView.chengeMode(bool);
     }
 
