@@ -52,7 +52,7 @@ module FixedTables {
       }
     }
 
-    public chengeMode(bool: Boolean): void {
+    public chengeMode(bool: boolean): void {
       this.isFullMode = bool;
     }
   }

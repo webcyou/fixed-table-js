@@ -22,7 +22,6 @@ module FixedTables {
     private tableViewModel: TableView;
     private tableModel    : Table;
     private theadModel    : Thead;
-    private tableModel    : Table;
     private tbodyModel    : Tbody;
 
     constructor(
