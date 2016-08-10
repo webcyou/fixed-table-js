@@ -8,14 +8,23 @@ var e = eval, global: NodeJS.Global = e('this');
 
 module FixedTables {
   export class FixedTable {
+    private static _instance: FixedTable = null;
+
     private view: FixedTableView;
     private model: FixedTableModel;
 
     constructor(
       option?: any
       ) {
-      this.model = new FixedTables.FixedTableModel(option);
-      this.view = new FixedTables.FixedTableView(this.model);
+      if (FixedTable._instance) {
+        return FixedTable._instance;
+
+      } else {
+        this.model = new FixedTables.FixedTableModel(option);
+        this.view = new FixedTables.FixedTableView(this.model);
+
+        FixedTable._instance = this;
+      }
     }
   }
 }

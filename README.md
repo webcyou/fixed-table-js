@@ -36,6 +36,25 @@ npm install fixed-table-js
 <script src="fixed_table.js"></script>
 ```
 
+HTML
+```
+<div id="fixedTable">
+    <table>
+        <thead>....</thead>
+        <tbody>
+            <tr>
+                <th>...</th> or <td>...</td>
+                ....
+            </tr>
+        </tbody>
+    </table>
+</div>
+```
+`<thead></thead>`と、`<tbody><tr></tr></tbody>`の最初の子要素が固定されます。
+
+
+Singleton Object
+
 ```
 new FixedTable();
 ```

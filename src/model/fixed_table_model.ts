@@ -11,7 +11,11 @@ module FixedTables {
     constructor(
       option?: any
       ) {
-      this.tableView = TableView.fromData(option);
+      if(option !== void 0) {
+        this.tableView = TableView.fromData(option);
+      } else {
+        this.tableView = TableView.fromData({});
+      }
 
       console.log(this);
     }

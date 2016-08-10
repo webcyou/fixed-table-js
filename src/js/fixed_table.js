@@ -4,9 +4,16 @@ var FixedTables;
 (function (FixedTables) {
     var FixedTable = (function () {
         function FixedTable(option) {
-            this.model = new FixedTables.FixedTableModel(option);
-            this.view = new FixedTables.FixedTableView(this.model);
+            if (FixedTable._instance) {
+                return FixedTable._instance;
+            }
+            else {
+                this.model = new FixedTables.FixedTableModel(option);
+                this.view = new FixedTables.FixedTableView(this.model);
+                FixedTable._instance = this;
+            }
         }
+        FixedTable._instance = null;
         return FixedTable;
     }());
     FixedTables.FixedTable = FixedTable;
@@ -280,7 +287,12 @@ var FixedTables;
 (function (FixedTables) {
     var FixedTableModel = (function () {
         function FixedTableModel(option) {
-            this.tableView = FixedTables.TableView.fromData(option);
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
             console.log(this);
         }
         FixedTableModel.prototype.getTableViewModel = function () {
