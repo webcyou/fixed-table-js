@@ -1,5 +1,9 @@
-# FixedTableJS
+# Fixed Table JS
 FixedTableJS - Fixed Table Layout JavaScript Library
+
+
+![](http://webcyou.com/fixed_table_js/img/fixed_table.png)
+
 
 ### これは何？
 tableレイアウトでの簡単に固定表示を行える、JavaScriptライブラリです。
