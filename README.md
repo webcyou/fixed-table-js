@@ -15,7 +15,7 @@ tableレイアウトでの簡単に固定表示を行える、JavaScriptライ�
 
 **Clone the repo:**
 ```
-git clone git@github.com:webcyou/countup-timer-js.git
+git clone git@github.com:webcyou/fixed-table-js.git
 ```
 
 **Install with [Bower](http://bower.io):**
