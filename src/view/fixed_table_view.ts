@@ -301,5 +301,10 @@ module FixedTables {
       }
     }
 
+    public resizeContainer(): void {
+      this.setTableViewModel();
+      this.setTableViewStyle();
+    }
+
   }
 }

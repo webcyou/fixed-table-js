@@ -20,9 +20,9 @@ module FixedTables {
       console.log(this);
     }
 
-    /*
-    * Getter Model
-    */
+    /**
+     * Getter Model
+    **/
     public getTableViewModel(): TableView {
       return this.tableView;
     }
@@ -37,6 +37,13 @@ module FixedTables {
 
     public getTbodyModel(): Tbody {
       return this.tableView.table.tbody;
+    }
+
+    /**
+     * Function
+    **/
+    public chengeMode(bool: boolean) {
+      this.tableView.chengeMode(bool);
     }
 
   }

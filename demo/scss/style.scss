@@ -8,10 +8,33 @@ body {
   height: 100%;
 }
 
+body {
+  background: url(http://webcyou.com/fixed_table_js/img/fixed_table.png) no-repeat;
+  background-size: 300px auto;
+  background-position: 30px 10px;
+}
+
+.modeView {
+  position: absolute;
+  right: 282px;
+  top: 17px;
+  width: 100px;
+  padding: 4px 8px;
+  background: rgba(#000, 0.8);
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  z-index: 100;
+  .val {
+    color: #1edca4;
+  }
+}
+
 .btnView {
   position: absolute;
   right: 0;
   padding-top: 10px;
+  z-index: 100;
   .btnList {
     margin: 10px;
     list-style: none;
@@ -33,6 +56,9 @@ body {
 
 .tableView {
   padding: 80px 80px 0 80px;
+  &.full {
+    padding: 0;
+  }
 }
 
 .fixedTable {
@@ -70,6 +96,7 @@ body {
       }
       td {
         font-size: 13px;
+        background: #fff;
       }
     }
   }

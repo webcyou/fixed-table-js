@@ -13,6 +13,10 @@ var FixedTables;
                 FixedTable._instance = this;
             }
         }
+        FixedTable.prototype.chengeMode = function (bool) {
+            this.model.chengeMode(bool);
+            this.view.resizeContainer();
+        };
         FixedTable._instance = null;
         return FixedTable;
     }());
@@ -152,7 +156,6 @@ var FixedTables;
             return this.elementIdName;
         };
         TableView.prototype.setOffset = function (rect) {
-            console.log(rect);
             this.offsetTop = rect.top;
             this.offsetLeft = rect.left;
         };
@@ -161,6 +164,9 @@ var FixedTables;
                 width: windowWidth - this.offsetLeft,
                 height: windowHeight - this.offsetTop
             };
+        };
+        TableView.prototype.chengeMode = function (bool) {
+            this.fullMode = bool;
         };
         TableView.CSS_POSITION_VALUE = 'relative';
         TableView.CSS_OVERFLOW_VALUE = 'auto';
@@ -306,6 +312,9 @@ var FixedTables;
         };
         FixedTableModel.prototype.getTbodyModel = function () {
             return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.chengeMode = function (bool) {
+            this.tableView.chengeMode(bool);
         };
         return FixedTableModel;
     }());
@@ -499,6 +508,10 @@ var FixedTables;
             if (tableViewModel.fullMode) {
                 this.setTableViewFullModeStyle();
             }
+        };
+        FixedTableView.prototype.resizeContainer = function () {
+            this.setTableViewModel();
+            this.setTableViewStyle();
         };
         return FixedTableView;
     }());

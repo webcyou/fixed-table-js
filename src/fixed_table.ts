@@ -26,6 +26,15 @@ module FixedTables {
         FixedTable._instance = this;
       }
     }
+
+    /**
+     * Function
+     **/
+    public chengeMode(bool: boolean) {
+      this.model.chengeMode(bool);
+      this.view.resizeContainer();
+    }
+
   }
 }
 

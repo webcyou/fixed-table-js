@@ -9,10 +9,13 @@
     <script src="./js/fixed_table.js"></script>
 </head>
 <body>
+<div class="modeView">
+    <p>Mode: <span class="val">Normal</span></p>
+</div>
 <div class="btnView">
     <ui class="btnList">
-        <li>Half Mode</li>
-        <li>Full Mode</li>
+        <li class="btnHalf">Half Mode</li>
+        <li class="btnFull">Full Mode</li>
     </ui>
 </div>
 <div class="tableView">
@@ -195,7 +198,49 @@
     </div>
 </div>
 <script>
-    new FixedTable();
+    var fixedTable = new FixedTable();
+</script>
+
+<script>
+$(function() {
+    $('.btnHalf').on('click', function() {
+        $('.tableView').removeClass('full');
+
+        $('.tableView').toggleClass('half');
+
+        if($('.tableView').hasClass('half')) {
+            fixedTable.chengeMode(true);
+            setModeText('Half');
+        } else {
+            fixedTable.chengeMode(false);
+            resetCSSClass();
+        }
+    });
+
+    $('.btnFull').on('click', function() {
+        $('.tableView').removeClass('half');
+
+        $('.tableView').toggleClass('full');
+
+        if($('.tableView').hasClass('full')) {
+            fixedTable.chengeMode(true);
+            setModeText('Full');
+        } else {
+            fixedTable.chengeMode(false);
+            resetCSSClass();
+        }
+    });
+
+    var resetCSSClass = function() {
+        $('.fixedTable').width('auto');
+        $('.fixedTable').height('500px');
+        setModeText('Normal');
+    };
+
+    var setModeText = function(text) {
+        $('.modeView .val').text(text);
+    };
+});
 </script>
 </body>
 </html>

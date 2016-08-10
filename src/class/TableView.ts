@@ -40,9 +40,7 @@ module FixedTables {
       return this.elementIdName
     }
 
-    public setOffset(rect: ClientRect) {
-      console.log(rect);
-
+    public setOffset(rect: ClientRect): void {
       this.offsetTop = rect.top;
       this.offsetLeft = rect.left;
     }
@@ -52,6 +50,10 @@ module FixedTables {
         width: windowWidth - this.offsetLeft,
         height: windowHeight - this.offsetTop
       }
+    }
+
+    public chengeMode(bool: Boolean): void {
+      this.fullMode = bool;
     }
   }
 }
