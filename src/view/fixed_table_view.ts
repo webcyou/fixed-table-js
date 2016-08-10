@@ -35,6 +35,16 @@ module FixedTables {
       this.tbodyModel = this.model.getTbodyModel();
 
       this.setElements();
+
+      if(!this.tableView) return;
+
+      this.init();
+    }
+
+    /**
+     * Initialization
+     **/
+    private init() {
       this.setTableViewModel();
       this.setTableViewStyle();
 
@@ -57,6 +67,9 @@ module FixedTables {
     **/
     private setElements(): void {
       this.tableView = document.getElementById(this.tableViewModel.getIdName());
+
+      if(!this.tableView) return;
+
       this.table = this.tableView.querySelector('table');
       this.thead = this.table.querySelector('thead');
       this.tbody = this.table.querySelector('tbody');

@@ -332,6 +332,11 @@ var FixedTables;
             this.theadModel = this.model.getTheadModel();
             this.tbodyModel = this.model.getTbodyModel();
             this.setElements();
+            if (!this.tableView)
+                return;
+            this.init();
+        }
+        FixedTableView.prototype.init = function () {
             this.setTableViewModel();
             this.setTableViewStyle();
             this.setTableStyle();
@@ -342,9 +347,11 @@ var FixedTables;
             this.setTbodyModel();
             this.setFixedStyle();
             this.setEventHandler();
-        }
+        };
         FixedTableView.prototype.setElements = function () {
             this.tableView = document.getElementById(this.tableViewModel.getIdName());
+            if (!this.tableView)
+                return;
             this.table = this.tableView.querySelector('table');
             this.thead = this.table.querySelector('thead');
             this.tbody = this.table.querySelector('tbody');
