@@ -227,7 +227,7 @@ var FixedTables;
         };
         Tbody.prototype.setStyles = function (table) {
             this.paddingLeft = table.thead.cells[0].outerWidth;
-            this.marginTop = table.thead.cells[0].outerHeight;
+            this.marginTop = table.thead.outerHeight;
             this.width = table.outerWidth - table.thead.cells[0].outerWidth;
         };
         Tbody.prototype.getPaddingLeft = function () {
@@ -255,11 +255,12 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var Thead = (function () {
-        function Thead(lineNum, cells, width, outerWidth, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, position, top, zIndex) {
+        function Thead(lineNum, cells, width, outerWidth, outerHeight, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, position, top, zIndex) {
             this.lineNum = lineNum;
             this.cells = cells;
             this.width = width;
             this.outerWidth = outerWidth;
+            this.outerHeight = outerHeight;
             this.borderTopWidth = borderTopWidth;
             this.borderRightWidth = borderRightWidth;
             this.borderBottomWidth = borderBottomWidth;
@@ -269,7 +270,7 @@ var FixedTables;
             this.zIndex = zIndex;
         }
         Thead.fromData = function (data) {
-            return new Thead(0, [], data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.borderTopWidth ? data.borderTopWidth : '', data.borderRightWidth ? data.borderRightWidth : '', data.borderBottomWidth ? data.borderBottomWidth : '', data.borderLeftWidth ? data.borderLeftWidth : '', this.CSS_POSITION_VALUE, this.CSS_TOP_VALUE, this.CSS_ZINDEX_VALUE);
+            return new Thead(0, [], data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.borderTopWidth ? data.borderTopWidth : '', data.borderRightWidth ? data.borderRightWidth : '', data.borderBottomWidth ? data.borderBottomWidth : '', data.borderLeftWidth ? data.borderLeftWidth : '', this.CSS_POSITION_VALUE, this.CSS_TOP_VALUE, this.CSS_ZINDEX_VALUE);
         };
         Thead.prototype.setLineNumber = function (num) {
             this.lineNum = num;
@@ -292,6 +293,14 @@ var FixedTables;
             else {
                 this.width = table.outerWidth;
             }
+        };
+        Thead.prototype.setSelfStyles = function (thead) {
+            this.borderBottomWidth = thead.borderBottomWidth;
+            this.borderLeftWidth = thead.borderLeftWidth;
+            this.borderRightWidth = thead.borderRightWidth;
+            this.borderTopWidth = thead.borderTopWidth;
+            this.outerWidth = thead.outerWidth;
+            this.outerHeight = thead.outerHeight;
         };
         Thead.prototype.getWidth = function () {
             return this.width;
@@ -404,6 +413,7 @@ var FixedTables;
         FixedTableView.prototype.setTheadModel = function () {
             this.theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
             this.theadModel.setCells(this.createTheadCellsModel());
+            this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, this.thead.currentStyle || document.defaultView.getComputedStyle(this.thead, '')));
         };
         FixedTableView.prototype.createTheadCellsModel = function () {
             var tr = this.thead.querySelectorAll('tr'), th = this.thead.querySelectorAll('tr > *'), styles, cells = [];
@@ -412,6 +422,20 @@ var FixedTables;
                 cells.push(this.getCreateCellModel('thead', th, styles, i, 0));
             }
             return cells;
+        };
+        FixedTableView.prototype.getCreateTheadModel = function (elements, styles) {
+            return FixedTables.Thead.fromData({
+                outerWidth: elements.offsetWidth,
+                outerHeight: elements.offsetHeight,
+                paddingTop: styles["padding-top"],
+                paddingRight: styles["padding-right"],
+                paddingBottom: styles["padding-bottom"],
+                paddingLeft: styles["padding-left"],
+                borderTopWidth: styles["border-top-width"],
+                borderRightWidth: styles["border-right-width"],
+                borderBottomWidth: styles["border-bottom-width"],
+                borderLeftWidth: styles["border-left-width"]
+            });
         };
         FixedTableView.prototype.setTbodyStyle = function () {
             this.tableModel.setTbodyFixedModel();

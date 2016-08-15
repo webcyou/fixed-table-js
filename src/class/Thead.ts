@@ -15,6 +15,7 @@ module FixedTables {
       public cells: Cell[],
       public width: number,
       public outerWidth: number,
+      public outerHeight: number,
       public borderTopWidth: string,
       public borderRightWidth: string,
       public borderBottomWidth: string,
@@ -31,6 +32,7 @@ module FixedTables {
         [],
         data.width ? data.width : 0,
         data.outerWidth ? data.outerWidth : 0,
+        data.outerHeight ? data.outerHeight : 0,
         data.borderTopWidth ? data.borderTopWidth : '',
         data.borderRightWidth ? data.borderRightWidth : '',
         data.borderBottomWidth ? data.borderBottomWidth : '',
@@ -65,6 +67,15 @@ module FixedTables {
       } else {
         this.width = table.outerWidth;
       }
+    }
+
+    public setSelfStyles(thead: Thead) {
+      this.borderBottomWidth = thead.borderBottomWidth;
+      this.borderLeftWidth   = thead.borderLeftWidth;
+      this.borderRightWidth  = thead.borderRightWidth;
+      this.borderTopWidth    = thead.borderTopWidth;
+      this.outerWidth        = thead.outerWidth;
+      this.outerHeight       = thead.outerHeight;
     }
 
     public getWidth(): number {

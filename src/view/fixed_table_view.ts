@@ -125,6 +125,7 @@ module FixedTables {
     private setTheadModel(): void {
       this.theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
       this.theadModel.setCells(this.createTheadCellsModel());
+      this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, (<any>this.thead).currentStyle || (<any>document.defaultView).getComputedStyle(this.thead, '')));
     }
 
     private createTheadCellsModel(): Cell[] {
@@ -138,6 +139,21 @@ module FixedTables {
         cells.push(this.getCreateCellModel('thead', th, styles, i, 0));
       }
       return cells;
+    }
+
+    private getCreateTheadModel(elements, styles): Thead {
+      return Thead.fromData({
+        outerWidth: elements.offsetWidth,
+        outerHeight: elements.offsetHeight,
+        paddingTop: styles["padding-top"],
+        paddingRight: styles["padding-right"],
+        paddingBottom: styles["padding-bottom"],
+        paddingLeft: styles["padding-left"],
+        borderTopWidth: styles["border-top-width"],
+        borderRightWidth: styles["border-right-width"],
+        borderBottomWidth: styles["border-bottom-width"],
+        borderLeftWidth: styles["border-left-width"]
+      });
     }
 
     /**
