@@ -78,7 +78,7 @@ new FixedTable({ fullMode: true; });
 
 ### Option Parameters Reference
 
-| ParametersName | value         | DefaultValue | Detail                | 
+| ParametersName | type         | DefaultValue | Details                | 
 | --------------- |:---------------:|:---------------:|-------------------- |
 | id | string | 'fixedTable' | CSS ID Name |
 | fullMode | boolean | false | window full size |
