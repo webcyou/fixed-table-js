@@ -454,7 +454,7 @@ var FixedTables;
         FixedTableView.prototype.setTbodyFixedStyle = function () {
             var tr = this.tbody.querySelectorAll('tr'), td, angleCell = this.theadModel.getFirstCell();
             for (var y = 0; y < tr.length; y++) {
-                td = tr[y].querySelectorAll('tr > *');
+                td = this.filterElementTdTh(tr[y].querySelectorAll('tr > *'));
                 for (var x = 0; x < td.length; x++) {
                     if (x == 0) {
                         var secondCell = this.tbodyModel.getCell(1, y);
@@ -469,6 +469,15 @@ var FixedTables;
                     }
                 }
             }
+        };
+        FixedTableView.prototype.filterElementTdTh = function (elements) {
+            var nodeList = [];
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].tagName === 'TH' || elements[i].tagName === 'TD') {
+                    nodeList.push(elements[i]);
+                }
+            }
+            return nodeList;
         };
         FixedTableView.prototype.setEventHandler = function () {
             this.setScrollEvent();

@@ -222,7 +222,7 @@ module FixedTables {
           angleCell = this.theadModel.getFirstCell();
 
       for (var y: number = 0; y < tr.length; y++) {
-        td = (<Element>tr[y]).querySelectorAll('tr > *');
+        td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
         for (var x: number = 0; x < td.length; x++) {
           if(x == 0) {
@@ -238,6 +238,17 @@ module FixedTables {
           }
         }
       }
+    }
+
+    private filterElementTdTh(elements: NodeList): NodeList {
+      var nodeList: any = [];
+
+      for (var i: number = 0; i < elements.length; i++) {
+        if(elements[i].tagName === 'TH' || elements[i].tagName === 'TD') {
+          nodeList.push(elements[i]);
+        }
+      }
+      return nodeList;
     }
 
     /**
