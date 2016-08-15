@@ -162,7 +162,7 @@ module FixedTables {
           cells: Cell[] = [];
 
       for (var y: number = 0; y < tr.length; y++) {
-        td = (<Element>tr[y]).querySelectorAll('tr > *');
+        td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
         for (var x: number = 0; x < td.length; x++) {
           styles = (<any>td[x]).currentStyle || (<any>document.defaultView).getComputedStyle(td[x], '');
@@ -195,7 +195,8 @@ module FixedTables {
         borderTopWidth: styles["border-top-width"],
         borderRightWidth: styles["border-right-width"],
         borderBottomWidth: styles["border-bottom-width"],
-        borderLeftWidth: styles["border-left-width"]
+        borderLeftWidth: styles["border-left-width"],
+        tHeadCell: parent === 'tbody' ? this.theadModel.getCell(x, 0) : null
       });
     }
 
@@ -218,22 +219,22 @@ module FixedTables {
 
     private setTbodyFixedStyle(): void {
       var tr: NodeList = this.tbody.querySelectorAll('tr'),
-          td: NodeList,
-          angleCell = this.theadModel.getFirstCell();
+          td: NodeList;
 
       for (var y: number = 0; y < tr.length; y++) {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
         for (var x: number = 0; x < td.length; x++) {
           if(x == 0) {
-            var secondCell = this.tbodyModel.getCell(1, y);
+            var cell: Cell = this.tbodyModel.getCell(x, y);
+            var secondCell: Cell = this.tbodyModel.getCell(1, y);
 
-            (<HTMLElement>td[x]).style.width = angleCell.getCSSWidth();
+            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
             (<HTMLElement>td[x]).style.height = secondCell.getCSSHeight();
             (<HTMLElement>td[x]).style.position = this.tbodyModel.fixedPositon;
             (<HTMLElement>td[x]).style.left = this.tbodyModel.fixedLeft;
           } else {
-            var cell = this.theadModel.getCell(x, 0);
+            var cell: Cell = this.tbodyModel.getCell(x, 0);
             (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
           }
         }

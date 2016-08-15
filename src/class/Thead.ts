@@ -59,10 +59,6 @@ module FixedTables {
       return this.getCells(x, y)[0];
     }
 
-    public getFirstCell(): Cell {
-      return this.getCell(0, 0);
-    }
-
     public setStyles(table: Table) {
       if(this.borderLeftWidth) {
         this.width = table.outerWidth - (parseInt(this.borderLeftWidth, 10) + parseInt(this.borderRightWidth, 10));

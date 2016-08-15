@@ -24,7 +24,8 @@ module FixedTables {
       public borderTopWidth: string,
       public borderRightWidth: string,
       public borderBottomWidth: string,
-      public borderLeftWidth: string
+      public borderLeftWidth: string,
+      public tHeadCell?: Cell
       ) {
       this.id = this.createId();
       this.width = this.getWidth();
@@ -49,7 +50,8 @@ module FixedTables {
         data.borderTopWidth ? data.borderTopWidth : '',
         data.borderRightWidth ? data.borderRightWidth : '',
         data.borderBottomWidth ? data.borderBottomWidth : '',
-        data.borderLeftWidth ? data.borderLeftWidth : ''
+        data.borderLeftWidth ? data.borderLeftWidth : '',
+        data.tHeadCell ? data.tHeadCell : null
       );
     }
 
@@ -58,8 +60,13 @@ module FixedTables {
     }
 
     private getWidth(): number {
-      return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
-        + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+      if(this.parent === 'thead') {
+        return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
+          + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+      } else {
+        return this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
+          + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+      }
     }
 
     public getCSSWidth(): string {
