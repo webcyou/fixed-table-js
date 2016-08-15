@@ -221,20 +221,20 @@ module FixedTables {
           td: NodeList,
           angleCell = this.theadModel.getFirstCell();
 
-      for (var i: number = 0; i < tr.length; i++) {
-        td = (<Element>tr[i]).querySelectorAll('tr > *');
+      for (var y: number = 0; y < tr.length; y++) {
+        td = (<Element>tr[y]).querySelectorAll('tr > *');
 
-        for (var n: number = 0; n < td.length; n++) {
-          if(n == 0) {
-            var secondCell = this.tbodyModel.getCell(1, i);
+        for (var x: number = 0; x < td.length; x++) {
+          if(x == 0) {
+            var secondCell = this.tbodyModel.getCell(1, y);
 
-            (<HTMLElement>td[n]).style.width = angleCell.getCSSWidth();
-            (<HTMLElement>td[n]).style.height = secondCell.getCSSHeight();
-            (<HTMLElement>td[n]).style.position = this.tbodyModel.fixedPositon;
-            (<HTMLElement>td[n]).style.left = this.tbodyModel.fixedLeft;
+            (<HTMLElement>td[x]).style.width = angleCell.getCSSWidth();
+            (<HTMLElement>td[x]).style.height = secondCell.getCSSHeight();
+            (<HTMLElement>td[x]).style.position = this.tbodyModel.fixedPositon;
+            (<HTMLElement>td[x]).style.left = this.tbodyModel.fixedLeft;
           } else {
-            var cell = this.theadModel.getCell(n, 0);
-            (<HTMLElement>td[n]).style.width = cell.getCSSWidth();
+            var cell = this.theadModel.getCell(x, 0);
+            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
           }
         }
       }
