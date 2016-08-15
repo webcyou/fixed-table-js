@@ -224,16 +224,16 @@ module FixedTables {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
         for (var x: number = 0; x < td.length; x++) {
+          var cell: Cell = this.tbodyModel.getCell(x, y);
+
           if(x == 0) {
-            var cell: Cell = this.tbodyModel.getCell(x, y);
             var secondCell: Cell = this.tbodyModel.getCell(1, y);
 
             (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
-            (<HTMLElement>td[x]).style.height = secondCell.getCSSHeight();
+            (<HTMLElement>td[x]).style.height = cell.getCSSHeight(secondCell);
             (<HTMLElement>td[x]).style.position = this.tbodyModel.fixedPositon;
             (<HTMLElement>td[x]).style.left = this.tbodyModel.fixedLeft;
           } else {
-            var cell: Cell = this.tbodyModel.getCell(x, 0);
             (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
           }
         }

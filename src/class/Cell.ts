@@ -9,6 +9,7 @@ module FixedTables {
   export class Cell {
     constructor(
       public id: number,
+      public isFixed: boolean,
       public parent: string,
       public tagName: string,
       public x: number,
@@ -35,6 +36,7 @@ module FixedTables {
     static fromData(data: any): Cell {
       return new Cell(
         data.id ? data.id : 0,
+        data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0),
         data.parent ? data.parent : '',
         data.tagName ? data.tagName : '',
         data.x ? data.x : 0,
@@ -52,6 +54,7 @@ module FixedTables {
         data.borderBottomWidth ? data.borderBottomWidth : '',
         data.borderLeftWidth ? data.borderLeftWidth : '',
         data.tHeadCell ? data.tHeadCell : null
+
       );
     }
 
@@ -73,13 +76,25 @@ module FixedTables {
       return this.width + 'px';
     }
 
-    private getHeight(): number {
-      return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
-        + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+    private getHeight(cell?: Cell): number {
+      if(this.isFixed && cell) {
+        return cell.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
+          + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+
+      } else {
+        return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
+          + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+      }
     }
 
-    public getCSSHeight(): string {
-      return this.height + 'px';
+    public getCSSHeight(cell?: Cell): string {
+      if(cell) {
+        this.height = this.getHeight(cell);
+
+        return this.height + 'px';
+      } else {
+        return this.height + 'px';
+      }
     }
   }
 }
