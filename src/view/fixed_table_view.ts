@@ -146,7 +146,6 @@ module FixedTables {
     private setTbodyStyle(): void {
       this.tableModel.setTbodyFixedModel();
       (<HTMLElement>this.tbody).style.display = this.tbodyModel.display;
-      (<HTMLElement>this.tbody).style.width = this.tbodyModel.getCSSWidth();
       (<HTMLElement>this.tbody).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
       (<HTMLElement>this.tbody).style.marginTop = this.tbodyModel.getCSSMarginTop();
     }

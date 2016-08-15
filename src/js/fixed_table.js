@@ -373,7 +373,6 @@ var FixedTables;
         FixedTableView.prototype.setTbodyStyle = function () {
             this.tableModel.setTbodyFixedModel();
             this.tbody.style.display = this.tbodyModel.display;
-            this.tbody.style.width = this.tbodyModel.getCSSWidth();
             this.tbody.style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
             this.tbody.style.marginTop = this.tbodyModel.getCSSMarginTop();
         };
