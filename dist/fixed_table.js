@@ -291,6 +291,36 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.chengeMode = function (bool) {
+            this.tableView.chengeMode(bool);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
     var FixedTableView = (function () {
         function FixedTableView(model) {
             this.model = model;
@@ -423,19 +453,19 @@ var FixedTables;
         };
         FixedTableView.prototype.setTbodyFixedStyle = function () {
             var tr = this.tbody.querySelectorAll('tr'), td, angleCell = this.theadModel.getFirstCell();
-            for (var i = 0; i < tr.length; i++) {
-                td = tr[i].querySelectorAll('tr > *');
-                for (var n = 0; n < td.length; n++) {
-                    if (n == 0) {
-                        var secondCell = this.tbodyModel.getCell(1, i);
-                        td[n].style.width = angleCell.getCSSWidth();
-                        td[n].style.height = secondCell.getCSSHeight();
-                        td[n].style.position = this.tbodyModel.fixedPositon;
-                        td[n].style.left = this.tbodyModel.fixedLeft;
+            for (var y = 0; y < tr.length; y++) {
+                td = tr[y].querySelectorAll('tr > *');
+                for (var x = 0; x < td.length; x++) {
+                    if (x == 0) {
+                        var secondCell = this.tbodyModel.getCell(1, y);
+                        td[x].style.width = angleCell.getCSSWidth();
+                        td[x].style.height = secondCell.getCSSHeight();
+                        td[x].style.position = this.tbodyModel.fixedPositon;
+                        td[x].style.left = this.tbodyModel.fixedLeft;
                     }
                     else {
-                        var cell = this.theadModel.getCell(n, 0);
-                        td[n].style.width = cell.getCSSWidth();
+                        var cell = this.theadModel.getCell(x, 0);
+                        td[x].style.width = cell.getCSSWidth();
                     }
                 }
             }
@@ -486,34 +516,4 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.chengeMode = function (bool) {
-            this.tableView.chengeMode(bool);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
