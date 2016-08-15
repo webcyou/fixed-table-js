@@ -8,15 +8,15 @@
     <script   src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
     <script src="./js/fixed_table.js"></script>
 </head>
-<body id="pageTop">
-   <ul class="globalMenuList">
-       <li>
-           <a href="./index.html">Top</a>
-       </li>
-       <li>
-           <a href="./colgroup.html">colgroup</a>
-       </li>
-   </ul>
+<body id="pageColgroup">
+    <ul class="globalMenuList">
+        <li>
+            <a href="./index.html">Top</a>
+        </li>
+        <li>
+            <a href="./colgroup.html">colgroup</a>
+        </li>
+    </ul>
 
     <div class="modeView">
         <p>Mode: <span class="val">Normal</span></p>
@@ -30,6 +30,19 @@
     <div class="tableView">
         <div id="fixedTable" class="fixedTable">
             <table>
+                <colgroup>
+                    <col width="210px">
+                    <col width="120px">
+                    <col width="120px">
+                    <col width="90px">
+                    <col width="130px">
+                    <col width="200px">
+                    <col width="92px">
+                    <col width="92px">
+                    <col width="100px">
+                    <col width="92px">
+                    <col width="auto">
+                </colgroup>
                 <thead>
                   <tr>
                       <th></th>
@@ -242,7 +255,7 @@
 
         var resetCSSClass = function() {
             $('.fixedTable').width('auto');
-            $('.fixedTable').height('500px');
+            $('.fixedTable').height('600px');
             setModeText('Normal');
         };
 
