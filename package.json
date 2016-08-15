@@ -1,6 +1,6 @@
 {
   "name": "fixed-table-js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "FiixedTableJS - Fixed Table Layout JavaScript Library",
   "main": "dist/fixed_table.js",
   "scripts": {
