@@ -52,10 +52,12 @@ module FixedTables {
       this.setTheadModel();
       this.setTbodyModel();
 
+      this.setTheadFixedStyle();
       this.setTheadStyle();
-      this.setTbodyStyle();
 
-      this.setFixedStyle();
+      this.setTbodyStyle();
+      this.setTbodyFixedStyle();
+
       this.setEventHandler();
     }
 
@@ -120,12 +122,14 @@ module FixedTables {
       (<HTMLElement>this.thead).style.top = this.theadModel.top;
       (<HTMLElement>this.thead).style.width =  this.theadModel.getCSSWidth();
       (<HTMLElement>this.thead).style.zIndex = this.theadModel.zIndex;
+
+      // thead Style Model
+      this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, (<any>this.thead).currentStyle || (<any>document.defaultView).getComputedStyle(this.thead, '')));
     }
 
     private setTheadModel(): void {
       this.theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
       this.theadModel.setCells(this.createTheadCellsModel());
-      this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, (<any>this.thead).currentStyle || (<any>document.defaultView).getComputedStyle(this.thead, '')));
     }
 
     private createTheadCellsModel(): Cell[] {
@@ -190,11 +194,6 @@ module FixedTables {
     /**
      * Fixed Style
     **/
-    private setFixedStyle(): void {
-      this.setTheadFixedStyle();
-      this.setTbodyFixedStyle();
-    }
-
     private getCreateCellModel(parent: string, elements, styles, x: number, y: number): Cell {
       return Cell.fromData({
         parent: parent,

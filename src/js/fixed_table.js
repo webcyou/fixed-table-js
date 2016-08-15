@@ -317,36 +317,6 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.chengeMode = function (bool) {
-            this.tableView.chengeMode(bool);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
     var FixedTableView = (function () {
         function FixedTableView(model) {
             this.model = model;
@@ -366,9 +336,10 @@ var FixedTables;
             this.setTableModel();
             this.setTheadModel();
             this.setTbodyModel();
+            this.setTheadFixedStyle();
             this.setTheadStyle();
             this.setTbodyStyle();
-            this.setFixedStyle();
+            this.setTbodyFixedStyle();
             this.setEventHandler();
         };
         FixedTableView.prototype.setElements = function () {
@@ -409,11 +380,11 @@ var FixedTables;
             this.thead.style.top = this.theadModel.top;
             this.thead.style.width = this.theadModel.getCSSWidth();
             this.thead.style.zIndex = this.theadModel.zIndex;
+            this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, this.thead.currentStyle || document.defaultView.getComputedStyle(this.thead, '')));
         };
         FixedTableView.prototype.setTheadModel = function () {
             this.theadModel.setLineNumber(this.table.querySelectorAll('thead tr').length);
             this.theadModel.setCells(this.createTheadCellsModel());
-            this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, this.thead.currentStyle || document.defaultView.getComputedStyle(this.thead, '')));
         };
         FixedTableView.prototype.createTheadCellsModel = function () {
             var tr = this.thead.querySelectorAll('tr'), th = this.thead.querySelectorAll('tr > *'), styles, cells = [];
@@ -456,10 +427,6 @@ var FixedTables;
                 }
             }
             return cells;
-        };
-        FixedTableView.prototype.setFixedStyle = function () {
-            this.setTheadFixedStyle();
-            this.setTbodyFixedStyle();
         };
         FixedTableView.prototype.getCreateCellModel = function (parent, elements, styles, x, y) {
             return FixedTables.Cell.fromData({
@@ -566,4 +533,34 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.chengeMode = function (bool) {
+            this.tableView.chengeMode(bool);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
