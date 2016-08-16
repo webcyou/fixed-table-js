@@ -259,7 +259,7 @@ module FixedTables {
       var nodeList: any = [];
 
       for (var i: number = 0; i < elements.length; i++) {
-        if(elements[i].tagName === 'TH' || elements[i].tagName === 'TD') {
+        if(elements[i]['tagName'] === 'TH' || elements[i]['tagName'] === 'TD') {
           nodeList.push(elements[i]);
         }
       }

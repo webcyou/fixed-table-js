@@ -83,6 +83,7 @@ var FixedTables;
         };
         Cell.prototype.getHeight = function (cell) {
             if (this.isFixed && cell) {
+                console.log(cell.outerHeight);
                 return cell.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
                     + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
             }
@@ -317,6 +318,36 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.chengeMode = function (bool) {
+            this.tableView.chengeMode(bool);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
     var FixedTableView = (function () {
         function FixedTableView(model) {
             this.model = model;
@@ -481,7 +512,7 @@ var FixedTables;
         FixedTableView.prototype.filterElementTdTh = function (elements) {
             var nodeList = [];
             for (var i = 0; i < elements.length; i++) {
-                if (elements[i].tagName === 'TH' || elements[i].tagName === 'TD') {
+                if (elements[i]['tagName'] === 'TH' || elements[i]['tagName'] === 'TD') {
                     nodeList.push(elements[i]);
                 }
             }
@@ -533,34 +564,4 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.chengeMode = function (bool) {
-            this.tableView.chengeMode(bool);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));

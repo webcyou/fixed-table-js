@@ -54,7 +54,6 @@ module FixedTables {
         data.borderBottomWidth ? data.borderBottomWidth : '',
         data.borderLeftWidth ? data.borderLeftWidth : '',
         data.tHeadCell ? data.tHeadCell : null
-
       );
     }
 
