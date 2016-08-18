@@ -83,7 +83,6 @@ var FixedTables;
         };
         Cell.prototype.getHeight = function (cell) {
             if (this.isFixed && cell) {
-                console.log(cell.outerHeight);
                 return cell.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
                     + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
             }
@@ -442,6 +441,7 @@ var FixedTables;
         FixedTableView.prototype.setTbodyStyle = function () {
             this.tableModel.setTbodyFixedModel();
             this.tbody.style.display = this.tbodyModel.display;
+            this.tbody.style.width = this.tbodyModel.width + 'px';
             this.tbody.style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
             this.tbody.style.marginTop = this.tbodyModel.getCSSMarginTop();
         };
