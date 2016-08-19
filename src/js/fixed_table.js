@@ -5,6 +5,10 @@ var FixedTables;
     var FixedTable = (function () {
         function FixedTable(option) {
             if (FixedTable._instance) {
+                if (option !== void 0) {
+                    FixedTable._instance.model = new FixedTables.FixedTableModel(option);
+                    FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model);
+                }
                 return FixedTable._instance;
             }
             else {

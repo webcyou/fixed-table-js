@@ -17,8 +17,12 @@ module FixedTables {
       option?: any
       ) {
       if (FixedTable._instance) {
-        return FixedTable._instance;
+        if (option !== void 0) {
+          FixedTable._instance.model = new FixedTables.FixedTableModel(option);
+          FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model);
+        }
 
+        return FixedTable._instance;
       } else {
         this.model = new FixedTables.FixedTableModel(option);
         this.view = new FixedTables.FixedTableView(this.model);

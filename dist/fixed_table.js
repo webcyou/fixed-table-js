@@ -5,6 +5,10 @@ var FixedTables;
     var FixedTable = (function () {
         function FixedTable(option) {
             if (FixedTable._instance) {
+                if (option !== void 0) {
+                    FixedTable._instance.model = new FixedTables.FixedTableModel(option);
+                    FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model);
+                }
                 return FixedTable._instance;
             }
             else {
@@ -16,6 +20,8 @@ var FixedTables;
         FixedTable.prototype.chengeMode = function (bool) {
             this.model.chengeMode(bool);
             this.view.resizeContainer();
+        };
+        FixedTable.prototype.setOptions = function (options) {
         };
         FixedTable._instance = null;
         return FixedTable;
