@@ -232,7 +232,7 @@ var FixedTables;
         Tbody.prototype.setStyles = function (table) {
             this.paddingLeft = table.thead.cells[0].outerWidth;
             this.marginTop = table.thead.outerHeight;
-            this.width = table.outerWidth - table.thead.cells[0].outerWidth;
+            this.width = table.outerWidth;
         };
         Tbody.prototype.getPaddingLeft = function () {
             return this.paddingLeft;
@@ -446,7 +446,6 @@ var FixedTables;
             this.tableModel.setTbodyFixedModel();
             this.tbody.style.display = this.tbodyModel.display;
             this.tbody.style.width = this.tbodyModel.width + 'px';
-            this.tbody.style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
             this.tbody.style.marginTop = this.tbodyModel.getCSSMarginTop();
         };
         FixedTableView.prototype.setTbodyModel = function () {
@@ -541,6 +540,8 @@ var FixedTables;
         FixedTableView.prototype.setTbodyScrollStyle = function (left) {
             var tr = this.tbody.querySelectorAll('tr'), td;
             for (var i = 0; i < tr.length; i++) {
+                tr[i].style.display = this.tbodyModel.display;
+                tr[i].style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {

@@ -154,6 +154,10 @@ body {
         }
       }
       tbody {
+        tr {
+          position: relative;
+          //display: block;
+        }
         th,
         td {
           padding: 8px 4px;

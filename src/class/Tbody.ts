@@ -60,7 +60,7 @@ module FixedTables {
     public setStyles(table: Table): void {
       this.paddingLeft = table.thead.cells[0].outerWidth;
       this.marginTop = table.thead.outerHeight;
-      this.width = table.outerWidth - table.thead.cells[0].outerWidth;
+      this.width = table.outerWidth;
     }
 
     public getPaddingLeft(): number {

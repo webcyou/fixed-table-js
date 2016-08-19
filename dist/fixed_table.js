@@ -232,7 +232,7 @@ var FixedTables;
         Tbody.prototype.setStyles = function (table) {
             this.paddingLeft = table.thead.cells[0].outerWidth;
             this.marginTop = table.thead.outerHeight;
-            this.width = table.outerWidth - table.thead.cells[0].outerWidth;
+            this.width = table.outerWidth;
         };
         Tbody.prototype.getPaddingLeft = function () {
             return this.paddingLeft;
@@ -318,6 +318,36 @@ var FixedTables;
         return Thead;
     }());
     FixedTables.Thead = Thead;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.chengeMode = function (bool) {
+            this.tableView.chengeMode(bool);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
@@ -415,7 +445,7 @@ var FixedTables;
         FixedTableView.prototype.setTbodyStyle = function () {
             this.tableModel.setTbodyFixedModel();
             this.tbody.style.display = this.tbodyModel.display;
-            this.tbody.style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
+            this.tbody.style.width = this.tbodyModel.width + 'px';
             this.tbody.style.marginTop = this.tbodyModel.getCSSMarginTop();
         };
         FixedTableView.prototype.setTbodyModel = function () {
@@ -510,6 +540,8 @@ var FixedTables;
         FixedTableView.prototype.setTbodyScrollStyle = function (left) {
             var tr = this.tbody.querySelectorAll('tr'), td;
             for (var i = 0; i < tr.length; i++) {
+                tr[i].style.display = this.tbodyModel.display;
+                tr[i].style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
@@ -537,34 +569,4 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.chengeMode = function (bool) {
-            this.tableView.chengeMode(bool);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
