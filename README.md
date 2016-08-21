@@ -13,7 +13,7 @@ tableレイアウトで、タイトル項目のカラムを簡単に固定表示
 
 | ![](./demo/img/icon/icon_chrome.png) |  ![](./demo/img/icon/icon_firefox.png)  | ![](./demo/img/icon/icon_safari.png)  | ![](./demo/img/icon/icon_ie.png)  |![](./demo/img/icon/icon_opera.png)  | 
 | :---------------: | :---------------:| :---------------:| :---------------:| :---------------:|
-| 52.0.2743.82 | 47.0.1 |  |  | |
+| 52.0.2743.82 | 47.0.1 | 9.1.2 |  | |
 
 **Windows**
 
