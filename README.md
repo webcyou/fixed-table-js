@@ -6,11 +6,13 @@ FixedTableJS - Fixed Table Layout JavaScript Library
 
 ### Support Browsers
 **Mac**
+
 | ![](./demo/img/icon/icon_chrome.png) |  ![](./demo/img/icon/icon_firefox.png)  | ![](./demo/img/icon/icon_safari.png)  | ![](./demo/img/icon/icon_ie.png)  |![](./demo/img/icon/icon_safari.png)  | 
 | :---------------: | :---------------:| :---------------:| :---------------:| :---------------:|
 | 52.0.2743.82 | 47.0.1 |  |  | |
 
 **Windows**
+
 | ![](./demo/img/icon/icon_chrome.png) |  ![](./demo/img/icon/icon_firefox.png)  | ![](./demo/img/icon/icon_safari.png)  | ![](./demo/img/icon/icon_ie.png)  |![](./demo/img/icon/icon_safari.png)  | 
 | :---------------: | :---------------:| :---------------:| :---------------:| :---------------:|
 |  |  |  |  | |
