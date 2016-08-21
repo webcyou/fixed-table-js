@@ -5,9 +5,15 @@ FixedTableJS - Fixed Table Layout JavaScript Library
 ![](http://webcyou.com/fixed_table_js/img/fixed_table.png)
 
 ### Support Browsers
-| ![](./demo/img/icon/icon_chrome.png) |  ![](./demo/img/icon/icon_firefox.png)  |  |  | | 
-| ---------------: |---------------:|---------------:|---------------:|---------------:|
+**Mac**
+| ![](./demo/img/icon/icon_chrome.png) |  ![](./demo/img/icon/icon_firefox.png)  | ![](./demo/img/icon/icon_safari.png)  | ![](./demo/img/icon/icon_ie.png)  |![](./demo/img/icon/icon_safari.png)  | 
+| :---------------: | :---------------:| :---------------:| :---------------:| :---------------:|
 | 52.0.2743.82 | 47.0.1 |  |  | |
+
+**Windows**
+| ![](./demo/img/icon/icon_chrome.png) |  ![](./demo/img/icon/icon_firefox.png)  | ![](./demo/img/icon/icon_safari.png)  | ![](./demo/img/icon/icon_ie.png)  |![](./demo/img/icon/icon_safari.png)  | 
+| :---------------: | :---------------:| :---------------:| :---------------:| :---------------:|
+|  |  |  |  | |
 
 
 ### これは何？
