@@ -5,6 +5,7 @@
 
 module FixedTables {
   var created_num = 0;
+  var PIXEL_REG = /px/g;
 
   export class Cell {
     constructor(
@@ -49,10 +50,10 @@ module FixedTables {
         data.paddingRight ? data.paddingRight : '',
         data.paddingBottom ? data.paddingBottom : '',
         data.paddingLeft ? data.paddingLeft : '',
-        data.borderTopWidth ? data.borderTopWidth : '',
-        data.borderRightWidth ? data.borderRightWidth : '',
-        data.borderBottomWidth ? data.borderBottomWidth : '',
-        data.borderLeftWidth ? data.borderLeftWidth : '',
+        data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0',
+        data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0',
+        data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0',
+        data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0',
         data.tHeadCell ? data.tHeadCell : null
       );
     }

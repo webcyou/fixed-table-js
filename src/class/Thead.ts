@@ -4,6 +4,7 @@
 /// <reference path='../_all.ts' />
 
 module FixedTables {
+  var PIXEL_REG = /px/g;
 
   export class Thead {
     static CSS_POSITION_VALUE = 'absolute';
@@ -33,10 +34,10 @@ module FixedTables {
         data.width ? data.width : 0,
         data.outerWidth ? data.outerWidth : 0,
         data.outerHeight ? data.outerHeight : 0,
-        data.borderTopWidth ? data.borderTopWidth : '',
-        data.borderRightWidth ? data.borderRightWidth : '',
-        data.borderBottomWidth ? data.borderBottomWidth : '',
-        data.borderLeftWidth ? data.borderLeftWidth : '',
+        data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0',
+        data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0',
+        data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0',
+        data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0',
         this.CSS_POSITION_VALUE,
         this.CSS_TOP_VALUE,
         this.CSS_ZINDEX_VALUE

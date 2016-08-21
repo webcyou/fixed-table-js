@@ -4,6 +4,8 @@
 /// <reference path='../_all.ts' />
 
 module FixedTables {
+  var PIXEL_REG = /px/g;
+
   export class Table {
     static CSS_BORDER_COLLAPSE_VALUE = 'collapse';
     static CSS_BORDER_SPACING_VALUE = '0';
@@ -36,10 +38,10 @@ module FixedTables {
         data.paddingRight ? data.paddingRight : '',
         data.paddingBottom ? data.paddingBottom : '',
         data.paddingLeft ? data.paddingLeft : '',
-        data.borderTopWidth ? data.borderTopWidth : '',
-        data.borderRightWidth ? data.borderRightWidth : '',
-        data.borderBottomWidth ? data.borderBottomWidth : '',
-        data.borderLeftWidth ? data.borderLeftWidth : '',
+        data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0',
+        data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0',
+        data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0',
+        data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0',
         data.borderCollapse ? data.borderCollapse : this.CSS_BORDER_COLLAPSE_VALUE,
         data.borderSpacing ? data.borderSpacing : this.CSS_BORDER_SPACING_VALUE
       );
@@ -51,10 +53,10 @@ module FixedTables {
       this.paddingRight = styles["padding-right"];
       this.paddingBottom = styles["padding-bottom"];
       this.paddingLeft = styles["padding-left"];
-      this.borderTopWidth = styles["border-top-width"];
-      this.borderRightWidth = styles["border-right-width"];
-      this.borderBottomWidth = styles["border-bottom-width"];
-      this.borderLeftWidth = styles["border-left-width"];
+      this.borderTopWidth = styles["border-top-width"] && PIXEL_REG.test(styles["border-top-width"]) ? styles["border-top-width"] : '0';
+      this.borderRightWidth = styles["border-right-width"] && PIXEL_REG.test(styles["border-right-width"]) ? styles["border-right-width"] : '0';
+      this.borderBottomWidth = styles["border-bottom-width"] && PIXEL_REG.test(styles["border-bottom-width"]) ? styles["border-bottom-width"] : '0';
+      this.borderLeftWidth = styles["border-left-width"] && PIXEL_REG.test(styles["border-left-width"]) ? styles["border-left-width"] : '0';
       this.outerWidth = this.getOuterWidth();
       this.setTheadFixedModel();
     }
