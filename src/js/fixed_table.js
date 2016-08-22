@@ -4,16 +4,17 @@ var FixedTables;
 (function (FixedTables) {
     var FixedTable = (function () {
         function FixedTable(option) {
+            this.callBackFunction = function () { };
             if (FixedTable._instance) {
                 if (option !== void 0) {
                     FixedTable._instance.model = new FixedTables.FixedTableModel(option);
-                    FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model);
+                    FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model, option);
                 }
                 return FixedTable._instance;
             }
             else {
                 this.model = new FixedTables.FixedTableModel(option);
-                this.view = new FixedTables.FixedTableView(this.model);
+                this.view = new FixedTables.FixedTableView(this.model, option);
                 FixedTable._instance = this;
             }
         }
@@ -24,6 +25,11 @@ var FixedTables;
         FixedTable.prototype.setCellStyle = function (data) {
             this.model.setCellStyle(data);
             this.view.setCellStyles();
+        };
+        FixedTable.prototype.click = function (fn) {
+            this.view.click(function (cell) {
+                fn(cell);
+            });
         };
         FixedTable._instance = null;
         return FixedTable;
@@ -392,7 +398,13 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var FixedTableView = (function () {
-        function FixedTableView(model) {
+        function FixedTableView(model, option) {
+            this.option = null;
+            this.callBackFunction = function () { };
+            this.selectedCell = null;
+            if (option !== void 0) {
+                this.option = option;
+            }
             this.model = model;
             this.tableViewModel = this.model.getTableViewModel();
             this.tableModel = this.model.getTableModel();
@@ -571,8 +583,49 @@ var FixedTables;
             return nodeList;
         };
         FixedTableView.prototype.setEventHandler = function () {
+            var _this = this;
             this.setScrollEvent();
             this.setWindowResizeEvent();
+            if (this.option && this.option.click) {
+                this.setTheadCellClickEvent(function (cell) {
+                    _this.selectedCell = cell;
+                    _this.click(_this.callBackFunction);
+                });
+                this.setTbodyCellClickEvent(function (cell) {
+                    _this.selectedCell = cell;
+                    _this.click(_this.callBackFunction);
+                });
+            }
+        };
+        FixedTableView.prototype.setTheadCellClickEvent = function (fn) {
+            var theadModel = this.theadModel, tr = this.thead.querySelectorAll('tr'), td;
+            for (var y = 0; y < tr.length; y++) {
+                td = this.filterElementTdTh(tr[y].querySelectorAll('tr > *'));
+                for (var x = 0; x < td.length; x++) {
+                    (function (arg) {
+                        (function (len) {
+                            td[x].addEventListener('click', function () {
+                                fn(theadModel.getCell(len, arg));
+                            }, false);
+                        })(x);
+                    })(y);
+                }
+            }
+        };
+        FixedTableView.prototype.setTbodyCellClickEvent = function (fn) {
+            var tbodyModel = this.tbodyModel, tr = this.tbody.querySelectorAll('tr'), td;
+            for (var y = 0; y < tr.length; y++) {
+                td = this.filterElementTdTh(tr[y].querySelectorAll('tr > *'));
+                for (var x = 0; x < td.length; x++) {
+                    (function (arg) {
+                        (function (len) {
+                            td[x].addEventListener('click', function () {
+                                fn(tbodyModel.getCell(len, arg));
+                            }, false);
+                        })(x);
+                    })(y);
+                }
+            }
         };
         FixedTableView.prototype.setScrollEvent = function () {
             var _this = this;
@@ -616,6 +669,10 @@ var FixedTables;
         FixedTableView.prototype.setCellStyles = function () {
             this.setTheadFixedStyle();
             this.setTbodyFixedStyle(true);
+        };
+        FixedTableView.prototype.click = function (fn) {
+            this.callBackFunction = fn;
+            fn(this.selectedCell);
         };
         return FixedTableView;
     }());

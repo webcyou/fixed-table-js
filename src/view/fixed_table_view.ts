@@ -23,9 +23,20 @@ module FixedTables {
     private theadModel    : Thead;
     private tbodyModel    : Tbody;
 
+    private option: any = null;
+
+    private callBackFunction: Function = () => {};
+
+    private selectedCell: Cell = null;
+
     constructor(
-      model: FixedTableModel
+      model: FixedTableModel,
+      option?: any
       ) {
+      if(option !== void 0) {
+        this.option = option;
+      }
+
       this.model = model;
       this.tableViewModel = this.model.getTableViewModel();
       this.tableModel = this.model.getTableModel();
@@ -37,6 +48,7 @@ module FixedTables {
       if(!this.tableView) return;
 
       this.init();
+
     }
 
     /**
@@ -283,6 +295,57 @@ module FixedTables {
     private setEventHandler(): void {
       this.setScrollEvent();
       this.setWindowResizeEvent();
+
+      if(this.option && this.option.click) {
+        this.setTheadCellClickEvent((cell: Cell) => {
+          this.selectedCell = cell;
+          this.click(this.callBackFunction);
+        });
+        this.setTbodyCellClickEvent((cell: Cell) => {
+          this.selectedCell = cell;
+          this.click(this.callBackFunction);
+        });
+      }
+    }
+
+    private setTheadCellClickEvent(fn): void {
+      var theadModel: Thead = this.theadModel,
+          tr: NodeList = this.thead.querySelectorAll('tr'),
+          td: NodeList;
+
+      for (var y: number = 0; y < tr.length; y++) {
+        td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
+
+        for (var x: number = 0; x < td.length; x++) {
+          ((arg: number) => {
+            ((len: number) => {
+              td[x].addEventListener('click', () => {
+                fn(theadModel.getCell(len, arg));
+              }, false);
+            })(x);
+          })(y);
+        }
+      }
+    }
+
+    private setTbodyCellClickEvent(fn): void {
+      var tbodyModel: Tbody = this.tbodyModel,
+          tr: NodeList = this.tbody.querySelectorAll('tr'),
+          td: NodeList;
+
+      for (var y: number = 0; y < tr.length; y++) {
+        td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
+
+        for (var x: number = 0; x < td.length; x++) {
+          ((arg: number) => {
+            ((len: number) => {
+              td[x].addEventListener('click', () => {
+                fn(tbodyModel.getCell(len, arg));
+              }, false);
+            })(x);
+          })(y);
+        }
+      }
     }
 
     private setScrollEvent(): void {
@@ -332,9 +395,14 @@ module FixedTables {
       this.setTableViewStyle();
     }
 
-    public setCellStyles() {
+    public setCellStyles(): void {
       this.setTheadFixedStyle();
       this.setTbodyFixedStyle(true);
+    }
+
+    public click(fn: Function): void {
+      this.callBackFunction = fn;
+      fn(this.selectedCell);
     }
   }
 }

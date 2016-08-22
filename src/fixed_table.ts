@@ -13,19 +13,21 @@ module FixedTables {
     private view: FixedTableView;
     private model: FixedTableModel;
 
+    private callBackFunction: Function = () => {};
+
     constructor(
       option?: any
       ) {
       if (FixedTable._instance) {
         if (option !== void 0) {
           FixedTable._instance.model = new FixedTables.FixedTableModel(option);
-          FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model);
+          FixedTable._instance.view = new FixedTables.FixedTableView(FixedTable._instance.model, option);
         }
 
         return FixedTable._instance;
       } else {
         this.model = new FixedTables.FixedTableModel(option);
-        this.view = new FixedTables.FixedTableView(this.model);
+        this.view = new FixedTables.FixedTableView(this.model, option);
 
         FixedTable._instance = this;
       }
@@ -43,6 +45,13 @@ module FixedTables {
       this.model.setCellStyle(data);
       this.view.setCellStyles();
     }
+
+    public click(fn: Function): void {
+      this.view.click((cell: Cell) => {
+        fn(cell);
+      });
+    }
+
   }
 }
 

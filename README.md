@@ -94,8 +94,32 @@ new FixedTable({ fullMode: true; });
 
 | ParametersName | type         | DefaultValue | Details           | 
 | -------------- |:------------:|:------------:|------------------ |
-|    id          |    string    | 'fixedTable' |    CSS ID Name    |
-| fullMode | boolean | false | window full size |
+| id             | string       | 'fixedTable' |    CSS ID Name    |
+| fullMode       | boolean      | false        | window full size |
+| click          | boolean      | false        | click event callBack Function |
+
+
+## Public Function
+| Function Name  | Argument           | Argument Type      | Details           | 
+| -------------- |:------------------:|:------------------:|------------------ |
+| changeMode     | true, false        | boolean            | テーブル表示モード切り替え |
+| setCellStyle   | cell style data    | object             | cellのstyleを切り替え |
+| click          | callback           | Function           | click event callBack Function |
+
+
+
+## CallBack Function
+
+```
+fixedTable.click(function(cell: Cell) {
+  ...
+});
+```
+
+## CallBack Parameters Reference
+**Cell**
+
+
 
 
 ## Start develop
