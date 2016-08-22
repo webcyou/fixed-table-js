@@ -67,16 +67,6 @@ module FixedTables {
         return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
           + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
       } else {
-        //debugger;
-
-//        console.log(this.tHeadCell);
-//        console.log(this.tHeadCell.outerWidth);
-//        console.log(this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
-//          + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10)));
-//
-//        console.log(this.paddingRight, this.paddingLeft, this.borderRightWidth, this.borderLeftWidth);
-//        console.log(this);
-
         return this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
           + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
       }
