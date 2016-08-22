@@ -96,5 +96,26 @@ module FixedTables {
         return this.height + 'px';
       }
     }
+
+    public changeStyles(data) {
+      this.isFixed = data.isFixed ? data.isFixed : this.isFixed;
+      this.width = data.width ? data.width : this.width;
+      this.height = data.height ? data.height : this.height;
+      this.outerWidth = data.outerWidth ? data.outerWidth : this.outerWidth;
+      this.outerHeight = data.outerHeight ? data.outerHeight : this.outerHeight;
+      this.paddingTop = data.paddingTop ? data.paddingTop : this.paddingTop;
+      this.paddingRight = data.paddingRight ? data.paddingRight : this.paddingRight;
+      this.paddingBottom = data.paddingBottom ? data.paddingBottom : this.paddingBottom;
+      this.paddingLeft = data.paddingLeft ? data.paddingLeft : this.paddingLeft;
+      this.borderTopWidth = data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : this.borderTopWidth;
+      this.borderRightWidth = data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : this.borderRightWidth;
+      this.borderBottomWidth = data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : this.borderBottomWidth;
+      this.borderLeftWidth = data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : this.borderLeftWidth;
+
+      if(data.outerWidth !== void 0 || data.outerHeight !== void 0) {
+        this.width = this.getWidth();
+        this.height = this.getHeight();
+      }
+    }
   }
 }

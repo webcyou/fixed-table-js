@@ -232,7 +232,7 @@ module FixedTables {
       }
     }
 
-    private setTbodyFixedStyle(): void {
+    private setTbodyFixedStyle(isRestyle = false): void {
       var tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList;
 
@@ -241,18 +241,26 @@ module FixedTables {
 
         (<HTMLElement>tr[y]).style.display = this.tbodyModel.display;
         (<HTMLElement>tr[y]).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
+
         for (var x: number = 0; x < td.length; x++) {
           var cell: Cell = this.tbodyModel.getCell(x, y);
 
-          if(x == 0) {
-            var secondCell: Cell = this.tbodyModel.getCell(1, y);
+          // setCellStyles Function
+          if(isRestyle) {
+            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
+            (<HTMLElement>td[x]).style.height = cell.getCSSHeight();
 
-            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
-            (<HTMLElement>td[x]).style.height = cell.getCSSHeight(secondCell);
-            (<HTMLElement>td[x]).style.position = this.tbodyModel.fixedPositon;
-            (<HTMLElement>td[x]).style.left = this.tbodyModel.fixedLeft;
           } else {
-            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
+            if (x == 0) {
+              var secondCell: Cell = this.tbodyModel.getCell(1, y);
+
+              (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
+              (<HTMLElement>td[x]).style.height = cell.getCSSHeight(secondCell);
+              (<HTMLElement>td[x]).style.position = this.tbodyModel.fixedPositon;
+              (<HTMLElement>td[x]).style.left = this.tbodyModel.fixedLeft;
+            } else {
+              (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
+            }
           }
         }
       }
@@ -324,5 +332,9 @@ module FixedTables {
       this.setTableViewStyle();
     }
 
+    public setCellStyles() {
+      this.setTheadFixedStyle();
+      this.setTbodyFixedStyle(true);
+    }
   }
 }

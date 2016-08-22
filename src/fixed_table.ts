@@ -38,6 +38,11 @@ module FixedTables {
       this.model.changeMode(bool);
       this.view.resizeContainer();
     }
+
+    public setCellStyle(data: any): void {
+      this.model.setCellStyle(data);
+      this.view.setCellStyles();
+    }
   }
 }
 

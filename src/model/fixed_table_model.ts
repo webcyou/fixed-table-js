@@ -43,5 +43,8 @@ module FixedTables {
       this.tableView.changeMode(bool);
     }
 
+    public setCellStyle(data: any): void {
+      this.tableView.table.setCellStyle(data);
+    }
   }
 }

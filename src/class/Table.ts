@@ -73,6 +73,16 @@ module FixedTables {
       return this.width + (parseInt(this.paddingLeft, 10) + parseInt(this.paddingRight, 10)
         + parseInt(this.borderLeftWidth, 10) + parseInt(this.borderRightWidth, 10));
     }
+
+    public setCellStyle(data: any): void {
+      var cell: Cell;
+      if(data.parent !== void 0 && data.parent === 'thead') {
+        cell = this.thead.getCell(data.x, data.y);
+      } else {
+        cell = this.tbody.getCell(data.x, data.y);
+      }
+      cell.changeStyles(data);
+    }
   }
 }
 
