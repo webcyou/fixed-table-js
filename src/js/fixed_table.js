@@ -17,8 +17,8 @@ var FixedTables;
                 FixedTable._instance = this;
             }
         }
-        FixedTable.prototype.chengeMode = function (bool) {
-            this.model.chengeMode(bool);
+        FixedTable.prototype.changeMode = function (bool) {
+            this.model.changeMode(bool);
             this.view.resizeContainer();
         };
         FixedTable._instance = null;
@@ -191,7 +191,7 @@ var FixedTables;
                 height: windowHeight - this.offsetTop
             };
         };
-        TableView.prototype.chengeMode = function (bool) {
+        TableView.prototype.changeMode = function (bool) {
             this.isFullMode = bool;
         };
         TableView.CSS_POSITION_VALUE = 'relative';
@@ -346,8 +346,8 @@ var FixedTables;
         FixedTableModel.prototype.getTbodyModel = function () {
             return this.tableView.table.tbody;
         };
-        FixedTableModel.prototype.chengeMode = function (bool) {
-            this.tableView.chengeMode(bool);
+        FixedTableModel.prototype.changeMode = function (bool) {
+            this.tableView.changeMode(bool);
         };
         return FixedTableModel;
     }());

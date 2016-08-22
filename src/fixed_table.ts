@@ -34,8 +34,8 @@ module FixedTables {
     /**
      * Public Function
      **/
-    public chengeMode(bool: boolean): void {
-      this.model.chengeMode(bool);
+    public changeMode(bool: boolean): void {
+      this.model.changeMode(bool);
       this.view.resizeContainer();
     }
   }

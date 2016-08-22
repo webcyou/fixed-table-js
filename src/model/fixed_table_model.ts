@@ -39,8 +39,8 @@ module FixedTables {
     /**
      * Public Function
     **/
-    public chengeMode(bool: boolean): void {
-      this.tableView.chengeMode(bool);
+    public changeMode(bool: boolean): void {
+      this.tableView.changeMode(bool);
     }
 
   }
