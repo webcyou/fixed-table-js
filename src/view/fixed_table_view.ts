@@ -239,6 +239,8 @@ module FixedTables {
       for (var y: number = 0; y < tr.length; y++) {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
+        (<HTMLElement>tr[y]).style.display = this.tbodyModel.display;
+        (<HTMLElement>tr[y]).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
         for (var x: number = 0; x < td.length; x++) {
           var cell: Cell = this.tbodyModel.getCell(x, y);
 
@@ -292,9 +294,6 @@ module FixedTables {
           td: NodeList;
 
       for (var i: number = 0; i < tr.length; i++) {
-        (<HTMLElement>tr[i]).style.display = this.tbodyModel.display;
-        (<HTMLElement>tr[i]).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
-
         td = (<Element>tr[i]).querySelectorAll('tr > *');
 
         for (var n: number = 0; n < td.length; n++) {

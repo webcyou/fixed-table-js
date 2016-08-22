@@ -4,7 +4,7 @@
 /// <reference path='../_all.ts' />
 
 module FixedTables {
-  var PIXEL_REG = /px/g;
+  var PIXEL_REG = /.*px/;
 
   export class Table {
     static CSS_BORDER_COLLAPSE_VALUE = 'collapse';

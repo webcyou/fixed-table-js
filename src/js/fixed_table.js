@@ -41,7 +41,7 @@ if (typeof (global) !== 'undefined') {
 var FixedTables;
 (function (FixedTables) {
     var created_num = 0;
-    var PIXEL_REG = /px/g;
+    var PIXEL_REG = /.*px/;
     var Cell = (function () {
         function Cell(id, isFixed, parent, tagName, x, y, width, height, outerWidth, outerHeight, paddingTop, paddingRight, paddingBottom, paddingLeft, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, tHeadCell) {
             this.id = id;
@@ -68,7 +68,7 @@ var FixedTables;
             this.height = this.getHeight();
         }
         Cell.fromData = function (data) {
-            return new Cell(data.id ? data.id : 0, data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0), data.parent ? data.parent : '', data.tagName ? data.tagName : '', data.x ? data.x : 0, data.y ? data.y : 0, data.width ? data.width : 0, data.height ? data.height : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0', data.tHeadCell ? data.tHeadCell : null);
+            return new Cell(data.id ? data.id : 0, data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0), data.parent ? data.parent : '', data.tagName ? data.tagName : '', data.x ? data.x : 0, data.y ? data.y : 0, data.width ? data.width : 0, data.height ? data.height : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0px', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px', data.tHeadCell ? data.tHeadCell : null);
         };
         Cell.prototype.createId = function () {
             return ++created_num;
@@ -111,7 +111,7 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
-    var PIXEL_REG = /px/g;
+    var PIXEL_REG = /.*px/;
     var Table = (function () {
         function Table(thead, tbody, width, outerWidth, paddingTop, paddingRight, paddingBottom, paddingLeft, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, borderCollapse, borderSpacing) {
             this.thead = thead;
@@ -202,7 +202,7 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
-    var PIXEL_REG = /px/g;
+    var PIXEL_REG = /.*px/;
     var Tbody = (function () {
         function Tbody(cells, width, outerWidth, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, paddingLeft, marginTop, display, fixedPositon, fixedLeft) {
             this.cells = cells;
@@ -261,7 +261,7 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
-    var PIXEL_REG = /px/g;
+    var PIXEL_REG = /.*px/;
     var Thead = (function () {
         function Thead(lineNum, cells, width, outerWidth, outerHeight, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, position, top, zIndex) {
             this.lineNum = lineNum;
@@ -501,6 +501,8 @@ var FixedTables;
             var tr = this.tbody.querySelectorAll('tr'), td;
             for (var y = 0; y < tr.length; y++) {
                 td = this.filterElementTdTh(tr[y].querySelectorAll('tr > *'));
+                tr[y].style.display = this.tbodyModel.display;
+                tr[y].style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
                 for (var x = 0; x < td.length; x++) {
                     var cell = this.tbodyModel.getCell(x, y);
                     if (x == 0) {
@@ -544,8 +546,6 @@ var FixedTables;
         FixedTableView.prototype.setTbodyScrollStyle = function (left) {
             var tr = this.tbody.querySelectorAll('tr'), td;
             for (var i = 0; i < tr.length; i++) {
-                tr[i].style.display = this.tbodyModel.display;
-                tr[i].style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
                 td = tr[i].querySelectorAll('tr > *');
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {

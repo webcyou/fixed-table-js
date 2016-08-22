@@ -5,7 +5,7 @@
 
 module FixedTables {
   var created_num = 0;
-  var PIXEL_REG = /px/g;
+  var PIXEL_REG = /.*px/;
 
   export class Cell {
     constructor(
@@ -50,10 +50,10 @@ module FixedTables {
         data.paddingRight ? data.paddingRight : '',
         data.paddingBottom ? data.paddingBottom : '',
         data.paddingLeft ? data.paddingLeft : '',
-        data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0',
-        data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0',
-        data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0',
-        data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0',
+        data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0px',
+        data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px',
+        data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px',
+        data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px',
         data.tHeadCell ? data.tHeadCell : null
       );
     }
@@ -67,6 +67,16 @@ module FixedTables {
         return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
           + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
       } else {
+        //debugger;
+
+//        console.log(this.tHeadCell);
+//        console.log(this.tHeadCell.outerWidth);
+//        console.log(this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
+//          + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10)));
+//
+//        console.log(this.paddingRight, this.paddingLeft, this.borderRightWidth, this.borderLeftWidth);
+//        console.log(this);
+
         return this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
           + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
       }
