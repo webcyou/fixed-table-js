@@ -4,8 +4,11 @@ FixedTableJS - Fixed Table Layout JavaScript Library
 
 ![](http://webcyou.com/fixed_table_js/img/fixed_table.png)
 
-### これは何？
+## これは何？
 tableレイアウトで、タイトル項目のカラムを簡単に固定表示を行える、JavaScriptライブラリです。
+
+## demo
+[デモページ](https://webcyou.github.io/fixed_table/)
 
 
 ### Support Browsers
@@ -21,9 +24,6 @@ tableレイアウトで、タイトル項目のカラムを簡単に固定表示
 | :---------------: | :---------------:| :---------------:| :---------------:|:---------------:|
 | 52.0.2743.116 m ~ | 48.0.1 ~ | 11 | 25.10586.0.0 | 39.0 ~ |
 
-
-### demo
-[デモページ](https://webcyou.github.io/fixed_table/)
 
 ###  Quick start
 
