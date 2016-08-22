@@ -11,7 +11,7 @@ tableレイアウトで、タイトル項目のカラムを簡単に固定表示
 [デモページ](https://webcyou.github.io/fixed_table/)
 
 
-### Support Browsers
+## Support Browsers
 **Mac**
 
 | ![](./demo/img/icon/icon_chrome.png) | ![](./demo/img/icon/icon_firefox.png) | ![](./demo/img/icon/icon_safari.png) | ![](./demo/img/icon/icon_opera.png)  | 
@@ -25,7 +25,7 @@ tableレイアウトで、タイトル項目のカラムを簡単に固定表示
 | 52.0.2743.116 m ~ | 48.0.1 ~ | 11 | 25.10586.0.0 | 39.0 ~ |
 
 
-###  Quick start
+##  Quick start
 
 **Clone the repo:**
 ```
@@ -44,7 +44,7 @@ npm install fixed-table-js
 ```
 
 
-### Basic Usage
+## Basic Usage
 
 ```
 <script src="fixed_table.js"></script>
@@ -90,7 +90,7 @@ new FixedTable({ fullMode: true; });
 
 ![](http://webcyou.com/fixed_table_js/img/f_t_02.png)
 
-### Option Parameters Reference
+## Option Parameters Reference
 
 | ParametersName | type         | DefaultValue | Details                | 
 | --------------- |:---------------:|:---------------:|-------------------- |
@@ -98,7 +98,7 @@ new FixedTable({ fullMode: true; });
 | fullMode | boolean | false | window full size |
 
 
-### Start develop
+## Start develop
 ```
 npm install
 gulp 
@@ -109,7 +109,7 @@ Server started http://localhost:8088
 LiveReload started on port 35729
 ```
 
-### Start Test
+## Start Test
 
 **mocha**
 ```
@@ -122,11 +122,11 @@ gulp mocha.watch
 ```
 
 
-### Author
+## Author
 Daisuke Takayama
 [Web帳](http://www.webcyou.com/)
 
 
-### License
+## License
 Copyright (c) 2016 Daisuke Takayama
 Released under the [MIT license](http://opensource.org/licenses/mit-license.php)
