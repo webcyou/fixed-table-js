@@ -546,7 +546,7 @@ var FixedTables;
         FixedTableView.prototype.setTbodyScrollStyle = function (left) {
             var tr = this.tbody.querySelectorAll('tr'), td;
             for (var i = 0; i < tr.length; i++) {
-                td = tr[i].querySelectorAll('tr > *');
+                td = this.filterElementTdTh(tr[i].querySelectorAll('tr > *'));
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
                         td[n].style.left = left + 'px';

@@ -294,7 +294,7 @@ module FixedTables {
           td: NodeList;
 
       for (var i: number = 0; i < tr.length; i++) {
-        td = (<Element>tr[i]).querySelectorAll('tr > *');
+        td = this.filterElementTdTh((<Element>tr[i]).querySelectorAll('tr > *'));
 
         for (var n: number = 0; n < td.length; n++) {
           if(n == 0) {
