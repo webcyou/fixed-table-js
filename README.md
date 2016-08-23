@@ -117,8 +117,37 @@ fixedTable.click(function(cell: Cell) {
 ```
 
 ## CallBack Parameters Reference
-**Cell**
+**Cell example**
 
+```
+Cell {
+  id: 14,
+  x: 2,
+  y: 0,
+  width: 228,
+  height: 40,
+  outerHeight: 57,
+  outerWidth: 245,
+  orderBottomWidth: "0px",
+  borderLeftWidth: "1px",
+  borderRightWidth: "0px",
+  borderTopWidth: "1px",
+  paddingBottom: "8px",
+  paddingLeft: "8px",
+  paddingRight: "8px",
+  paddingTop: "8px",
+  parent: "tbody",
+  tHeadCell: Cell,
+  tagName: "TD",
+  isFixed: false
+}
+```
+
+| Parameters Name | Type               | Details            | 
+| --------------- |:------------------:|:------------------:|
+| id              | number             | cell ID Number     |
+| x               | number             | coordinate x       |
+| y               | number             | coordinate y       |
 
 
 

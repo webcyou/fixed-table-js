@@ -3,20 +3,20 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Fixed Table JS | colgroup</title>
+    <title>Fixed Table JS | callback</title>
     <link href="./css/style.css" rel="stylesheet" type="text/css" media="screen" />
     <script   src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
     <script src="./js/fixed_table.js"></script>
 </head>
-<body id="pageColgroup">
-    <ul class="globalMenuList">
-        <li>
-            <a href="./index.html">Top</a>
-        </li>
-        <li>
-            <a href="./colgroup.html">colgroup</a>
-        </li>
-    </ul>
+<body id="pageTop">
+   <ul class="globalMenuList">
+       <li>
+           <a href="./index.html">Top</a>
+       </li>
+       <li>
+           <a href="./colgroup.html">colgroup</a>
+       </li>
+   </ul>
 
     <div class="modeView">
         <p>Mode: <span class="val">Normal</span></p>
@@ -30,19 +30,6 @@
     <div class="tableView">
         <div id="fixedTable" class="fixedTable">
             <table>
-                <colgroup>
-                    <col width="210px">
-                    <col width="120px">
-                    <col width="120px">
-                    <col width="90px">
-                    <col width="130px">
-                    <col width="200px">
-                    <col width="92px">
-                    <col width="92px">
-                    <col width="100px">
-                    <col width="92px">
-                    <col width="auto">
-                </colgroup>
                 <thead>
                   <tr>
                       <th></th>
@@ -71,9 +58,6 @@
                       <td>detail Text detail Text detail Text </td>
                       <td>detail Text </td>
                       <td>detail Text detail Text detail Text </td>
-                      <input type="hidden"/>
-                      <input type="hidden"/>
-                      <input type="hidden"/>
                   </tr>
                   <tr>
                       <th>Col Title02</th>
@@ -87,7 +71,6 @@
                       <td>detail Text detail Text </td>
                       <td>detail Text detail Text </td>
                       <td>detail Text detail Text </td>
-                      <input type="hidden"/>
                   </tr>
                   <tr>
                       <th>Col Title03</th>
@@ -224,7 +207,9 @@
         </div>
     </div>
     <script>
-        var fixedTable = new FixedTable();
+        var fixedTable = new FixedTable({
+            click: true
+        });
     </script>
 
     <script>
@@ -259,13 +244,18 @@
 
         var resetCSSClass = function() {
             $('.fixedTable').width('auto');
-            $('.fixedTable').height('600px');
+            $('.fixedTable').height('500px');
             setModeText('Normal');
         };
 
         var setModeText = function(text) {
             $('.modeView .val').text(text);
         };
+
+        fixedTable.click(function(cell) {
+            console.log(cell);
+        });
+
     });
     </script>
 </body>

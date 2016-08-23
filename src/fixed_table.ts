@@ -13,8 +13,6 @@ module FixedTables {
     private view: FixedTableView;
     private model: FixedTableModel;
 
-    private callBackFunction: Function = () => {};
-
     constructor(
       option?: any
       ) {

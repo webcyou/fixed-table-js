@@ -4,7 +4,6 @@ var FixedTables;
 (function (FixedTables) {
     var FixedTable = (function () {
         function FixedTable(option) {
-            this.callBackFunction = function () { };
             if (FixedTable._instance) {
                 if (option !== void 0) {
                     FixedTable._instance.model = new FixedTables.FixedTableModel(option);
