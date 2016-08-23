@@ -16,17 +16,16 @@
        <li>
            <a href="./colgroup.html">colgroup</a>
        </li>
+       <li>
+           <a href="./callback.html">callback</a>
+       </li>
    </ul>
 
     <div class="modeView">
         <p>Mode: <span class="val">Normal</span></p>
     </div>
-    <div class="btnView">
-        <ui class="btnList">
-            <li class="btnHalf">Half Mode</li>
-            <li class="btnFull">Full Mode</li>
-        </ui>
-    </div>
+
+   <p class="title cellClick">Please click on the cell</p>
     <div class="tableView">
         <div id="fixedTable" class="fixedTable">
             <table>
@@ -206,6 +205,9 @@
             </table>
         </div>
     </div>
+
+   <p class="title callbackView">Cell Object of the result of clicking.</p>
+   <div id="callbackView"></div>
     <script>
         var fixedTable = new FixedTable({
             click: true
@@ -253,7 +255,7 @@
         };
 
         fixedTable.click(function(cell) {
-            console.log(cell);
+            $('#callbackView').text(JSON.stringify(cell));
         });
 
     });

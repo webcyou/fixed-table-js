@@ -156,14 +156,10 @@ body {
       tbody {
         tr {
           position: relative;
-          //display: block;
         }
         th,
         td {
           padding: 8px 4px;
-        }
-        th {
-          //padding-bottom: 30px;
         }
         td {
           height: 24px;
@@ -172,4 +168,26 @@ body {
       }
     }
   }
+}
+
+.title {
+  &.cellClick {
+    position: absolute;
+    top: 57px;
+    left: 79px;
+  }
+  &.callbackView {
+    margin: 20px 80px;
+    font-weight: bold;
+  }
+}
+
+
+#callbackView {
+  margin: 10px 80px;
+  padding: 20px 30px;
+  border-radius: 4px;
+  border: #999 1px solid;
+  font-size: 13px;
+  word-break: break-all;
 }
