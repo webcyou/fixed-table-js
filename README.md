@@ -50,7 +50,9 @@ npm install fixed-table-js
 <script src="fixed_table.js"></script>
 ```
 
-HTML
+it's a standard table layout.
+
+**HTML**
 ```
 <div id="fixedTable">
     <table>
@@ -143,27 +145,27 @@ Cell {
 }
 ```
 
-| Parameters Name    | Type               | Details            | 
-| ------------------ |:------------------:|:------------------:|
-| id                 | number             | cell ID Number     |
-| x                  | number             | x-coordinate       |
-| y                  | number             | y-coordinate       |
-| width              | number             |                    |
-| height             | number             |                    |
-| outerWidth         | number             |                    |
-| outerHeight        | number             |                    |
-| borderTopWidth     | string             |                    |
-| borderRightWidth   | string             |                    |
-| borderBottomWidth  | string             |                    |
-| borderLeftWidth    | string             |                    |
-| paddingTop         | string             |                    |
-| paddingRight       | string             |                    |
-| paddingBottom      | string             |                    |
-| paddingLeft        | string             |                    |
-| parent             | string             |                    |
-| tHeadCell          | Cell               |                    |
-| tagName            | string             |                    |
-| isFixed            | boolean            |                    |
+| Parameters Name    | Type               | Details                      | 
+| ------------------ |:------------------:|:----------------------------:|
+| id                 | number             | cell ID Number               |
+| x                  | number             | x-coordinate                 |
+| y                  | number             | y-coordinate                 |
+| width              | number             | contents inner width         |
+| height             | number             | contents inner height        |
+| outerWidth         | number             | contents inner outerWidth    |
+| outerHeight        | number             | contents inner outerHeight   |
+| borderTopWidth     | string             | contents border top width    |
+| borderRightWidth   | string             | contents border right width  |
+| borderBottomWidth  | string             | contents border bottom width |
+| borderLeftWidth    | string             | contents border left width   |
+| paddingTop         | string             | contents padding top         |
+| paddingRight       | string             | contents padding right       |
+| paddingBottom      | string             | contents padding bottom      |
+| paddingLeft        | string             | contents padding left        |
+| parent             | string             | contents parent node(tbody or thead)|
+| tHeadCell          | Cell               | contents thead cell node     |
+| tagName            | string             | self tagName                 |
+| isFixed            | boolean            | self fixed style             |
 
 ## Start develop
 ```
