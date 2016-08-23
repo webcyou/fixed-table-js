@@ -128,7 +128,7 @@ Cell {
   height: 40,
   outerHeight: 57,
   outerWidth: 245,
-  orderBottomWidth: "0px",
+  borderBottomWidth: "0px",
   borderLeftWidth: "1px",
   borderRightWidth: "0px",
   borderTopWidth: "1px",
@@ -143,13 +143,27 @@ Cell {
 }
 ```
 
-| Parameters Name | Type               | Details            | 
-| --------------- |:------------------:|:------------------:|
-| id              | number             | cell ID Number     |
-| x               | number             | coordinate x       |
-| y               | number             | coordinate y       |
-
-
+| Parameters Name    | Type               | Details            | 
+| ------------------ |:------------------:|:------------------:|
+| id                 | number             | cell ID Number     |
+| x                  | number             | x-coordinate       |
+| y                  | number             | y-coordinate       |
+| width              | number             |                    |
+| height             | number             |                    |
+| outerWidth         | number             |                    |
+| outerHeight        | number             |                    |
+| borderTopWidth     | string             |                    |
+| borderRightWidth   | string             |                    |
+| borderBottomWidth  | string             |                    |
+| borderLeftWidth    | string             |                    |
+| paddingTop         | string             |                    |
+| paddingRight       | string             |                    |
+| paddingBottom      | string             |                    |
+| paddingLeft        | string             |                    |
+| parent             | string             |                    |
+| tHeadCell          | Cell               |                    |
+| tagName            | string             |                    |
+| isFixed            | boolean            |                    |
 
 ## Start develop
 ```
