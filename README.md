@@ -1,7 +1,7 @@
 # Fixed Table JS
 FixedTableJS - Fixed Table Layout JavaScript Library
 
-[![npm version](https://badge.fury.io/js/npm.svg)](https://badge.fury.io/js/npm)
+[![npm version](https://badge.fury.io/js/fixed-table-js.svg)](https://badge.fury.io/js/fixed-table-js)
 
 ![](http://webcyou.com/fixed_table_js/img/fixed_table.png)
 
