@@ -27,6 +27,7 @@ module FixedTables {
       public borderRightWidth: string,
       public borderBottomWidth: string,
       public borderLeftWidth: string,
+      public boxSizing: string,
       public tHeadCell?: Cell
       ) {
       this.id = this.createId();
@@ -54,6 +55,7 @@ module FixedTables {
         data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px',
         data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px',
         data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px',
+        data.boxSizing ? data.boxSizing : '',
         data.tHeadCell ? data.tHeadCell : null
       );
     }
@@ -64,12 +66,50 @@ module FixedTables {
 
     private getWidth(): number {
       if(this.parent === 'thead') {
-        return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
-          + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+        return this.calculationWidth(this.outerWidth);
       } else {
-        return this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
-          + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+        return this.calculationWidth(this.tHeadCell.outerWidth);
       }
+    }
+
+    public calculationWidth(outerWidth: number): number {
+      var setWidth = 0;
+
+      switch (this.boxSizing) {
+        case 'content-box':
+          setWidth = outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10) + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+          break;
+        case 'padding-box':
+          setWidth = outerWidth - (parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+          break;
+        case 'border-box':
+          setWidth = outerWidth;
+          break;
+        default:
+          setWidth = outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10) + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+          break;
+      }
+      return setWidth;
+    }
+
+    public calculationHeight(outerHeight: number): number {
+      var setHeight = 0;
+
+      switch (this.boxSizing) {
+        case 'content-box':
+          setHeight = outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10) + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+          break;
+        case 'padding-box':
+          setHeight = outerHeight - (parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+          break;
+        case 'border-box':
+          setHeight = outerHeight;
+          break;
+        default:
+          setHeight = outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10) + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+          break;
+      }
+      return setHeight;
     }
 
     public getCSSWidth(): string {
@@ -78,12 +118,9 @@ module FixedTables {
 
     private getHeight(cell?: Cell): number {
       if(this.isFixed && cell) {
-        return cell.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
-          + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
-
+        return this.calculationHeight(cell.outerHeight);
       } else {
-        return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
-          + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+        return this.calculationHeight(this.outerHeight);
       }
     }
 
