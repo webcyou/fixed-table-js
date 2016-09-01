@@ -168,7 +168,8 @@ module FixedTables {
         borderTopWidth: styles["border-top-width"],
         borderRightWidth: styles["border-right-width"],
         borderBottomWidth: styles["border-bottom-width"],
-        borderLeftWidth: styles["border-left-width"]
+        borderLeftWidth: styles["border-left-width"],
+        boxSizing: styles["box-sizing"]
       });
     }
 
@@ -179,7 +180,6 @@ module FixedTables {
       this.tableModel.setTbodyFixedModel();
       (<HTMLElement>this.tbody).style.display = this.tbodyModel.display;
       (<HTMLElement>this.tbody).style.width = this.tbodyModel.width + 'px';
-      //(<HTMLElement>this.tbody).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
       (<HTMLElement>this.tbody).style.marginTop = this.tbodyModel.getCSSMarginTop();
     }
 
@@ -198,6 +198,7 @@ module FixedTables {
 
         for (var x: number = 0; x < td.length; x++) {
           styles = (<any>td[x]).currentStyle || (<any>document.defaultView).getComputedStyle(td[x], '');
+
           cells.push(this.getCreateCellModel('tbody', td, styles, x, y));
         }
       }
@@ -223,7 +224,8 @@ module FixedTables {
         borderRightWidth: styles["border-right-width"],
         borderBottomWidth: styles["border-bottom-width"],
         borderLeftWidth: styles["border-left-width"],
-        tHeadCell: parent === 'tbody' ? this.theadModel.getCell(x, 0) : null
+        tHeadCell: parent === 'tbody' ? this.theadModel.getCell(x, 0) : null,
+        boxSizing: styles["box-sizing"]
       });
     }
 

@@ -144,7 +144,8 @@ Cell {
   parent: "tbody",
   tHeadCell: Cell,
   tagName: "TD",
-  isFixed: false
+  isFixed: false,
+  boxSizing: "content-box"
 }
 ```
 
@@ -169,6 +170,7 @@ Cell {
 | tHeadCell          | Cell               | contents thead cell node     |
 | tagName            | string             | self tagName                 |
 | isFixed            | boolean            | self fixed style             |
+| boxSizing          | string             | boxSizing style             |
 
 ## Start develop
 ```

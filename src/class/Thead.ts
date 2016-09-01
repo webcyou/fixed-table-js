@@ -21,6 +21,7 @@ module FixedTables {
       public borderRightWidth: string,
       public borderBottomWidth: string,
       public borderLeftWidth: string,
+      public boxSizing: string,
       public position: string,
       public top: string,
       public zIndex: string
@@ -38,6 +39,7 @@ module FixedTables {
         data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0',
         data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0',
         data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0',
+        data.boxSizing ? data.boxSizing : '',
         this.CSS_POSITION_VALUE,
         this.CSS_TOP_VALUE,
         this.CSS_ZINDEX_VALUE
