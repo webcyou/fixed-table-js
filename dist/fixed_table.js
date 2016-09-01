@@ -397,6 +397,74 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
+    var Utility = (function () {
+        function Utility() {
+            this.support = {
+                touch: ('ontouchstart' in window)
+            };
+            this.vendor = {
+                defaultEvent: 'click',
+                transitionend: this.whichTransitionEvent(),
+                animationend: this.whichAnimationEvent(),
+                prefix: this.whichPrefix(),
+                transform: this.whichTransform()
+            };
+            if (this.support.touch) {
+                this.vendor.defaultEvent = 'touchend';
+            }
+        }
+        Utility.prototype.whichPrefix = function () {
+            return (/webkit/i).test(navigator.appVersion) ? '-webkit-' : (/firefox/i).test(navigator.userAgent) ? '-moz-' :
+                (/trident/i).test(navigator.userAgent) ? '-ms-' : 'opera' in window ? '-o-' : '';
+        };
+        Utility.prototype.whichTransform = function () {
+            var t, el = document.createElement('fakeelement');
+            var transform = {
+                'transform': 'transform',
+                'OTransform': 'OTransform',
+                'MozTransform': 'MozTransform',
+                'webkitTransform': 'webkitTransform'
+            };
+            for (t in transform) {
+                if (el.style[t] !== undefined) {
+                    return transform[t];
+                }
+            }
+        };
+        Utility.prototype.whichAnimationEvent = function () {
+            var t, el = document.createElement('fakeelement');
+            var animations = {
+                'animation': 'animationend',
+                'OAnimation': 'oAnimationEnd',
+                'MozAnimation': 'animationend',
+                'WebkitAnimation': 'webkitAnimationEnd'
+            };
+            for (t in animations) {
+                if (el.style[t] !== undefined) {
+                    return animations[t];
+                }
+            }
+        };
+        Utility.prototype.whichTransitionEvent = function () {
+            var t, el = document.createElement('fakeelement');
+            var transitions = {
+                'transition': 'transitionend',
+                'OTransition': 'oTransitionEnd',
+                'MozTransition': 'transitionend',
+                'WebkitTransition': 'webkitTransitionEnd'
+            };
+            for (t in transitions) {
+                if (el.style[t] !== undefined) {
+                    return transitions[t];
+                }
+            }
+        };
+        return Utility;
+    }());
+    FixedTables.Utility = Utility;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
     var FixedTableModel = (function () {
         function FixedTableModel(option) {
             if (option !== void 0) {
@@ -435,6 +503,7 @@ var FixedTables;
             this.option = null;
             this.callBackFunction = function () { };
             this.selectedCell = null;
+            this.utillty = new FixedTables.Utility();
             if (option !== void 0) {
                 this.option = option;
             }
@@ -680,13 +749,23 @@ var FixedTables;
                 td = this.filterElementTdTh(tr[i].querySelectorAll('tr > *'));
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
-                        td[n].style.left = left + 'px';
+                        if (this.utillty.vendor.transform) {
+                            td[n].style[this.utillty.vendor.transform] = 'translate3d(' + left + 'px, 0, 0)';
+                        }
+                        else {
+                            td[n].style.left = left + 'px';
+                        }
                     }
                 }
             }
         };
         FixedTableView.prototype.setTheadScrollStyle = function (top) {
-            this.thead.style.top = top + 'px';
+            if (this.utillty.vendor.transform) {
+                this.thead.style[this.utillty.vendor.transform] = 'translate3d(0, ' + top + 'px, 0)';
+            }
+            else {
+                this.thead.style.top = top + 'px';
+            }
         };
         FixedTableView.prototype.boxScroll = function () {
             this.setTbodyScrollStyle(this.tableView.scrollLeft);

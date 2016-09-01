@@ -29,6 +29,8 @@ module FixedTables {
 
     private selectedCell: Cell = null;
 
+    private utillty: Utility = new Utility();
+
     constructor(
       model: FixedTableModel,
       option?: any
@@ -36,7 +38,6 @@ module FixedTables {
       if(option !== void 0) {
         this.option = option;
       }
-
       this.model = model;
       this.tableViewModel = this.model.getTableViewModel();
       this.tableModel = this.model.getTableModel();
@@ -371,14 +372,22 @@ module FixedTables {
 
         for (var n: number = 0; n < td.length; n++) {
           if(n == 0) {
-            (<HTMLElement>td[n]).style.left = left + 'px';
+            if(this.utillty.vendor.transform) {
+              (<HTMLElement>td[n]).style[this.utillty.vendor.transform] = 'translate3d(' + left + 'px, 0, 0)';
+            } else {
+              (<HTMLElement>td[n]).style.left = left + 'px';
+            }
           }
         }
       }
     }
 
     private setTheadScrollStyle(top: number): void {
-      (<HTMLElement>this.thead).style.top = top + 'px';
+      if(this.utillty.vendor.transform) {
+        (<HTMLElement>this.thead).style[this.utillty.vendor.transform] = 'translate3d(0, ' + top + 'px, 0)';
+      } else {
+        (<HTMLElement>this.thead).style.top = top + 'px';
+      }
     }
 
     public boxScroll(): void {
