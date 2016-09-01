@@ -52,7 +52,7 @@ var FixedTables;
     var created_num = 0;
     var PIXEL_REG = /.*px/;
     var Cell = (function () {
-        function Cell(id, isFixed, parent, tagName, x, y, width, height, outerWidth, outerHeight, paddingTop, paddingRight, paddingBottom, paddingLeft, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, tHeadCell) {
+        function Cell(id, isFixed, parent, tagName, x, y, width, height, outerWidth, outerHeight, paddingTop, paddingRight, paddingBottom, paddingLeft, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, boxSizing, tHeadCell) {
             this.id = id;
             this.isFixed = isFixed;
             this.parent = parent;
@@ -71,38 +71,71 @@ var FixedTables;
             this.borderRightWidth = borderRightWidth;
             this.borderBottomWidth = borderBottomWidth;
             this.borderLeftWidth = borderLeftWidth;
+            this.boxSizing = boxSizing;
             this.tHeadCell = tHeadCell;
             this.id = this.createId();
             this.width = this.getWidth();
             this.height = this.getHeight();
         }
         Cell.fromData = function (data) {
-            return new Cell(data.id ? data.id : 0, data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0), data.parent ? data.parent : '', data.tagName ? data.tagName : '', data.x ? data.x : 0, data.y ? data.y : 0, data.width ? data.width : 0, data.height ? data.height : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0px', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px', data.tHeadCell ? data.tHeadCell : null);
+            return new Cell(data.id ? data.id : 0, data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0), data.parent ? data.parent : '', data.tagName ? data.tagName : '', data.x ? data.x : 0, data.y ? data.y : 0, data.width ? data.width : 0, data.height ? data.height : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0px', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px', data.boxSizing ? data.boxSizing : '', data.tHeadCell ? data.tHeadCell : null);
         };
         Cell.prototype.createId = function () {
             return ++created_num;
         };
         Cell.prototype.getWidth = function () {
             if (this.parent === 'thead') {
-                return this.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
-                    + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+                return this.calculationWidth(this.outerWidth);
             }
             else {
-                return this.tHeadCell.outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10)
-                    + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+                return this.calculationWidth(this.tHeadCell.outerWidth);
             }
+        };
+        Cell.prototype.calculationWidth = function (outerWidth) {
+            var setWidth = 0;
+            switch (this.boxSizing) {
+                case 'content-box':
+                    setWidth = outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10) + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+                    break;
+                case 'padding-box':
+                    setWidth = outerWidth - (parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+                    break;
+                case 'border-box':
+                    setWidth = outerWidth;
+                    break;
+                default:
+                    setWidth = outerWidth - (parseInt(this.paddingRight, 10) + parseInt(this.paddingLeft, 10) + parseInt(this.borderRightWidth, 10) + parseInt(this.borderLeftWidth, 10));
+                    break;
+            }
+            return setWidth;
+        };
+        Cell.prototype.calculationHeight = function (outerHeight) {
+            var setHeight = 0;
+            switch (this.boxSizing) {
+                case 'content-box':
+                    setHeight = outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10) + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+                    break;
+                case 'padding-box':
+                    setHeight = outerHeight - (parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+                    break;
+                case 'border-box':
+                    setHeight = outerHeight;
+                    break;
+                default:
+                    setHeight = outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10) + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+                    break;
+            }
+            return setHeight;
         };
         Cell.prototype.getCSSWidth = function () {
             return this.width + 'px';
         };
         Cell.prototype.getHeight = function (cell) {
             if (this.isFixed && cell) {
-                return cell.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
-                    + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+                return this.calculationHeight(cell.outerHeight);
             }
             else {
-                return this.outerHeight - (parseInt(this.paddingTop, 10) + parseInt(this.paddingBottom, 10)
-                    + parseInt(this.borderTopWidth, 10) + parseInt(this.borderBottomWidth, 10));
+                return this.calculationHeight(this.outerHeight);
             }
         };
         Cell.prototype.getCSSHeight = function (cell) {
@@ -301,7 +334,7 @@ var FixedTables;
 (function (FixedTables) {
     var PIXEL_REG = /.*px/;
     var Thead = (function () {
-        function Thead(lineNum, cells, width, outerWidth, outerHeight, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, position, top, zIndex) {
+        function Thead(lineNum, cells, width, outerWidth, outerHeight, borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, boxSizing, position, top, zIndex) {
             this.lineNum = lineNum;
             this.cells = cells;
             this.width = width;
@@ -311,12 +344,13 @@ var FixedTables;
             this.borderRightWidth = borderRightWidth;
             this.borderBottomWidth = borderBottomWidth;
             this.borderLeftWidth = borderLeftWidth;
+            this.boxSizing = boxSizing;
             this.position = position;
             this.top = top;
             this.zIndex = zIndex;
         }
         Thead.fromData = function (data) {
-            return new Thead(0, [], data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0', this.CSS_POSITION_VALUE, this.CSS_TOP_VALUE, this.CSS_ZINDEX_VALUE);
+            return new Thead(0, [], data.width ? data.width : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0', data.boxSizing ? data.boxSizing : '', this.CSS_POSITION_VALUE, this.CSS_TOP_VALUE, this.CSS_ZINDEX_VALUE);
         };
         Thead.prototype.setLineNumber = function (num) {
             this.lineNum = num;
@@ -490,7 +524,8 @@ var FixedTables;
                 borderTopWidth: styles["border-top-width"],
                 borderRightWidth: styles["border-right-width"],
                 borderBottomWidth: styles["border-bottom-width"],
-                borderLeftWidth: styles["border-left-width"]
+                borderLeftWidth: styles["border-left-width"],
+                boxSizing: styles["box-sizing"]
             });
         };
         FixedTableView.prototype.setTbodyStyle = function () {
@@ -529,7 +564,8 @@ var FixedTables;
                 borderRightWidth: styles["border-right-width"],
                 borderBottomWidth: styles["border-bottom-width"],
                 borderLeftWidth: styles["border-left-width"],
-                tHeadCell: parent === 'tbody' ? this.theadModel.getCell(x, 0) : null
+                tHeadCell: parent === 'tbody' ? this.theadModel.getCell(x, 0) : null,
+                boxSizing: styles["box-sizing"]
             });
         };
         FixedTableView.prototype.setTheadFixedStyle = function () {
