@@ -503,7 +503,7 @@ var FixedTables;
             this.option = null;
             this.callBackFunction = function () { };
             this.selectedCell = null;
-            this.utillty = new FixedTables.Utility();
+            this.utility = new FixedTables.Utility();
             if (option !== void 0) {
                 this.option = option;
             }
@@ -749,8 +749,8 @@ var FixedTables;
                 td = this.filterElementTdTh(tr[i].querySelectorAll('tr > *'));
                 for (var n = 0; n < td.length; n++) {
                     if (n == 0) {
-                        if (this.utillty.vendor.transform) {
-                            td[n].style[this.utillty.vendor.transform] = 'translate3d(' + left + 'px, 0, 0)';
+                        if (this.utility.vendor.transform) {
+                            td[n].style[this.utility.vendor.transform] = 'translate3d(' + left + 'px, 0, 0)';
                         }
                         else {
                             td[n].style.left = left + 'px';
@@ -760,8 +760,8 @@ var FixedTables;
             }
         };
         FixedTableView.prototype.setTheadScrollStyle = function (top) {
-            if (this.utillty.vendor.transform) {
-                this.thead.style[this.utillty.vendor.transform] = 'translate3d(0, ' + top + 'px, 0)';
+            if (this.utility.vendor.transform) {
+                this.thead.style[this.utility.vendor.transform] = 'translate3d(0, ' + top + 'px, 0)';
             }
             else {
                 this.thead.style.top = top + 'px';
