@@ -18,7 +18,13 @@ module FixedTables {
       public offsetTop: number,
       public offsetLeft: number,
       public position: string,
-      public overflow: string
+      public overflow: string,
+      public isHandScroll: boolean,
+      public isHandScrollMode: boolean,
+      public startX: number,
+      public startY: number,
+      public scrollX: number,
+      public scrollY: number
       ) {
     }
 
@@ -32,7 +38,13 @@ module FixedTables {
         0,
         0,
         this.CSS_POSITION_VALUE,
-        this.CSS_OVERFLOW_VALUE
+        this.CSS_OVERFLOW_VALUE,
+        true,
+        false,
+        0,
+        0,
+        0,
+        0
       );
     }
 
@@ -55,5 +67,17 @@ module FixedTables {
     public changeMode(bool: boolean): void {
       this.isFullMode = bool;
     }
+
+    public setHandScrollMode(bool: boolean) {
+      this.isHandScrollMode = bool;
+    }
+
+    public setStartScrollPosition(x, y) {
+      this.startX = x;
+      this.startY = y;
+    }
+
+
+
   }
 }

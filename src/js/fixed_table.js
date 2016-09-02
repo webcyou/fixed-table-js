@@ -235,7 +235,7 @@ var FixedTables;
 var FixedTables;
 (function (FixedTables) {
     var TableView = (function () {
-        function TableView(elementIdName, table, isFullMode, fixedLineNum, fixedColumnNum, offsetTop, offsetLeft, position, overflow) {
+        function TableView(elementIdName, table, isFullMode, fixedLineNum, fixedColumnNum, offsetTop, offsetLeft, position, overflow, isHandScroll, isHandScrollMode, startX, startY, scrollX, scrollY) {
             this.elementIdName = elementIdName;
             this.table = table;
             this.isFullMode = isFullMode;
@@ -245,9 +245,15 @@ var FixedTables;
             this.offsetLeft = offsetLeft;
             this.position = position;
             this.overflow = overflow;
+            this.isHandScroll = isHandScroll;
+            this.isHandScrollMode = isHandScrollMode;
+            this.startX = startX;
+            this.startY = startY;
+            this.scrollX = scrollX;
+            this.scrollY = scrollY;
         }
         TableView.fromData = function (data) {
-            return new TableView(data.id ? data.id : 'fixedTable', FixedTables.Table.fromData({}), data.fullMode ? data.fullMode : false, data.fixedLineNum ? data.fixedLineNum : 1, data.fixedColumnNum ? data.fixedColumnNum : 1, 0, 0, this.CSS_POSITION_VALUE, this.CSS_OVERFLOW_VALUE);
+            return new TableView(data.id ? data.id : 'fixedTable', FixedTables.Table.fromData({}), data.fullMode ? data.fullMode : false, data.fixedLineNum ? data.fixedLineNum : 1, data.fixedColumnNum ? data.fixedColumnNum : 1, 0, 0, this.CSS_POSITION_VALUE, this.CSS_OVERFLOW_VALUE, true, false, 0, 0, 0, 0);
         };
         TableView.prototype.getIdName = function () {
             return this.elementIdName;
@@ -264,6 +270,13 @@ var FixedTables;
         };
         TableView.prototype.changeMode = function (bool) {
             this.isFullMode = bool;
+        };
+        TableView.prototype.setHandScrollMode = function (bool) {
+            this.isHandScrollMode = bool;
+        };
+        TableView.prototype.setStartScrollPosition = function (x, y) {
+            this.startX = x;
+            this.startY = y;
         };
         TableView.CSS_POSITION_VALUE = 'relative';
         TableView.CSS_OVERFLOW_VALUE = 'auto';
@@ -544,6 +557,8 @@ var FixedTables;
         FixedTableView.prototype.setTableViewStyle = function () {
             this.tableView.style.position = this.tableViewModel.position;
             this.tableView.style.overflow = this.tableViewModel.overflow;
+            this.tableView.style.cursor = '-webkit-grab';
+            console.log(this.tableView.style);
             if (this.tableViewModel.isFullMode) {
                 this.setTableViewFullModeStyle();
             }
@@ -690,6 +705,7 @@ var FixedTables;
             var _this = this;
             this.setScrollEvent();
             this.setWindowResizeEvent();
+            this.setGrabScrollEvent();
             if (this.option && this.option.click) {
                 this.setTheadCellClickEvent(function (cell) {
                     _this.selectedCell = cell;
@@ -700,6 +716,27 @@ var FixedTables;
                     _this.click(_this.callBackFunction);
                 });
             }
+        };
+        FixedTableView.prototype.setGrabScrollEvent = function () {
+            var _this = this;
+            console.log(this.tableView);
+            this.tableView.addEventListener('mousedown', function (e) {
+                e.preventDefault();
+                var mouseX = e.pageX;
+                var mouseY = e.pageY;
+                _this.tableViewModel.setHandScrollMode(true);
+            });
+            this.tableView.addEventListener('mouseup', function (e) {
+                _this.tableViewModel.setHandScrollMode(false);
+            });
+            this.tableView.addEventListener('mousemove', function (e) {
+                if (_this.tableViewModel.isHandScrollMode) {
+                    var mouseX = e.pageX;
+                    var mouseY = e.pageY;
+                }
+            });
+            this.tableView.addEventListener('mouseout', function (e) {
+            });
         };
         FixedTableView.prototype.setTheadCellClickEvent = function (fn) {
             var theadModel = this.theadModel, tr = this.thead.querySelectorAll('tr'), td;

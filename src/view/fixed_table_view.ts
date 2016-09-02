@@ -10,6 +10,11 @@ module FixedTables {
     height: number;
   }
 
+//  interface Event extends MouseEvent {
+//    pageX: number;
+//    pageY: number;
+//  }
+
   export class FixedTableView {
     private model: FixedTableModel;
 
@@ -97,6 +102,9 @@ module FixedTables {
     private setTableViewStyle(): void {
       this.tableView.style.position = this.tableViewModel.position;
       this.tableView.style.overflow = this.tableViewModel.overflow;
+      this.tableView.style.cursor = '-webkit-grab';
+
+      console.log(this.tableView.style);
 
       if(this.tableViewModel.isFullMode) {
         this.setTableViewFullModeStyle();
@@ -298,6 +306,8 @@ module FixedTables {
     private setEventHandler(): void {
       this.setScrollEvent();
       this.setWindowResizeEvent();
+      this.setGrabScrollEvent();
+
 
       if(this.option && this.option.click) {
         this.setTheadCellClickEvent((cell: Cell) => {
@@ -309,6 +319,38 @@ module FixedTables {
           this.click(this.callBackFunction);
         });
       }
+    }
+
+    private setGrabScrollEvent() {
+
+      console.log(this.tableView);
+
+      this.tableView.addEventListener('mousedown', (e: MouseEvent) => {
+        e.preventDefault();
+
+        var mouseX = e.pageX ;
+        var mouseY = e.pageY ;
+        this.tableViewModel.setHandScrollMode(true);
+
+      });
+
+      this.tableView.addEventListener('mouseup', (e: MouseEvent) => {
+        this.tableViewModel.setHandScrollMode(false);
+      });
+
+      this.tableView.addEventListener('mousemove', (e: MouseEvent) => {
+
+        if(this.tableViewModel.isHandScrollMode) {
+          var mouseX = e.pageX ;
+          var mouseY = e.pageY ;
+        }
+
+      });
+
+      this.tableView.addEventListener('mouseout', (e) => {
+        //this.tableViewModel.setHandScrollMode(false);
+      });
+
     }
 
     private setTheadCellClickEvent(fn): void {
