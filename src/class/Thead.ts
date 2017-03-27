@@ -3,8 +3,8 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTables {
-  var PIXEL_REG = /.*px/;
+namespace FixedTables {
+  const PIXEL_REG = /.*px/;
 
   export class Thead {
     static CSS_POSITION_VALUE = 'absolute';

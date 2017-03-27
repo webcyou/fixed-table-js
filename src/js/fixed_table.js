@@ -30,9 +30,9 @@ var FixedTables;
                 fn(cell);
             });
         };
-        FixedTable._instance = null;
         return FixedTable;
     }());
+    FixedTable._instance = null;
     FixedTables.FixedTable = FixedTable;
 })(FixedTables || (FixedTables = {}));
 if (typeof (module) !== 'undefined') {
@@ -226,10 +226,10 @@ var FixedTables;
             }
             cell.changeStyles(data);
         };
-        Table.CSS_BORDER_COLLAPSE_VALUE = 'collapse';
-        Table.CSS_BORDER_SPACING_VALUE = '0';
         return Table;
     }());
+    Table.CSS_BORDER_COLLAPSE_VALUE = 'collapse';
+    Table.CSS_BORDER_SPACING_VALUE = '0';
     FixedTables.Table = Table;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
@@ -265,10 +265,10 @@ var FixedTables;
         TableView.prototype.changeMode = function (bool) {
             this.isFullMode = bool;
         };
-        TableView.CSS_POSITION_VALUE = 'relative';
-        TableView.CSS_OVERFLOW_VALUE = 'auto';
         return TableView;
     }());
+    TableView.CSS_POSITION_VALUE = 'relative';
+    TableView.CSS_OVERFLOW_VALUE = 'auto';
     FixedTables.TableView = TableView;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
@@ -323,11 +323,11 @@ var FixedTables;
         Tbody.prototype.getCSSWidth = function () {
             return this.width + 'px';
         };
-        Tbody.CSS_DISPLAY_VALUE = 'block';
-        Tbody.FIXED_CSS_POSITION_VALUE = 'absolute';
-        Tbody.FIXED_CSS_LEFT_VALUE = '0';
         return Tbody;
     }());
+    Tbody.CSS_DISPLAY_VALUE = 'block';
+    Tbody.FIXED_CSS_POSITION_VALUE = 'absolute';
+    Tbody.FIXED_CSS_LEFT_VALUE = '0';
     FixedTables.Tbody = Tbody;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
@@ -391,11 +391,11 @@ var FixedTables;
         Thead.prototype.getCSSWidth = function () {
             return this.width + 'px';
         };
-        Thead.CSS_POSITION_VALUE = 'absolute';
-        Thead.CSS_TOP_VALUE = '0';
-        Thead.CSS_ZINDEX_VALUE = '10';
         return Thead;
     }());
+    Thead.CSS_POSITION_VALUE = 'absolute';
+    Thead.CSS_TOP_VALUE = '0';
+    Thead.CSS_ZINDEX_VALUE = '10';
     FixedTables.Thead = Thead;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
@@ -465,6 +465,39 @@ var FixedTables;
         return Utility;
     }());
     FixedTables.Utility = Utility;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.changeMode = function (bool) {
+            this.tableView.changeMode(bool);
+        };
+        FixedTableModel.prototype.setCellStyle = function (data) {
+            this.tableView.table.setCellStyle(data);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
@@ -619,7 +652,7 @@ var FixedTables;
                     td[x].style.height = cell.getCSSHeight();
                     if (x == 0) {
                         td[x].style.position = "absolute";
-                        td[x].style.top = 0;
+                        td[x].style.top = "0";
                         td[x].style.left = -cell.outerWidth + 'px';
                     }
                 }
@@ -681,7 +714,7 @@ var FixedTables;
             var theadModel = this.theadModel, tr = this.thead.querySelectorAll('tr'), td;
             for (var y = 0; y < tr.length; y++) {
                 td = this.filterElementTdTh(tr[y].querySelectorAll('tr > *'));
-                for (var x = 0; x < td.length; x++) {
+                var _loop_1 = function (x) {
                     (function (arg) {
                         (function (len) {
                             td[x].addEventListener('click', function () {
@@ -689,6 +722,9 @@ var FixedTables;
                             }, false);
                         })(x);
                     })(y);
+                };
+                for (var x = 0; x < td.length; x++) {
+                    _loop_1(x);
                 }
             }
         };
@@ -696,7 +732,7 @@ var FixedTables;
             var tbodyModel = this.tbodyModel, tr = this.tbody.querySelectorAll('tr'), td;
             for (var y = 0; y < tr.length; y++) {
                 td = this.filterElementTdTh(tr[y].querySelectorAll('tr > *'));
-                for (var x = 0; x < td.length; x++) {
+                var _loop_2 = function (x) {
                     (function (arg) {
                         (function (len) {
                             td[x].addEventListener('click', function () {
@@ -704,6 +740,9 @@ var FixedTables;
                             }, false);
                         })(x);
                     })(y);
+                };
+                for (var x = 0; x < td.length; x++) {
+                    _loop_2(x);
                 }
             }
         };
@@ -785,37 +824,4 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.changeMode = function (bool) {
-            this.tableView.changeMode(bool);
-        };
-        FixedTableModel.prototype.setCellStyle = function (data) {
-            this.tableView.table.setCellStyle(data);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));

@@ -3,8 +3,8 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTables {
-  var PIXEL_REG = /.*px/;
+namespace FixedTables {
+  const PIXEL_REG = /.*px/;
 
   export class Table {
     static CSS_BORDER_COLLAPSE_VALUE = 'collapse';
@@ -75,7 +75,8 @@ module FixedTables {
     }
 
     public setCellStyle(data: any): void {
-      var cell: Cell;
+      let cell: Cell;
+
       if(data.parent !== void 0 && data.parent === 'thead') {
         cell = this.thead.getCell(data.x, data.y);
       } else {

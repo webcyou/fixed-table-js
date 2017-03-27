@@ -3,7 +3,7 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTables {
+namespace FixedTables {
 
   interface ViewSize {
     width: number;
@@ -105,8 +105,8 @@ module FixedTables {
 
     private setTableViewFullModeStyle(): void {
       // Fix ScrollBar
-      for (var i = 0; i < 2; i++) {
-        var viewSize: Object = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
+      for (let i = 0; i < 2; i++) {
+        let viewSize: Object = this.tableViewModel.getFullModeSize(document.body.clientWidth, document.body.clientHeight);
 
         this.tableView.style.width = (<ViewSize>viewSize).width + 'px';
         this.tableView.style.height = (<ViewSize>viewSize).height + 'px';
@@ -122,7 +122,7 @@ module FixedTables {
     }
 
     private setTableModel(): void {
-      var tableStyles = (<any>this.table).currentStyle || (<any>document.defaultView).getComputedStyle(this.table, '');
+      const tableStyles = (<any>this.table).currentStyle || (<any>document.defaultView).getComputedStyle(this.table, '');
       this.tableModel.setStyles(tableStyles);
     }
 
@@ -149,12 +149,12 @@ module FixedTables {
     }
 
     private createTheadCellsModel(): Cell[] {
-      var tr: NodeList = this.thead.querySelectorAll('tr'),
+      let tr: NodeList = this.thead.querySelectorAll('tr'),
           th: NodeList = this.thead.querySelectorAll('tr > *'),
           styles,
           cells: Cell[] = [];
 
-      for (var i = 0; i < th.length; i++) {
+      for (let i = 0; i < th.length; i++) {
         styles = (<any>th[i]).currentStyle || (<any>document.defaultView).getComputedStyle(th[i], '');
         cells.push(this.getCreateCellModel('thead', th, styles, i, 0));
       }
@@ -192,15 +192,15 @@ module FixedTables {
     }
 
     private createTbodyCellsModel(): Cell[] {
-      var tr: NodeList = this.tbody.querySelectorAll('tr'),
+      let tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList,
           styles,
           cells: Cell[] = [];
 
-      for (var y: number = 0; y < tr.length; y++) {
+      for (let y: number = 0; y < tr.length; y++) {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
-        for (var x: number = 0; x < td.length; x++) {
+        for (let x: number = 0; x < td.length; x++) {
           styles = (<any>td[x]).currentStyle || (<any>document.defaultView).getComputedStyle(td[x], '');
 
           cells.push(this.getCreateCellModel('tbody', td, styles, x, y));
@@ -234,14 +234,14 @@ module FixedTables {
     }
 
     private setTheadFixedStyle(): void {
-      var tr: NodeList = this.thead.querySelectorAll('tr'),
+      let tr: NodeList = this.thead.querySelectorAll('tr'),
           td: NodeList,
           cell: Cell;
 
-      for (var y: number = 0; y < tr.length; y++) {
+      for (let y: number = 0; y < tr.length; y++) {
         td = (<Element>tr[y]).querySelectorAll('tr > *');
 
-        for (var x: number = 0; x < td.length; x++) {
+        for (let x: number = 0; x < td.length; x++) {
           cell = this.theadModel.getCell(x, y);
 
           (<HTMLElement>td[x]).style.width  = cell.getCSSWidth();
@@ -249,7 +249,7 @@ module FixedTables {
 
           if(x == 0) {
             (<HTMLElement>td[x]).style.position = "absolute";
-            (<HTMLElement>td[x]).style.top      = 0;
+            (<HTMLElement>td[x]).style.top      = "0";
             (<HTMLElement>td[x]).style.left     = -cell.outerWidth + 'px';
           }
         }
@@ -257,17 +257,17 @@ module FixedTables {
     }
 
     private setTbodyFixedStyle(isRestyle = false): void {
-      var tr: NodeList = this.tbody.querySelectorAll('tr'),
+      let tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList;
 
-      for (var y: number = 0; y < tr.length; y++) {
+      for (let y: number = 0; y < tr.length; y++) {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
         (<HTMLElement>tr[y]).style.display = this.tbodyModel.display;
         (<HTMLElement>tr[y]).style.paddingLeft = this.tbodyModel.getCSSPaddingLeft();
 
-        for (var x: number = 0; x < td.length; x++) {
-          var cell: Cell = this.tbodyModel.getCell(x, y);
+        for (let x: number = 0; x < td.length; x++) {
+          let cell: Cell = this.tbodyModel.getCell(x, y);
 
           // setCellStyles Function
           if(isRestyle) {
@@ -276,7 +276,7 @@ module FixedTables {
 
           } else {
             if (x == 0) {
-              var secondCell: Cell = this.tbodyModel.getCell(1, y);
+              let secondCell: Cell = this.tbodyModel.getCell(1, y);
 
               (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
               (<HTMLElement>td[x]).style.height = cell.getCSSHeight(secondCell);
@@ -291,9 +291,9 @@ module FixedTables {
     }
 
     private filterElementTdTh(elements: NodeList): NodeList {
-      var nodeList: any = [];
+      let nodeList: any = [];
 
-      for (var i: number = 0; i < elements.length; i++) {
+      for (let i: number = 0; i < elements.length; i++) {
         if(elements[i]['tagName'] === 'TH' || elements[i]['tagName'] === 'TD') {
           nodeList.push(elements[i]);
         }
@@ -321,14 +321,14 @@ module FixedTables {
     }
 
     private setTheadCellClickEvent(fn): void {
-      var theadModel: Thead = this.theadModel,
+      let theadModel: Thead = this.theadModel,
           tr: NodeList = this.thead.querySelectorAll('tr'),
           td: NodeList;
 
-      for (var y: number = 0; y < tr.length; y++) {
+      for (let y: number = 0; y < tr.length; y++) {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
-        for (var x: number = 0; x < td.length; x++) {
+        for (let x: number = 0; x < td.length; x++) {
           ((arg: number) => {
             ((len: number) => {
               td[x].addEventListener('click', () => {
@@ -341,14 +341,14 @@ module FixedTables {
     }
 
     private setTbodyCellClickEvent(fn): void {
-      var tbodyModel: Tbody = this.tbodyModel,
+      let tbodyModel: Tbody = this.tbodyModel,
           tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList;
 
-      for (var y: number = 0; y < tr.length; y++) {
+      for (let y: number = 0; y < tr.length; y++) {
         td = this.filterElementTdTh((<Element>tr[y]).querySelectorAll('tr > *'));
 
-        for (var x: number = 0; x < td.length; x++) {
+        for (let x: number = 0; x < td.length; x++) {
           ((arg: number) => {
             ((len: number) => {
               td[x].addEventListener('click', () => {
@@ -373,14 +373,14 @@ module FixedTables {
     }
 
     private setCornerFixedScrollStyle(left: number): void {
-      var tr: NodeList = this.thead.querySelectorAll('tr'),
+      let tr: NodeList = this.thead.querySelectorAll('tr'),
           td: NodeList,
           cell: Cell;
 
-      for (var i: number = 0; i < tr.length; i++) {
+      for (let i: number = 0; i < tr.length; i++) {
         td = this.filterElementTdTh((<Element>tr[i]).querySelectorAll('tr > *'));
 
-        for (var n: number = 0; n < td.length; n++) {
+        for (let n: number = 0; n < td.length; n++) {
           cell = this.tbodyModel.getCell(n, i);
 
           if(n == 0) {
@@ -395,13 +395,13 @@ module FixedTables {
     }
 
     private setTbodyScrollStyle(left: number): void {
-      var tr: NodeList = this.tbody.querySelectorAll('tr'),
+      let tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList;
 
-      for (var i: number = 0; i < tr.length; i++) {
+      for (let i: number = 0; i < tr.length; i++) {
         td = this.filterElementTdTh((<Element>tr[i]).querySelectorAll('tr > *'));
 
-        for (var n: number = 0; n < td.length; n++) {
+        for (let n: number = 0; n < td.length; n++) {
           if(n == 0) {
             if(this.utility.vendor.transform) {
               (<HTMLElement>td[n]).style[this.utility.vendor.transform] = 'translate3d(' + left + 'px, 0, 0)';

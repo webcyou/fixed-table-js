@@ -6,7 +6,7 @@
 'use strict';
 var e = eval, global: NodeJS.Global = e('this');
 
-module FixedTables {
+namespace FixedTables {
   export class FixedTable {
     private static _instance: FixedTable = null;
 
