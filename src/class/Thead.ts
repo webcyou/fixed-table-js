@@ -24,6 +24,7 @@ module FixedTables {
       public boxSizing: string,
       public position: string,
       public top: string,
+      public left: string,
       public zIndex: string
       ) {
     }
@@ -42,6 +43,7 @@ module FixedTables {
         data.boxSizing ? data.boxSizing : '',
         this.CSS_POSITION_VALUE,
         this.CSS_TOP_VALUE,
+        "0",
         this.CSS_ZINDEX_VALUE
       );
     }
@@ -73,6 +75,8 @@ module FixedTables {
     }
 
     public setSelfStyles(thead: Thead) {
+      this.left              = this.getCell(0, 0).outerWidth　+ 'px';
+      this.width             = this.width - parseInt(this.left, 10);
       this.borderBottomWidth = thead.borderBottomWidth;
       this.borderLeftWidth   = thead.borderLeftWidth;
       this.borderRightWidth  = thead.borderRightWidth;

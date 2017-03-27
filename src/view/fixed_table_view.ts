@@ -114,7 +114,7 @@ module FixedTables {
     }
 
     /**
-     * Table
+     * Table Style
     **/
     private setTableStyle(): void {
       (<HTMLElement>this.table).style.borderCollapse = this.tableModel.borderCollapse;
@@ -127,17 +127,20 @@ module FixedTables {
     }
 
     /**
-     * Thead
-     *
+     * THead Style
     **/
     private setTheadStyle(): void {
       (<HTMLElement>this.thead).style.position = this.theadModel.position;
-      (<HTMLElement>this.thead).style.top = this.theadModel.top;
-      (<HTMLElement>this.thead).style.width =  this.theadModel.getCSSWidth();
-      (<HTMLElement>this.thead).style.zIndex = this.theadModel.zIndex;
+      (<HTMLElement>this.thead).style.top      = this.theadModel.top;
+      (<HTMLElement>this.thead).style.width    = this.theadModel.getCSSWidth();
+      (<HTMLElement>this.thead).style.zIndex   = this.theadModel.zIndex;
 
-      // thead Style Model
+      // THead Style Model
       this.theadModel.setSelfStyles(this.getCreateTheadModel(this.thead, (<any>this.thead).currentStyle || (<any>document.defaultView).getComputedStyle(this.thead, '')));
+
+      // todo style適応順の精査を行う
+      (<HTMLElement>this.thead).style.left  = this.theadModel.left;
+      (<HTMLElement>this.thead).style.width = this.theadModel.getCSSWidth();
     }
 
     private setTheadModel(): void {
@@ -239,9 +242,15 @@ module FixedTables {
         td = (<Element>tr[y]).querySelectorAll('tr > *');
 
         for (var x: number = 0; x < td.length; x++) {
-          if(y == 0) {
-            cell = this.theadModel.getCell(x, y);
-            (<HTMLElement>td[x]).style.width = cell.getCSSWidth();
+          cell = this.theadModel.getCell(x, y);
+
+          (<HTMLElement>td[x]).style.width  = cell.getCSSWidth();
+          (<HTMLElement>td[x]).style.height = cell.getCSSHeight();
+
+          if(x == 0) {
+            (<HTMLElement>td[x]).style.position = "absolute";
+            (<HTMLElement>td[x]).style.top      = 0;
+            (<HTMLElement>td[x]).style.left     = -cell.outerWidth + 'px';
           }
         }
       }
@@ -363,6 +372,28 @@ module FixedTables {
       }, false);
     }
 
+    private setCornerFixedScrollStyle(left: number): void {
+      var tr: NodeList = this.thead.querySelectorAll('tr'),
+          td: NodeList,
+          cell: Cell;
+
+      for (var i: number = 0; i < tr.length; i++) {
+        td = this.filterElementTdTh((<Element>tr[i]).querySelectorAll('tr > *'));
+
+        for (var n: number = 0; n < td.length; n++) {
+          cell = this.tbodyModel.getCell(n, i);
+
+          if(n == 0) {
+            if(this.utility.vendor.transform) {
+              (<HTMLElement>td[n]).style[this.utility.vendor.transform] = 'translate3d(' + left + 'px, 0, 0)';
+            } else {
+              (<HTMLElement>td[n]).style.left = (cell.outerWidth + left) + 'px';
+            }
+          }
+        }
+      }
+    }
+
     private setTbodyScrollStyle(left: number): void {
       var tr: NodeList = this.tbody.querySelectorAll('tr'),
           td: NodeList;
@@ -393,6 +424,7 @@ module FixedTables {
     public boxScroll(): void {
       this.setTbodyScrollStyle(this.tableView.scrollLeft);
       this.setTheadScrollStyle(this.tableView.scrollTop);
+      this.setCornerFixedScrollStyle(this.tableView.scrollLeft);
     }
 
     public windowResize(): void {
