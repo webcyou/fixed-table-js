@@ -4,8 +4,8 @@
   "description": "FiixedTableJS - Fixed Table Layout JavaScript Library",
   "main": "dist/fixed_table.js",
   "scripts": {
-    "test": "$(npm bin)/mocha test -r test/spec_setup.js",
-    "test:watch": "$(npm bin)/mocha -w test -r test/spec_setup.js"
+    "test": "$(npm bin)/mocha test/** -r test/spec_setup.js",
+    "test:watch": "$(npm bin)/mocha -w test/** -r test/spec_setup.js"
   },
   "repository": {
     "type": "git",

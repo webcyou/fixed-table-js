@@ -1,6 +1,5 @@
 const assert = require('power-assert');
-
-var FixedTable = require('../dist/fixed_table.js');
+const FixedTable = require('../dist/fixed_table.js').FixedTable;
 
 describe('FixedTable', function() {
   var fixedTable = new global.FixedTable();
