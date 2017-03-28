@@ -1,4 +1,4 @@
-var assert = require('power-assert');
+const assert = require('power-assert');
 
 var FixedTable = require('../dist/fixed_table.js');
 
@@ -9,7 +9,11 @@ describe('FixedTable', function() {
     assert(fixedTable instanceof Object);
   });
 
-  describe('Public Function', function() {
-
+  it('Singleton Object', function() {
+    assert(fixedTable === new global.FixedTable());
   });
+
+  // describe('Public Function', function() {
+  //
+  // });
 });
