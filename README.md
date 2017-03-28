@@ -187,12 +187,12 @@ LiveReload started on port 35729
 
 **mocha**
 ```
-gulp mocha
+npm run test
 ```
 
 **mocha watch**
 ```
-gulp mocha.watch
+npm run test:watch
 ```
 
 
