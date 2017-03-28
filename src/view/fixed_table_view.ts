@@ -248,9 +248,11 @@ namespace FixedTables {
           (<HTMLElement>td[x]).style.height = cell.getCSSHeight();
 
           if(x == 0) {
-            (<HTMLElement>td[x]).style.position = "absolute";
-            (<HTMLElement>td[x]).style.top      = "0";
-            (<HTMLElement>td[x]).style.left     = -cell.outerWidth + 'px';
+            (<HTMLElement>td[x]).style.position  = "absolute";
+            (<HTMLElement>td[x]).style.top       = "0";
+            (<HTMLElement>td[x]).style.left      = -cell.outerWidth + 'px';
+            (<HTMLElement>td[x]).style.height    = 'auto';
+            (<HTMLElement>td[x]).style.minHeight = cell.getCSSHeight();
           }
         }
       }
