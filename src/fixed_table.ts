@@ -57,7 +57,6 @@ if (typeof (module) !== 'undefined') {
   if (typeof (module).exports.FixedTable === 'undefined') {
     (module).exports.FixedTable = {};
   }
-  //(module).exports.FixedTable = FixedTables.FixedTable;
   (module).exports.FixedTable = FixedTables;
 }
 
