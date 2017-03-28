@@ -17,13 +17,13 @@ tableレイアウトで、タイトル項目のカラムを簡単に固定表示
 ## Support Browsers
 **Mac**
 
-| ![](./demo/img/icon/icon_chrome.png) | ![](./demo/img/icon/icon_firefox.png) | ![](./demo/img/icon/icon_safari.png) | ![](./demo/img/icon/icon_opera.png)  | 
+| ![](./docs/img/icon/icon_chrome.png) | ![](./docs/img/icon/icon_firefox.png) | ![](./docs/img/icon/icon_safari.png) | ![](./docs/img/icon/icon_opera.png)  | 
 | :---------------: | :---------------:| :---------------:| :---------------:|
 | 52.0.2743.82 ~ | 47.0.1 ~ | 9.1.2 ~ | 39.0 ~ |
 
 **Windows**
 
-| ![](./demo/img/icon/icon_chrome.png) | ![](./demo/img/icon/icon_firefox.png) | ![](./demo/img/icon/icon_ie.png) | ![](./demo/img/icon/icon_edge01.png) | ![](./demo/img/icon/icon_opera.png) | 
+| ![](./docs/img/icon/icon_chrome.png) | ![](./docs/img/icon/icon_firefox.png) | ![](./docs/img/icon/icon_ie.png) | ![](./docs/img/icon/icon_edge01.png) | ![](./docs/img/icon/icon_opera.png) | 
 | :---------------: | :---------------:| :---------------:| :---------------:|:---------------:|
 | 52.0.2743.116 m ~ | 48.0.1 ~ | 11 | 25.10586.0.0 | 39.0 ~ |
 
