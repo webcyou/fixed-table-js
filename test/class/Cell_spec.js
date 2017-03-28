@@ -86,5 +86,31 @@ describe('Cell', function() {
   });
 
   describe('public Function changeStyles', function() {
+    beforeEach(function(done) {
+      cell.changeStyles({
+        isFixed: true,
+        outerWidth: 400,
+        outerHeight: 300,
+        paddingTop:  10,
+        paddingRight: 20,
+        paddingBottom: 30,
+        paddingLeft: 40,
+        borderTopWidth: "10px",
+        borderRightWidth: "10px",
+        borderBottomWidth: "10px",
+        borderLeftWidth: "10px"
+      });
+
+      done();
+    });
+
+    it('The expected property is set', function() {
+      assert.equal(cell.width, 320);
+      assert.equal(cell.height, 240);
+      assert.equal(cell.borderTopWidth, "10px");
+      assert.equal(cell.borderRightWidth, "10px");
+      assert.equal(cell.borderBottomWidth, "10px");
+      assert.equal(cell.borderLeftWidth, "10px");
+    });
   });
 });
