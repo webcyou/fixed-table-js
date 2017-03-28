@@ -3,7 +3,7 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTables {
+namespace FixedTables {
 
   interface support {
     touch: boolean;
@@ -48,8 +48,8 @@ module FixedTables {
     }
 
     public whichTransform() {
-      var t, el = document.createElement('fakeelement');
-      var transform = {
+      let t, el = document.createElement('fakeelement');
+      let transform = {
         'transform': 'transform',
         'OTransform': 'OTransform',
         'MozTransform': 'MozTransform',
@@ -63,8 +63,8 @@ module FixedTables {
     }
 
     public whichAnimationEvent() {
-      var t, el = document.createElement('fakeelement');
-      var animations = {
+      let t, el = document.createElement('fakeelement');
+      let animations = {
         'animation': 'animationend',
         'OAnimation': 'oAnimationEnd',
         'MozAnimation': 'animationend',
@@ -78,8 +78,8 @@ module FixedTables {
     }
 
     public whichTransitionEvent() {
-      var t, el = document.createElement('fakeelement');
-      var transitions = {
+      let t, el = document.createElement('fakeelement');
+      let transitions = {
         'transition': 'transitionend',
         'OTransition': 'oTransitionEnd',
         'MozTransition': 'transitionend',

@@ -3,7 +3,7 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTables {
+namespace FixedTables {
   export class FixedTableModel {
     private tableView: TableView;
 

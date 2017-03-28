@@ -3,9 +3,9 @@
  */
 /// <reference path='../_all.ts' />
 
-module FixedTables {
+namespace FixedTables {
   var created_num = 0;
-  var PIXEL_REG = /.*px/;
+  const PIXEL_REG = /.*px/;
 
   export class Cell {
     constructor(
@@ -73,7 +73,7 @@ module FixedTables {
     }
 
     public calculationWidth(outerWidth: number): number {
-      var setWidth = 0;
+      let setWidth = 0;
 
       switch (this.boxSizing) {
         case 'content-box':
@@ -93,7 +93,7 @@ module FixedTables {
     }
 
     public calculationHeight(outerHeight: number): number {
-      var setHeight = 0;
+      let setHeight = 0;
 
       switch (this.boxSizing) {
         case 'content-box':
