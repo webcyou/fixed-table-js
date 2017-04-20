@@ -41,4 +41,29 @@ describe('Table', function() {
       assert(table.borderSpacing === '0');
     });
   });
+
+  describe('public Function setStyles', function() {
+    it('Properties are generated in FromData', function() {
+    });
+  });
+
+  describe('public Function setTheadFixedModel', function() {
+    it('Properties are generated in FromData', function() {
+    });
+  });
+
+  describe('public Function setTbodyFixedModel', function() {
+    it('Properties are generated in FromData', function() {
+    });
+  });
+
+  describe('public Function getOuterWidth', function() {
+    it('Properties are generated in FromData', function() {
+    });
+  });
+
+  describe('public Function setCellStyle', function() {
+    it('Properties are generated in FromData', function() {
+    });
+  });
 });
