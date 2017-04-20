@@ -48,16 +48,17 @@ namespace FixedTables {
     }
 
     public setStyles(styles) {
-      this.width = parseInt(styles["width"], 10);
-      this.paddingTop = styles["padding-top"];
-      this.paddingRight = styles["padding-right"];
-      this.paddingBottom = styles["padding-bottom"];
-      this.paddingLeft = styles["padding-left"];
-      this.borderTopWidth = styles["border-top-width"] && PIXEL_REG.test(styles["border-top-width"]) ? styles["border-top-width"] : '0';
-      this.borderRightWidth = styles["border-right-width"] && PIXEL_REG.test(styles["border-right-width"]) ? styles["border-right-width"] : '0';
+      this.width             = parseInt(styles["width"], 10);
+      this.paddingTop        = styles["padding-top"];
+      this.paddingRight      = styles["padding-right"];
+      this.paddingBottom     = styles["padding-bottom"];
+      this.paddingLeft       = styles["padding-left"];
+      this.borderTopWidth    = styles["border-top-width"] && PIXEL_REG.test(styles["border-top-width"]) ? styles["border-top-width"] : '0';
+      this.borderRightWidth  = styles["border-right-width"] && PIXEL_REG.test(styles["border-right-width"]) ? styles["border-right-width"] : '0';
       this.borderBottomWidth = styles["border-bottom-width"] && PIXEL_REG.test(styles["border-bottom-width"]) ? styles["border-bottom-width"] : '0';
-      this.borderLeftWidth = styles["border-left-width"] && PIXEL_REG.test(styles["border-left-width"]) ? styles["border-left-width"] : '0';
-      this.outerWidth = this.getOuterWidth();
+      this.borderLeftWidth   = styles["border-left-width"] && PIXEL_REG.test(styles["border-left-width"]) ? styles["border-left-width"] : '0';
+      this.outerWidth        = this.getOuterWidth();
+
       this.setTheadFixedModel();
     }
 
