@@ -653,10 +653,11 @@ var FixedTables;
                     td[x].style.width = cell.getCSSWidth();
                     td[x].style.height = cell.getCSSHeight();
                     if (x == 0) {
+                        var secondCell = this.theadModel.getCell(1, y);
                         td[x].style.position = "absolute";
                         td[x].style.top = "0";
                         td[x].style.left = -cell.outerWidth + 'px';
-                        td[x].style.height = 'auto';
+                        td[x].style.height = secondCell.getCSSHeight();
                         td[x].style.minHeight = cell.getCSSHeight();
                     }
                 }
