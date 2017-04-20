@@ -22,6 +22,7 @@ describe('Cell', function() {
       borderBottomWidth: '0px',
       borderLeftWidth: '0px'
     };
+
     cell = Cell.fromData(CELL_DATA);
 
     done();
