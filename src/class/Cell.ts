@@ -30,14 +30,16 @@ namespace FixedTables {
       public boxSizing: string,
       public tHeadCell?: Cell
       ) {
-      this.id = this.createId();
+      if(this.id === null) {
+        this.id = this.createId();
+      }
       this.width = this.getWidth();
       this.height = this.getHeight();
     }
 
     static fromData(data: any): Cell {
       return new Cell(
-        data.id ? data.id : 0,
+        data.id ? data.id : null,
         data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0),
         data.parent ? data.parent : '',
         data.tagName ? data.tagName : '',
