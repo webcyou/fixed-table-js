@@ -73,12 +73,14 @@ var FixedTables;
             this.borderLeftWidth = borderLeftWidth;
             this.boxSizing = boxSizing;
             this.tHeadCell = tHeadCell;
-            this.id = this.createId();
+            if (this.id === null) {
+                this.id = this.createId();
+            }
             this.width = this.getWidth();
             this.height = this.getHeight();
         }
         Cell.fromData = function (data) {
-            return new Cell(data.id ? data.id : 0, data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0), data.parent ? data.parent : '', data.tagName ? data.tagName : '', data.x ? data.x : 0, data.y ? data.y : 0, data.width ? data.width : 0, data.height ? data.height : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0px', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px', data.boxSizing ? data.boxSizing : '', data.tHeadCell ? data.tHeadCell : null);
+            return new Cell(data.id ? data.id : null, data.isFixed ? data.isFixed : Boolean(data.parent === 'tbody' && data.x === 0), data.parent ? data.parent : '', data.tagName ? data.tagName : '', data.x ? data.x : 0, data.y ? data.y : 0, data.width ? data.width : 0, data.height ? data.height : 0, data.outerWidth ? data.outerWidth : 0, data.outerHeight ? data.outerHeight : 0, data.paddingTop ? data.paddingTop : '', data.paddingRight ? data.paddingRight : '', data.paddingBottom ? data.paddingBottom : '', data.paddingLeft ? data.paddingLeft : '', data.borderTopWidth && PIXEL_REG.test(data.borderTopWidth) ? data.borderTopWidth : '0px', data.borderRightWidth && PIXEL_REG.test(data.borderRightWidth) ? data.borderRightWidth : '0px', data.borderBottomWidth && PIXEL_REG.test(data.borderBottomWidth) ? data.borderBottomWidth : '0px', data.borderLeftWidth && PIXEL_REG.test(data.borderLeftWidth) ? data.borderLeftWidth : '0px', data.boxSizing ? data.boxSizing : '', data.tHeadCell ? data.tHeadCell : null);
         };
         Cell.prototype.createId = function () {
             return ++created_num;
@@ -468,39 +470,6 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.changeMode = function (bool) {
-            this.tableView.changeMode(bool);
-        };
-        FixedTableModel.prototype.setCellStyle = function (data) {
-            this.tableView.table.setCellStyle(data);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
     var FixedTableView = (function () {
         function FixedTableView(model, option) {
             this.option = null;
@@ -826,4 +795,37 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.changeMode = function (bool) {
+            this.tableView.changeMode(bool);
+        };
+        FixedTableModel.prototype.setCellStyle = function (data) {
+            this.tableView.table.setCellStyle(data);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
