@@ -470,39 +470,6 @@ var FixedTables;
 })(FixedTables || (FixedTables = {}));
 var FixedTables;
 (function (FixedTables) {
-    var FixedTableModel = (function () {
-        function FixedTableModel(option) {
-            if (option !== void 0) {
-                this.tableView = FixedTables.TableView.fromData(option);
-            }
-            else {
-                this.tableView = FixedTables.TableView.fromData({});
-            }
-        }
-        FixedTableModel.prototype.getTableViewModel = function () {
-            return this.tableView;
-        };
-        FixedTableModel.prototype.getTableModel = function () {
-            return this.tableView.table;
-        };
-        FixedTableModel.prototype.getTheadModel = function () {
-            return this.tableView.table.thead;
-        };
-        FixedTableModel.prototype.getTbodyModel = function () {
-            return this.tableView.table.tbody;
-        };
-        FixedTableModel.prototype.changeMode = function (bool) {
-            this.tableView.changeMode(bool);
-        };
-        FixedTableModel.prototype.setCellStyle = function (data) {
-            this.tableView.table.setCellStyle(data);
-        };
-        return FixedTableModel;
-    }());
-    FixedTables.FixedTableModel = FixedTableModel;
-})(FixedTables || (FixedTables = {}));
-var FixedTables;
-(function (FixedTables) {
     var FixedTableView = (function () {
         function FixedTableView(model, option) {
             this.option = null;
@@ -653,10 +620,11 @@ var FixedTables;
                     td[x].style.width = cell.getCSSWidth();
                     td[x].style.height = cell.getCSSHeight();
                     if (x == 0) {
+                        var secondCell = this.theadModel.getCell(1, y);
                         td[x].style.position = "absolute";
                         td[x].style.top = "0";
                         td[x].style.left = -cell.outerWidth + 'px';
-                        td[x].style.height = 'auto';
+                        td[x].style.height = secondCell.getCSSHeight();
                         td[x].style.minHeight = cell.getCSSHeight();
                     }
                 }
@@ -828,4 +796,37 @@ var FixedTables;
         return FixedTableView;
     }());
     FixedTables.FixedTableView = FixedTableView;
+})(FixedTables || (FixedTables = {}));
+var FixedTables;
+(function (FixedTables) {
+    var FixedTableModel = (function () {
+        function FixedTableModel(option) {
+            if (option !== void 0) {
+                this.tableView = FixedTables.TableView.fromData(option);
+            }
+            else {
+                this.tableView = FixedTables.TableView.fromData({});
+            }
+        }
+        FixedTableModel.prototype.getTableViewModel = function () {
+            return this.tableView;
+        };
+        FixedTableModel.prototype.getTableModel = function () {
+            return this.tableView.table;
+        };
+        FixedTableModel.prototype.getTheadModel = function () {
+            return this.tableView.table.thead;
+        };
+        FixedTableModel.prototype.getTbodyModel = function () {
+            return this.tableView.table.tbody;
+        };
+        FixedTableModel.prototype.changeMode = function (bool) {
+            this.tableView.changeMode(bool);
+        };
+        FixedTableModel.prototype.setCellStyle = function (data) {
+            this.tableView.table.setCellStyle(data);
+        };
+        return FixedTableModel;
+    }());
+    FixedTables.FixedTableModel = FixedTableModel;
 })(FixedTables || (FixedTables = {}));
